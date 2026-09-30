@@ -24,6 +24,14 @@
     {
       "name": "Leg Sweep",
       "ioValue": 20
+    },
+    {
+      "name": "Bit Diameter",
+      "ioValue": 6.35
+    },
+    {
+      "name": "Clearance",
+      "ioValue": 0.2
     }
   ],
   "topLevel": true,
@@ -54,6 +62,18 @@
         {
           "name": "Seat Width",
           "ioValue": 560
+        },
+        {
+          "name": "Back Angle",
+          "ioValue": 24
+        },
+        {
+          "name": "Bit Diameter",
+          "ioValue": 6.35
+        },
+        {
+          "name": "Clearance",
+          "ioValue": 0.2
         }
       ],
       "topLevel": false,
@@ -101,11 +121,50 @@
             {
               "name": "seatWidth",
               "ioValue": 560
+            },
+            {
+              "name": "backAngle",
+              "ioValue": 24
+            },
+            {
+              "name": "bitDiameter",
+              "ioValue": 6.35
+            },
+            {
+              "name": "clearance",
+              "ioValue": 0.2
             }
           ],
           "interpreterVersion": 1,
-          "code": "/**\n * Frame: two side runners plus the front apron.\n * Chair axes (mm): X runs front -> back, Y across the chair, Z up.\n * Runner side profile corners (x, z):\n *   front top (0,380) -> seat rear (460,300) -> toe (960,0) -> heel (720,0) -> front bottom (0,200)\n * The top edge from front to seat rear is the seat slope; the seat panels sit on it.\n */\nfunction run(thickness: number = 19.05, seatWidth: number = 560): Assembly[] {\n  const T = thickness;\n  const W = seatWidth; // clear width between the runners\n  const wood = \"#C8894F\";\n\n  // A flat board cut from a profile drawn in the side (XZ) view, placed with its\n  // inner face at y = y0 and extending T in +Y.\n  const sideBoard = (pts: number[][], y0: number) => {\n    let pen = replicad.draw(pts[0]);\n    for (let i = 1; i < pts.length; i++) pen = pen.lineTo(pts[i]);\n    let solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n    const bb = solid.boundingBox.bounds;\n    return solid.translate(0, y0 - bb[0][1], 0);\n  };\n\n  const runnerPts = [[0, 380], [0, 200], [720, 0], [960, 0], [460, 300]];\n  const parts: Assembly[] = [];\n  for (const [side, y0] of [[\"Right\", W / 2], [\"Left\", -W / 2 - T]] as [string, number][]) {\n    parts.push(new Assembly({\n      geometry: sideBoard(runnerPts, y0),\n      color: wood,\n      tags: [\"cutLayout\", \"runner\"],\n      bom: [`${side} runner`],\n    }));\n  }\n\n  // Front apron: spans the outside faces of both runners and caps their front ends.\n  const apron = replicad.makeBox([-T, -(W / 2 + T), 200], [0, W / 2 + T, 380]);\n  parts.push(new Assembly({ geometry: apron, color: wood, tags: [\"cutLayout\", \"apron\"], bom: [\"Front apron\"] }));\n  return parts;\n}\n",
-          "compiledCode": "\"use strict\";\n/**\n * Frame: two side runners plus the front apron.\n * Chair axes (mm): X runs front -> back, Y across the chair, Z up.\n * Runner side profile corners (x, z):\n *   front top (0,380) -> seat rear (460,300) -> toe (960,0) -> heel (720,0) -> front bottom (0,200)\n * The top edge from front to seat rear is the seat slope; the seat panels sit on it.\n */\nfunction run(thickness = 19.05, seatWidth = 560) {\n    const T = thickness;\n    const W = seatWidth; // clear width between the runners\n    const wood = \"#C8894F\";\n    // A flat board cut from a profile drawn in the side (XZ) view, placed with its\n    // inner face at y = y0 and extending T in +Y.\n    const sideBoard = (pts, y0) => {\n        let pen = replicad.draw(pts[0]);\n        for (let i = 1; i < pts.length; i++)\n            pen = pen.lineTo(pts[i]);\n        let solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n        const bb = solid.boundingBox.bounds;\n        return solid.translate(0, y0 - bb[0][1], 0);\n    };\n    const runnerPts = [[0, 380], [0, 200], [720, 0], [960, 0], [460, 300]];\n    const parts = [];\n    for (const [side, y0] of [[\"Right\", W / 2], [\"Left\", -W / 2 - T]]) {\n        parts.push(new Assembly({\n            geometry: sideBoard(runnerPts, y0),\n            color: wood,\n            tags: [\"cutLayout\", \"runner\"],\n            bom: [`${side} runner`],\n        }));\n    }\n    // Front apron: spans the outside faces of both runners and caps their front ends.\n    const apron = replicad.makeBox([-T, -(W / 2 + T), 200], [0, W / 2 + T, 380]);\n    parts.push(new Assembly({ geometry: apron, color: wood, tags: [\"cutLayout\", \"apron\"], bom: [\"Front apron\"] }));\n    return parts;\n}\n"
+          "code": "/**\n * Frame: two side runners, the front apron, and a seat stretcher, joined with through-tabs.\n * Chair axes (mm): X runs front -> back, Y across the chair, Z up.\n * Runner side profile (x, z): front top A(0,380) -> seat rear B(460,300) -> toe (960,0)\n * -> heel (720,0) -> front bottom (0,200). A->B is the seat slope.\n *\n * Joints owned here:\n *  - runner front tab -> slot in the apron\n *  - runner top tabs -> notches in the seat panels (Seat molecule, same positions)\n *  - seat stretcher end tabs -> slots in the runners\n *  - slots in the runners for the lower back batten tabs (Back molecule, same geometry)\n * Slots are grown by clearance and dogboned for the bit so square tabs seat fully.\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  backAngle: number = 24,\n  bitDiameter: number = 6.35,\n  clearance: number = 0.2,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const c = clearance;\n  const r = (bitDiameter / 2) * 1.02;\n  const wood = \"#C8894F\";\n\n  const A = [0, 380];\n  const B = [460, 300];\n  const a = Math.atan2(A[1] - B[1], B[0] - A[0]);\n  const tHat = [Math.cos(a), -Math.sin(a)]; // down the seat slope\n  const mHat = [Math.sin(a), Math.cos(a)]; // up out of the seat slope\n  const b = (backAngle * Math.PI) / 180;\n  const seatTabs = [110, 350]; // tab centres along the seat slope from A\n  const seatTabLen = 60;\n  const SX = 360; // seat stretcher front face\n  const apronTab = [260, 320]; // runner front tab z range\n  const stretcherTab = [250, 290]; // seat stretcher tab z range\n\n  const add = (p: number[], q: number[], k = 1) => [p[0] + k * q[0], p[1] + k * q[1]];\n  const poly = (pts: number[][]) => {\n    let pen = replicad.draw(pts[0]);\n    for (let i = 1; i < pts.length; i++) pen = pen.lineTo(pts[i]);\n    return pen.close();\n  };\n  // A four-corner slot with a dogbone at each corner: the bit centre sits r from the corner\n  // along the bisector, so it reaches right into the corner.\n  const slot = (pts: number[][]) => {\n    let d = poly(pts);\n    for (let i = 0; i < 4; i++) {\n      const p = pts[i], n = pts[(i + 1) % 4], q = pts[(i + 3) % 4];\n      const e1 = [n[0] - p[0], n[1] - p[1]], e2 = [q[0] - p[0], q[1] - p[1]];\n      const l1 = Math.hypot(e1[0], e1[1]), l2 = Math.hypot(e2[0], e2[1]);\n      const bis = [e1[0] / l1 + e2[0] / l2, e1[1] / l1 + e2[1] / l2];\n      const lb = Math.hypot(bis[0], bis[1]);\n      d = d.fuse(replicad.drawCircle(r).translate(p[0] + (r * bis[0]) / lb, p[1] + (r * bis[1]) / lb));\n    }\n    return d;\n  };\n  const rect = (u0: number, u1: number, v0: number, v1: number, map = (u: number, v: number) => [u, v]) =>\n    [map(u0, v0), map(u1, v0), map(u1, v1), map(u0, v1)];\n  // Extrude a drawing T thick on a plane whose local x/y map to world xDir/yDir.\n  const sheet = (d: any, origin: number[], xDir: number[], yDir: number[]) => {\n    const n = [\n      xDir[1] * yDir[2] - xDir[2] * yDir[1],\n      xDir[2] * yDir[0] - xDir[0] * yDir[2],\n      xDir[0] * yDir[1] - xDir[1] * yDir[0],\n    ];\n    return d.sketchOnPlane(new replicad.Plane(origin, xDir, n)).extrude(T);\n  };\n  // Side-view (XZ) board occupying y0 .. y0+T.\n  const sideSheet = (d: any, y0: number) => sheet(d, [0, y0 + T, 0], [1, 0, 0], [0, 0, 1]);\n  // Across-the-chair (YZ) board occupying x0 .. x0+T.\n  const crossSheet = (d: any, x0: number) => sheet(d, [x0, 0, 0], [0, 1, 0], [0, 0, 1]);\n\n  // ---- Runner profile with tabs ----\n  const outline: number[][] = [A];\n  for (const uc of seatTabs) {\n    const p0 = add(A, tHat, uc - seatTabLen / 2);\n    const p3 = add(A, tHat, uc + seatTabLen / 2);\n    outline.push(p0, add(p0, mHat, T), add(p3, mHat, T), p3);\n  }\n  outline.push(B, [960, 0], [720, 0], [0, 200], [0, apronTab[0]], [-T, apronTab[0]], [-T, apronTab[1]], [0, apronTab[1]]);\n  let runner = poly(outline);\n  // Seat stretcher tab slot.\n  runner = runner.cut(slot(rect(SX - c, SX + T + c, stretcherTab[0] - c, stretcherTab[1] + c)));\n  // Lower back batten tab slot: back-local (lx across the back, lz along it) leaned about the seat rear.\n  const backMap = (lx: number, lz: number) => [\n    B[0] + lx * Math.cos(b) + lz * Math.sin(b),\n    B[1] - lx * Math.sin(b) + lz * Math.cos(b),\n  ];\n  runner = runner.cut(slot(rect(T - c, 2 * T + c, -70 - c, -20 + c, backMap)));\n\n  const parts: Assembly[] = [];\n  for (const [side, y0] of [[\"Right\", W / 2], [\"Left\", -W / 2 - T]] as [string, number][]) {\n    parts.push(new Assembly({ geometry: sideSheet(runner, y0), color: wood, tags: [\"cutLayout\", \"runner\"], bom: [`${side} runner`] }));\n  }\n\n  // ---- Apron: caps the runner fronts, runner tabs pass through it ----\n  const apronHalf = W / 2 + T + 20;\n  let apron = poly(rect(-apronHalf, apronHalf, 200, 380));\n  for (const s of [1, -1]) {\n    const y0 = s > 0 ? W / 2 - c : -W / 2 - T - c;\n    apron = apron.cut(slot(rect(y0, y0 + T + 2 * c, apronTab[0] - c, apronTab[1] + c)));\n  }\n  parts.push(new Assembly({ geometry: crossSheet(apron, -T), color: wood, tags: [\"cutLayout\", \"apron\"], bom: [\"Front apron\"] }));\n\n  // ---- Seat stretcher: supports the inner edges of the seat panels at the rear ----\n  const top = A[1] - (SX + T) * Math.tan(a) - 0.5; // just under the sloped seat\n  const h = W / 2;\n  const stretcher = poly([\n    [-h, 230], [h, 230], [h, stretcherTab[0]], [h + T, stretcherTab[0]], [h + T, stretcherTab[1]], [h, stretcherTab[1]],\n    [h, top], [-h, top], [-h, stretcherTab[1]], [-h - T, stretcherTab[1]], [-h - T, stretcherTab[0]], [-h, stretcherTab[0]],\n  ]);\n  parts.push(new Assembly({ geometry: crossSheet(stretcher, SX), color: wood, tags: [\"cutLayout\", \"stretcher\"], bom: [\"Seat stretcher\"] }));\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Frame: two side runners, the front apron, and a seat stretcher, joined with through-tabs.\n * Chair axes (mm): X runs front -> back, Y across the chair, Z up.\n * Runner side profile (x, z): front top A(0,380) -> seat rear B(460,300) -> toe (960,0)\n * -> heel (720,0) -> front bottom (0,200). A->B is the seat slope.\n *\n * Joints owned here:\n *  - runner front tab -> slot in the apron\n *  - runner top tabs -> notches in the seat panels (Seat molecule, same positions)\n *  - seat stretcher end tabs -> slots in the runners\n *  - slots in the runners for the lower back batten tabs (Back molecule, same geometry)\n * Slots are grown by clearance and dogboned for the bit so square tabs seat fully.\n */\nfunction run(thickness = 19.05, seatWidth = 560, backAngle = 24, bitDiameter = 6.35, clearance = 0.2) {\n    const T = thickness;\n    const W = seatWidth;\n    const c = clearance;\n    const r = (bitDiameter / 2) * 1.02;\n    const wood = \"#C8894F\";\n    const A = [0, 380];\n    const B = [460, 300];\n    const a = Math.atan2(A[1] - B[1], B[0] - A[0]);\n    const tHat = [Math.cos(a), -Math.sin(a)]; // down the seat slope\n    const mHat = [Math.sin(a), Math.cos(a)]; // up out of the seat slope\n    const b = (backAngle * Math.PI) / 180;\n    const seatTabs = [110, 350]; // tab centres along the seat slope from A\n    const seatTabLen = 60;\n    const SX = 360; // seat stretcher front face\n    const apronTab = [260, 320]; // runner front tab z range\n    const stretcherTab = [250, 290]; // seat stretcher tab z range\n    const add = (p, q, k = 1) => [p[0] + k * q[0], p[1] + k * q[1]];\n    const poly = (pts) => {\n        let pen = replicad.draw(pts[0]);\n        for (let i = 1; i < pts.length; i++)\n            pen = pen.lineTo(pts[i]);\n        return pen.close();\n    };\n    // A four-corner slot with a dogbone at each corner: the bit centre sits r from the corner\n    // along the bisector, so it reaches right into the corner.\n    const slot = (pts) => {\n        let d = poly(pts);\n        for (let i = 0; i < 4; i++) {\n            const p = pts[i], n = pts[(i + 1) % 4], q = pts[(i + 3) % 4];\n            const e1 = [n[0] - p[0], n[1] - p[1]], e2 = [q[0] - p[0], q[1] - p[1]];\n            const l1 = Math.hypot(e1[0], e1[1]), l2 = Math.hypot(e2[0], e2[1]);\n            const bis = [e1[0] / l1 + e2[0] / l2, e1[1] / l1 + e2[1] / l2];\n            const lb = Math.hypot(bis[0], bis[1]);\n            d = d.fuse(replicad.drawCircle(r).translate(p[0] + (r * bis[0]) / lb, p[1] + (r * bis[1]) / lb));\n        }\n        return d;\n    };\n    const rect = (u0, u1, v0, v1, map = (u, v) => [u, v]) => [map(u0, v0), map(u1, v0), map(u1, v1), map(u0, v1)];\n    // Extrude a drawing T thick on a plane whose local x/y map to world xDir/yDir.\n    const sheet = (d, origin, xDir, yDir) => {\n        const n = [\n            xDir[1] * yDir[2] - xDir[2] * yDir[1],\n            xDir[2] * yDir[0] - xDir[0] * yDir[2],\n            xDir[0] * yDir[1] - xDir[1] * yDir[0],\n        ];\n        return d.sketchOnPlane(new replicad.Plane(origin, xDir, n)).extrude(T);\n    };\n    // Side-view (XZ) board occupying y0 .. y0+T.\n    const sideSheet = (d, y0) => sheet(d, [0, y0 + T, 0], [1, 0, 0], [0, 0, 1]);\n    // Across-the-chair (YZ) board occupying x0 .. x0+T.\n    const crossSheet = (d, x0) => sheet(d, [x0, 0, 0], [0, 1, 0], [0, 0, 1]);\n    // ---- Runner profile with tabs ----\n    const outline = [A];\n    for (const uc of seatTabs) {\n        const p0 = add(A, tHat, uc - seatTabLen / 2);\n        const p3 = add(A, tHat, uc + seatTabLen / 2);\n        outline.push(p0, add(p0, mHat, T), add(p3, mHat, T), p3);\n    }\n    outline.push(B, [960, 0], [720, 0], [0, 200], [0, apronTab[0]], [-T, apronTab[0]], [-T, apronTab[1]], [0, apronTab[1]]);\n    let runner = poly(outline);\n    // Seat stretcher tab slot.\n    runner = runner.cut(slot(rect(SX - c, SX + T + c, stretcherTab[0] - c, stretcherTab[1] + c)));\n    // Lower back batten tab slot: back-local (lx across the back, lz along it) leaned about the seat rear.\n    const backMap = (lx, lz) => [\n        B[0] + lx * Math.cos(b) + lz * Math.sin(b),\n        B[1] - lx * Math.sin(b) + lz * Math.cos(b),\n    ];\n    runner = runner.cut(slot(rect(T - c, 2 * T + c, -70 - c, -20 + c, backMap)));\n    const parts = [];\n    for (const [side, y0] of [[\"Right\", W / 2], [\"Left\", -W / 2 - T]]) {\n        parts.push(new Assembly({ geometry: sideSheet(runner, y0), color: wood, tags: [\"cutLayout\", \"runner\"], bom: [`${side} runner`] }));\n    }\n    // ---- Apron: caps the runner fronts, runner tabs pass through it ----\n    const apronHalf = W / 2 + T + 20;\n    let apron = poly(rect(-apronHalf, apronHalf, 200, 380));\n    for (const s of [1, -1]) {\n        const y0 = s > 0 ? W / 2 - c : -W / 2 - T - c;\n        apron = apron.cut(slot(rect(y0, y0 + T + 2 * c, apronTab[0] - c, apronTab[1] + c)));\n    }\n    parts.push(new Assembly({ geometry: crossSheet(apron, -T), color: wood, tags: [\"cutLayout\", \"apron\"], bom: [\"Front apron\"] }));\n    // ---- Seat stretcher: supports the inner edges of the seat panels at the rear ----\n    const top = A[1] - (SX + T) * Math.tan(a) - 0.5; // just under the sloped seat\n    const h = W / 2;\n    const stretcher = poly([\n        [-h, 230], [h, 230], [h, stretcherTab[0]], [h + T, stretcherTab[0]], [h + T, stretcherTab[1]], [h, stretcherTab[1]],\n        [h, top], [-h, top], [-h, stretcherTab[1]], [-h - T, stretcherTab[1]], [-h - T, stretcherTab[0]], [-h, stretcherTab[0]],\n    ]);\n    parts.push(new Assembly({ geometry: crossSheet(stretcher, SX), color: wood, tags: [\"cutLayout\", \"stretcher\"], bom: [\"Seat stretcher\"] }));\n    return parts;\n}\n"
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.3,
+          "uniqueID": "id-8447",
+          "name": "Back Angle",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.4,
+          "uniqueID": "id-8450",
+          "name": "Bit Diameter",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.5,
+          "uniqueID": "id-8453",
+          "name": "Clearance",
+          "type": "number",
+          "options": []
         }
       ],
       "allConnectors": [
@@ -123,6 +182,21 @@
           "ap2Name": "number or geometry",
           "ap1ID": "id-8332",
           "ap2ID": "id-8308"
+        },
+        {
+          "ap2Name": "backAngle",
+          "ap1ID": "id-8447",
+          "ap2ID": "id-8332"
+        },
+        {
+          "ap2Name": "bitDiameter",
+          "ap1ID": "id-8450",
+          "ap2ID": "id-8332"
+        },
+        {
+          "ap2Name": "clearance",
+          "ap1ID": "id-8453",
+          "ap2ID": "id-8332"
         }
       ],
       "fileTypeVersion": 1
@@ -141,6 +215,14 @@
         {
           "name": "Seat Width",
           "ioValue": 560
+        },
+        {
+          "name": "Bit Diameter",
+          "ioValue": 6.35
+        },
+        {
+          "name": "Clearance",
+          "ioValue": 0.2
         }
       ],
       "topLevel": false,
@@ -192,11 +274,37 @@
             {
               "name": "gap",
               "ioValue": 6
+            },
+            {
+              "name": "bitDiameter",
+              "ioValue": 6.35
+            },
+            {
+              "name": "clearance",
+              "ioValue": 0.2
             }
           ],
           "interpreterVersion": 1,
-          "code": "/**\n * Seat: two wide panels resting on the runners' seat slope,\n * which runs from the runner front top (0,380) down to the seat rear (460,300).\n * The front of the seat overhangs to cover the apron.\n */\nfunction run(thickness: number = 19.05, seatWidth: number = 560, gap: number = 6): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const wood = \"#C8894F\";\n  const A = [0, 380]; // runner front top (x, z)\n  const B = [460, 300]; // runner seat rear (x, z)\n  const slopeDeg = (Math.atan2(A[1] - B[1], B[0] - A[0]) * 180) / Math.PI;\n  const depth = Math.hypot(B[0] - A[0], B[1] - A[1]); // along the slope\n\n  const half = W / 2 + T; // panels cover the runners' outside faces\n  const parts: Assembly[] = [];\n  for (const [side, y0, y1] of [[\"Right\", gap / 2, half], [\"Left\", -half, -gap / 2]] as [string, number, number][]) {\n    const panel = replicad\n      .makeBox([-T, y0, 0], [depth, y1, T])\n      .rotate(slopeDeg, [0, 0, 0], [0, 1, 0]) // tip the rear edge down\n      .translate(A[0], 0, A[1]);\n    parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"seat\"], bom: [`${side} seat panel`] }));\n  }\n  return parts;\n}\n",
-          "compiledCode": "\"use strict\";\n/**\n * Seat: two wide panels resting on the runners' seat slope,\n * which runs from the runner front top (0,380) down to the seat rear (460,300).\n * The front of the seat overhangs to cover the apron.\n */\nfunction run(thickness = 19.05, seatWidth = 560, gap = 6) {\n    const T = thickness;\n    const W = seatWidth;\n    const wood = \"#C8894F\";\n    const A = [0, 380]; // runner front top (x, z)\n    const B = [460, 300]; // runner seat rear (x, z)\n    const slopeDeg = (Math.atan2(A[1] - B[1], B[0] - A[0]) * 180) / Math.PI;\n    const depth = Math.hypot(B[0] - A[0], B[1] - A[1]); // along the slope\n    const half = W / 2 + T; // panels cover the runners' outside faces\n    const parts = [];\n    for (const [side, y0, y1] of [[\"Right\", gap / 2, half], [\"Left\", -half, -gap / 2]]) {\n        const panel = replicad\n            .makeBox([-T, y0, 0], [depth, y1, T])\n            .rotate(slopeDeg, [0, 0, 0], [0, 1, 0]) // tip the rear edge down\n            .translate(A[0], 0, A[1]);\n        parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"seat\"], bom: [`${side} seat panel`] }));\n    }\n    return parts;\n}\n"
+          "code": "/**\n * Seat: two wide panels resting on the runners' seat slope,\n * which runs from the runner front top A(0,380) down to the seat rear B(460,300).\n * The front of the seat overhangs to cover the apron.\n * The runner top tabs (Frame molecule, centres 110 and 350 mm along the slope, 60 long)\n * lock into dogboned notches along each panel's outside edge.\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  bitDiameter: number = 6.35,\n  clearance: number = 0.2,\n  gap: number = 6,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const c = clearance;\n  const r = (bitDiameter / 2) * 1.02;\n  const wood = \"#C8894F\";\n  const A = [0, 380];\n  const B = [460, 300];\n  const a = Math.atan2(A[1] - B[1], B[0] - A[0]);\n  const depth = Math.hypot(B[0] - A[0], B[1] - A[1]); // along the slope\n  const seatTabs = [110, 350];\n  const seatTabLen = 60;\n\n  const poly = (pts: number[][]) => {\n    let pen = replicad.draw(pts[0]);\n    for (let i = 1; i < pts.length; i++) pen = pen.lineTo(pts[i]);\n    return pen.close();\n  };\n  const rect = (u0: number, u1: number, v0: number, v1: number) => [[u0, v0], [u1, v0], [u1, v1], [u0, v1]];\n  // Dogboned slot: bit centre r from each corner along the bisector.\n  const slot = (u0: number, u1: number, v0: number, v1: number) => {\n    let d = poly(rect(u0, u1, v0, v1));\n    const k = r / Math.SQRT2;\n    for (const [x, y, sx, sy] of [[u0, v0, 1, 1], [u1, v0, -1, 1], [u1, v1, -1, -1], [u0, v1, 1, -1]]) {\n      d = d.fuse(replicad.drawCircle(r).translate(x + sx * k, y + sy * k));\n    }\n    return d;\n  };\n\n  // Panel plane: local x runs down the slope from A, local y across the chair, extruded up.\n  const xDir = [Math.cos(a), 0, -Math.sin(a)];\n  const normal = [Math.sin(a), 0, Math.cos(a)];\n  const plane = new replicad.Plane([A[0], 0, A[1]], xDir, normal);\n\n  const half = W / 2 + T; // panels cover the runners' outside faces\n  const parts: Assembly[] = [];\n  for (const [side, s] of [[\"Right\", 1], [\"Left\", -1]] as [string, number][]) {\n    let panel = poly(s > 0 ? rect(-T, depth, gap / 2, half) : rect(-T, depth, -half, -gap / 2));\n    for (const uc of seatTabs) {\n      const u0 = uc - seatTabLen / 2 - c, u1 = uc + seatTabLen / 2 + c;\n      // Notch runs off the outside edge (overshoot 10 mm so the outer dogbones fall clear).\n      panel = panel.cut(s > 0 ? slot(u0, u1, W / 2 - c, half + 10) : slot(u0, u1, -half - 10, -W / 2 + c));\n    }\n    const solid = panel.sketchOnPlane(plane).extrude(T);\n    parts.push(new Assembly({ geometry: solid, color: wood, tags: [\"cutLayout\", \"seat\"], bom: [`${side} seat panel`] }));\n  }\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Seat: two wide panels resting on the runners' seat slope,\n * which runs from the runner front top A(0,380) down to the seat rear B(460,300).\n * The front of the seat overhangs to cover the apron.\n * The runner top tabs (Frame molecule, centres 110 and 350 mm along the slope, 60 long)\n * lock into dogboned notches along each panel's outside edge.\n */\nfunction run(thickness = 19.05, seatWidth = 560, bitDiameter = 6.35, clearance = 0.2, gap = 6) {\n    const T = thickness;\n    const W = seatWidth;\n    const c = clearance;\n    const r = (bitDiameter / 2) * 1.02;\n    const wood = \"#C8894F\";\n    const A = [0, 380];\n    const B = [460, 300];\n    const a = Math.atan2(A[1] - B[1], B[0] - A[0]);\n    const depth = Math.hypot(B[0] - A[0], B[1] - A[1]); // along the slope\n    const seatTabs = [110, 350];\n    const seatTabLen = 60;\n    const poly = (pts) => {\n        let pen = replicad.draw(pts[0]);\n        for (let i = 1; i < pts.length; i++)\n            pen = pen.lineTo(pts[i]);\n        return pen.close();\n    };\n    const rect = (u0, u1, v0, v1) => [[u0, v0], [u1, v0], [u1, v1], [u0, v1]];\n    // Dogboned slot: bit centre r from each corner along the bisector.\n    const slot = (u0, u1, v0, v1) => {\n        let d = poly(rect(u0, u1, v0, v1));\n        const k = r / Math.SQRT2;\n        for (const [x, y, sx, sy] of [[u0, v0, 1, 1], [u1, v0, -1, 1], [u1, v1, -1, -1], [u0, v1, 1, -1]]) {\n            d = d.fuse(replicad.drawCircle(r).translate(x + sx * k, y + sy * k));\n        }\n        return d;\n    };\n    // Panel plane: local x runs down the slope from A, local y across the chair, extruded up.\n    const xDir = [Math.cos(a), 0, -Math.sin(a)];\n    const normal = [Math.sin(a), 0, Math.cos(a)];\n    const plane = new replicad.Plane([A[0], 0, A[1]], xDir, normal);\n    const half = W / 2 + T; // panels cover the runners' outside faces\n    const parts = [];\n    for (const [side, s] of [[\"Right\", 1], [\"Left\", -1]]) {\n        let panel = poly(s > 0 ? rect(-T, depth, gap / 2, half) : rect(-T, depth, -half, -gap / 2));\n        for (const uc of seatTabs) {\n            const u0 = uc - seatTabLen / 2 - c, u1 = uc + seatTabLen / 2 + c;\n            // Notch runs off the outside edge (overshoot 10 mm so the outer dogbones fall clear).\n            panel = panel.cut(s > 0 ? slot(u0, u1, W / 2 - c, half + 10) : slot(u0, u1, -half - 10, -W / 2 + c));\n        }\n        const solid = panel.sketchOnPlane(plane).extrude(T);\n        parts.push(new Assembly({ geometry: solid, color: wood, tags: [\"cutLayout\", \"seat\"], bom: [`${side} seat panel`] }));\n    }\n    return parts;\n}\n"
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.3,
+          "uniqueID": "id-8456",
+          "name": "Bit Diameter",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.4,
+          "uniqueID": "id-8459",
+          "name": "Clearance",
+          "type": "number",
+          "options": []
         }
       ],
       "allConnectors": [
@@ -214,6 +322,16 @@
           "ap2Name": "number or geometry",
           "ap1ID": "id-8347",
           "ap2ID": "id-8312"
+        },
+        {
+          "ap2Name": "bitDiameter",
+          "ap1ID": "id-8456",
+          "ap2ID": "id-8347"
+        },
+        {
+          "ap2Name": "clearance",
+          "ap1ID": "id-8459",
+          "ap2ID": "id-8347"
         }
       ],
       "fileTypeVersion": 1
@@ -307,8 +425,8 @@
             }
           ],
           "interpreterVersion": 1,
-          "code": "/**\n * Back: two leaning back panels between the runners plus a lower batten behind them.\n * The panels' front face pivots on the seat's rear bottom edge and leans back by backAngle\n * from vertical. The seat rear is where the seat slope (0,380)->(460,300) ends.\n * backLength is the panel length above the pivot, measured along the lean.\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  backAngle: number = 24,\n  backLength: number = 700,\n  gap: number = 6,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const wood = \"#C8894F\";\n  const P = [460, 300]; // seat rear bottom edge (x, z)\n  const below = 80; // panel length below the pivot, drops between the runners\n\n  // Boxes are built upright (X = thickness, Z = along the back) then leaned about Y.\n  const lean = (s: any) => s.rotate(backAngle, [0, 0, 0], [0, 1, 0]).translate(P[0], 0, P[1]);\n\n  const parts: Assembly[] = [];\n  for (const [side, y0, y1] of [[\"Right\", gap / 2, W / 2], [\"Left\", -W / 2, -gap / 2]] as [string, number, number][]) {\n    const panel = lean(replicad.makeBox([0, y0, -below], [T, y1, backLength]));\n    parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"back\"], bom: [`${side} back panel`] }));\n  }\n\n  // Lower batten: directly behind the panels at the bottom, screwed through the runners.\n  const batten = lean(replicad.makeBox([T, -W / 2, -below], [2 * T, W / 2, 20]));\n  parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Lower back batten\"] }));\n  return parts;\n}\n",
-          "compiledCode": "\"use strict\";\n/**\n * Back: two leaning back panels between the runners plus a lower batten behind them.\n * The panels' front face pivots on the seat's rear bottom edge and leans back by backAngle\n * from vertical. The seat rear is where the seat slope (0,380)->(460,300) ends.\n * backLength is the panel length above the pivot, measured along the lean.\n */\nfunction run(thickness = 19.05, seatWidth = 560, backAngle = 24, backLength = 700, gap = 6) {\n    const T = thickness;\n    const W = seatWidth;\n    const wood = \"#C8894F\";\n    const P = [460, 300]; // seat rear bottom edge (x, z)\n    const below = 80; // panel length below the pivot, drops between the runners\n    // Boxes are built upright (X = thickness, Z = along the back) then leaned about Y.\n    const lean = (s) => s.rotate(backAngle, [0, 0, 0], [0, 1, 0]).translate(P[0], 0, P[1]);\n    const parts = [];\n    for (const [side, y0, y1] of [[\"Right\", gap / 2, W / 2], [\"Left\", -W / 2, -gap / 2]]) {\n        const panel = lean(replicad.makeBox([0, y0, -below], [T, y1, backLength]));\n        parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"back\"], bom: [`${side} back panel`] }));\n    }\n    // Lower batten: directly behind the panels at the bottom, screwed through the runners.\n    const batten = lean(replicad.makeBox([T, -W / 2, -below], [2 * T, W / 2, 20]));\n    parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Lower back batten\"] }));\n    return parts;\n}\n"
+          "code": "/**\n * Back: two leaning back panels between the runners plus a lower batten behind them.\n * The panels' front face pivots on the seat's rear bottom edge and leans back by backAngle\n * from vertical. The seat rear is where the seat slope (0,380)->(460,300) ends.\n * backLength is the panel length above the pivot, measured along the lean.\n * The lower batten's end tabs (back-local 20..70 mm below the pivot) pass through slots\n * cut in the runners by the Frame molecule.\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  backAngle: number = 24,\n  backLength: number = 700,\n  gap: number = 6,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const wood = \"#C8894F\";\n  const P = [460, 300]; // seat rear bottom edge (x, z)\n  const below = 80; // panel length below the pivot, drops between the runners\n\n  // Boxes are built upright (X = thickness, Z = along the back) then leaned about Y.\n  const lean = (s: any) => s.rotate(backAngle, [0, 0, 0], [0, 1, 0]).translate(P[0], 0, P[1]);\n\n  const parts: Assembly[] = [];\n  for (const [side, y0, y1] of [[\"Right\", gap / 2, W / 2], [\"Left\", -W / 2, -gap / 2]] as [string, number, number][]) {\n    const panel = lean(replicad.makeBox([0, y0, -below], [T, y1, backLength]));\n    parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"back\"], bom: [`${side} back panel`] }));\n  }\n\n  // Lower batten: directly behind the panels at the bottom, tabs lock through the runners.\n  const batten = replicad\n    .makeBox([T, -W / 2, -below], [2 * T, W / 2, 20])\n    .fuse(replicad.makeBox([T, W / 2 - 1, -70], [2 * T, W / 2 + T, -20]))\n    .fuse(replicad.makeBox([T, -W / 2 - T, -70], [2 * T, -W / 2 + 1, -20]));\n  parts.push(new Assembly({ geometry: lean(batten), color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Lower back batten\"] }));\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Back: two leaning back panels between the runners plus a lower batten behind them.\n * The panels' front face pivots on the seat's rear bottom edge and leans back by backAngle\n * from vertical. The seat rear is where the seat slope (0,380)->(460,300) ends.\n * backLength is the panel length above the pivot, measured along the lean.\n * The lower batten's end tabs (back-local 20..70 mm below the pivot) pass through slots\n * cut in the runners by the Frame molecule.\n */\nfunction run(thickness = 19.05, seatWidth = 560, backAngle = 24, backLength = 700, gap = 6) {\n    const T = thickness;\n    const W = seatWidth;\n    const wood = \"#C8894F\";\n    const P = [460, 300]; // seat rear bottom edge (x, z)\n    const below = 80; // panel length below the pivot, drops between the runners\n    // Boxes are built upright (X = thickness, Z = along the back) then leaned about Y.\n    const lean = (s) => s.rotate(backAngle, [0, 0, 0], [0, 1, 0]).translate(P[0], 0, P[1]);\n    const parts = [];\n    for (const [side, y0, y1] of [[\"Right\", gap / 2, W / 2], [\"Left\", -W / 2, -gap / 2]]) {\n        const panel = lean(replicad.makeBox([0, y0, -below], [T, y1, backLength]));\n        parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"back\"], bom: [`${side} back panel`] }));\n    }\n    // Lower batten: directly behind the panels at the bottom, tabs lock through the runners.\n    const batten = replicad\n        .makeBox([T, -W / 2, -below], [2 * T, W / 2, 20])\n        .fuse(replicad.makeBox([T, W / 2 - 1, -70], [2 * T, W / 2 + T, -20]))\n        .fuse(replicad.makeBox([T, -W / 2 - T, -70], [2 * T, -W / 2 + 1, -20]));\n    parts.push(new Assembly({ geometry: lean(batten), color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Lower back batten\"] }));\n    return parts;\n}\n"
         }
       ],
       "allConnectors": [
@@ -361,6 +479,14 @@
         {
           "name": "Leg Sweep",
           "ioValue": 20
+        },
+        {
+          "name": "Bit Diameter",
+          "ioValue": 6.35
+        },
+        {
+          "name": "Clearance",
+          "ioValue": 0.2
         }
       ],
       "topLevel": false,
@@ -442,11 +568,23 @@
             {
               "name": "legSweep",
               "ioValue": 20
+            },
+            {
+              "name": "bitDiameter",
+              "ioValue": 6.35
+            },
+            {
+              "name": "clearance",
+              "ioValue": 0.2
+            },
+            {
+              "name": "gussetLength",
+              "ioValue": 300
             }
           ],
           "interpreterVersion": 1,
-          "code": "/**\n * Arms and legs: swept-back front legs, rear arm posts, an upper back batten, and two arms.\n * The back's rear face crosses arm height at xBack; the batten sits just behind it on\n * top of the rear posts, and the arms rest on the front legs and the batten.\n * Back pivot matches the Back molecule: seat rear bottom edge at (460, 300).\n * armHeight is the top of the arms above the floor.\n * legSweep is how far the front legs lean back from vertical (degrees); the foot sits\n * forward of the seat and the top lands well back under the arm.\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  backAngle: number = 24,\n  armHeight: number = 600,\n  legSweep: number = 20,\n  armWidth: number = 120,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const H = armHeight;\n  const wood = \"#C8894F\";\n  const P = [460, 300];\n  const b = (backAngle * Math.PI) / 180;\n  const s = (legSweep * Math.PI) / 180;\n\n  // Rear face of the back where it meets the underside of the arms, plus 1 mm clearance.\n  const xBack = P[0] + T * Math.cos(b) + (H - T - (P[1] - T * Math.sin(b))) * Math.tan(b) + 1;\n  const postDepth = 100;\n  const armFront = -60;\n  const armRear = xBack + postDepth;\n  const armIn = W / 2 + 5; // clears the back panels\n  const armOut = armIn + armWidth;\n\n  // Board drawn in the side (XZ) view with its inner face at y0.\n  const sideBoard = (pts: number[][], y0: number) => {\n    let pen = replicad.draw(pts[0]);\n    for (let i = 1; i < pts.length; i++) pen = pen.lineTo(pts[i]);\n    const solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n    const bb = solid.boundingBox.bounds;\n    return solid.translate(0, y0 - bb[0][1], 0);\n  };\n\n  // Front leg: a 90 mm wide board swept back by legSweep, cut level at the floor and under the arm.\n  const legWidth = 90;\n  const legFoot = -40; // front of the foot, ahead of the seat front\n  const wFlat = legWidth / Math.cos(s); // width measured along the level cuts\n  const rise = H - T;\n  const run_ = rise * Math.tan(s);\n  const legPts = [[legFoot, 0], [legFoot + wFlat, 0], [legFoot + wFlat + run_, rise], [legFoot + run_, rise]];\n  const postPts = [[xBack, 0], [xBack + postDepth, 0], [xBack + postDepth, H - 2 * T], [xBack, H - 2 * T]];\n\n  // Arm outline in plan: square rear, rounded front corners.\n  const armLen = armRear - armFront;\n  const armDrawing = replicad\n    .drawRoundedRectangle(armLen, armWidth, 45)\n    .fuse(replicad.drawRectangle(armLen / 2, armWidth).translate(armLen / 4, 0));\n\n  const parts: Assembly[] = [];\n  for (const [side, sign] of [[\"Right\", 1], [\"Left\", -1]] as [string, number][]) {\n    // Legs and posts sit outboard of the runners (runner occupies W/2 .. W/2+T).\n    const y0 = sign > 0 ? W / 2 + T : -W / 2 - 2 * T;\n    parts.push(new Assembly({ geometry: sideBoard(legPts, y0), color: wood, tags: [\"cutLayout\", \"leg\"], bom: [`${side} front leg`] }));\n    parts.push(new Assembly({ geometry: sideBoard(postPts, y0), color: wood, tags: [\"cutLayout\", \"post\"], bom: [`${side} rear post`] }));\n\n    const arm = armDrawing\n      .translate((armFront + armRear) / 2, (sign * (armIn + armOut)) / 2)\n      .sketchOnPlane(\"XY\")\n      .extrude(T)\n      .translate(0, 0, H - T);\n    parts.push(new Assembly({ geometry: arm, color: wood, tags: [\"cutLayout\", \"arm\"], bom: [`${side} arm`] }));\n  }\n\n  // Upper back batten: spans under both arms, rests on the rear posts.\n  const batten = replicad.makeBox([xBack, -armOut, H - 2 * T], [armRear, armOut, H - T]);\n  parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Upper back batten\"] }));\n  return parts;\n}\n",
-          "compiledCode": "\"use strict\";\n/**\n * Arms and legs: swept-back front legs, rear arm posts, an upper back batten, and two arms.\n * The back's rear face crosses arm height at xBack; the batten sits just behind it on\n * top of the rear posts, and the arms rest on the front legs and the batten.\n * Back pivot matches the Back molecule: seat rear bottom edge at (460, 300).\n * armHeight is the top of the arms above the floor.\n * legSweep is how far the front legs lean back from vertical (degrees); the foot sits\n * forward of the seat and the top lands well back under the arm.\n */\nfunction run(thickness = 19.05, seatWidth = 560, backAngle = 24, armHeight = 600, legSweep = 20, armWidth = 120) {\n    const T = thickness;\n    const W = seatWidth;\n    const H = armHeight;\n    const wood = \"#C8894F\";\n    const P = [460, 300];\n    const b = (backAngle * Math.PI) / 180;\n    const s = (legSweep * Math.PI) / 180;\n    // Rear face of the back where it meets the underside of the arms, plus 1 mm clearance.\n    const xBack = P[0] + T * Math.cos(b) + (H - T - (P[1] - T * Math.sin(b))) * Math.tan(b) + 1;\n    const postDepth = 100;\n    const armFront = -60;\n    const armRear = xBack + postDepth;\n    const armIn = W / 2 + 5; // clears the back panels\n    const armOut = armIn + armWidth;\n    // Board drawn in the side (XZ) view with its inner face at y0.\n    const sideBoard = (pts, y0) => {\n        let pen = replicad.draw(pts[0]);\n        for (let i = 1; i < pts.length; i++)\n            pen = pen.lineTo(pts[i]);\n        const solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n        const bb = solid.boundingBox.bounds;\n        return solid.translate(0, y0 - bb[0][1], 0);\n    };\n    // Front leg: a 90 mm wide board swept back by legSweep, cut level at the floor and under the arm.\n    const legWidth = 90;\n    const legFoot = -40; // front of the foot, ahead of the seat front\n    const wFlat = legWidth / Math.cos(s); // width measured along the level cuts\n    const rise = H - T;\n    const run_ = rise * Math.tan(s);\n    const legPts = [[legFoot, 0], [legFoot + wFlat, 0], [legFoot + wFlat + run_, rise], [legFoot + run_, rise]];\n    const postPts = [[xBack, 0], [xBack + postDepth, 0], [xBack + postDepth, H - 2 * T], [xBack, H - 2 * T]];\n    // Arm outline in plan: square rear, rounded front corners.\n    const armLen = armRear - armFront;\n    const armDrawing = replicad\n        .drawRoundedRectangle(armLen, armWidth, 45)\n        .fuse(replicad.drawRectangle(armLen / 2, armWidth).translate(armLen / 4, 0));\n    const parts = [];\n    for (const [side, sign] of [[\"Right\", 1], [\"Left\", -1]]) {\n        // Legs and posts sit outboard of the runners (runner occupies W/2 .. W/2+T).\n        const y0 = sign > 0 ? W / 2 + T : -W / 2 - 2 * T;\n        parts.push(new Assembly({ geometry: sideBoard(legPts, y0), color: wood, tags: [\"cutLayout\", \"leg\"], bom: [`${side} front leg`] }));\n        parts.push(new Assembly({ geometry: sideBoard(postPts, y0), color: wood, tags: [\"cutLayout\", \"post\"], bom: [`${side} rear post`] }));\n        const arm = armDrawing\n            .translate((armFront + armRear) / 2, (sign * (armIn + armOut)) / 2)\n            .sketchOnPlane(\"XY\")\n            .extrude(T)\n            .translate(0, 0, H - T);\n        parts.push(new Assembly({ geometry: arm, color: wood, tags: [\"cutLayout\", \"arm\"], bom: [`${side} arm`] }));\n    }\n    // Upper back batten: spans under both arms, rests on the rear posts.\n    const batten = replicad.makeBox([xBack, -armOut, H - 2 * T], [armRear, armOut, H - T]);\n    parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Upper back batten\"] }));\n    return parts;\n}\n"
+          "code": "/**\n * Arms and legs: swept-back front legs with a triangular gusset under each arm,\n * rear arm posts, an upper back batten, and two arms, locked together with through-tabs.\n * The back's rear face crosses arm height at xBack; the batten sits just behind it on\n * top of the rear posts, and the arms rest on the front legs and the batten.\n * Back pivot matches the Back molecule: seat rear bottom edge at (460, 300).\n * armHeight is the top of the arms above the floor.\n * legSweep is how far the front legs lean back from vertical (degrees).\n * The gusset stands at 90 degrees to the leg: it is centred on the leg's width, leans with\n * the sweep, runs out under the arm's overhang, and tapers to a point gussetLength down the leg.\n *\n * Joints owned here:\n *  - front leg top tab -> slot through the arm\n *  - rear post top tab -> slots through the upper batten and the arm\n *  - gusset edge tabs -> slots through the front leg\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  backAngle: number = 24,\n  armHeight: number = 600,\n  legSweep: number = 20,\n  bitDiameter: number = 6.35,\n  clearance: number = 0.2,\n  armWidth: number = 120,\n  gussetLength: number = 300,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const H = armHeight;\n  const c = clearance;\n  const r = (bitDiameter / 2) * 1.02;\n  const wood = \"#C8894F\";\n  const P = [460, 300];\n  const b = (backAngle * Math.PI) / 180;\n  const s = (legSweep * Math.PI) / 180;\n\n  // Rear face of the back where it meets the underside of the arms, plus 1 mm clearance.\n  const xBack = P[0] + T * Math.cos(b) + (H - T - (P[1] - T * Math.sin(b))) * Math.tan(b) + 1;\n  const postDepth = 100;\n  const armFront = -60;\n  const armRear = xBack + postDepth;\n  const armIn = W / 2 + 5; // clears the back panels\n  const armOut = armIn + armWidth;\n  const tabLen = 50; // tabs through the arms and batten\n  const bandIn = W / 2 + T; // legs and posts sit outboard of the runners\n  const bandOut = W / 2 + 2 * T;\n\n  const poly = (pts: number[][]) => {\n    let pen = replicad.draw(pts[0]);\n    for (let i = 1; i < pts.length; i++) pen = pen.lineTo(pts[i]);\n    return pen.close();\n  };\n  // Dogboned slot through four corners (any orientation): bit centre r from each corner along the bisector.\n  const slot = (pts: number[][]) => {\n    let d = poly(pts);\n    for (let i = 0; i < 4; i++) {\n      const p = pts[i], n = pts[(i + 1) % 4], q = pts[(i + 3) % 4];\n      const e1 = [n[0] - p[0], n[1] - p[1]], e2 = [q[0] - p[0], q[1] - p[1]];\n      const l1 = Math.hypot(e1[0], e1[1]), l2 = Math.hypot(e2[0], e2[1]);\n      const bis = [e1[0] / l1 + e2[0] / l2, e1[1] / l1 + e2[1] / l2];\n      const lb = Math.hypot(bis[0], bis[1]);\n      d = d.fuse(replicad.drawCircle(r).translate(p[0] + (r * bis[0]) / lb, p[1] + (r * bis[1]) / lb));\n    }\n    return d;\n  };\n  const rect = (u0: number, u1: number, v0: number, v1: number, map = (u: number, v: number) => [u, v]) =>\n    [map(u0, v0), map(u1, v0), map(u1, v1), map(u0, v1)];\n  // Side-view (XZ) board occupying y0 .. y0+T.\n  const sideSheet = (d: any, y0: number) =>\n    d.sketchOnPlane(new replicad.Plane([0, y0 + T, 0], [1, 0, 0], [0, -1, 0])).extrude(T);\n  // Flat (XY) board occupying z0 .. z0+T.\n  const flatSheet = (d: any, z0: number) => d.sketchOnPlane(\"XY\").extrude(T).translate(0, 0, z0);\n\n  // ---- Front leg: 90 mm wide, swept back by legSweep, cut level at the floor and under the arm ----\n  const legWidth = 90;\n  const legFoot = -40; // front of the foot, ahead of the seat front\n  const wFlat = legWidth / Math.cos(s);\n  const rise = H - T;\n  const TL = [legFoot + rise * Math.tan(s), rise];\n  const TR = [TL[0] + wFlat, rise];\n  const legMid = (TL[0] + TR[0]) / 2;\n  // Leg-local frame: u across the leg from its front edge, v up along the sweep.\n  const legMap = (u: number, v: number) => [legFoot + v * Math.sin(s) + u * Math.cos(s), v * Math.cos(s) - u * Math.sin(s)];\n\n  // Gusset position in leg-local coordinates: centred on the leg width, top face under the arm.\n  const gU0 = (legWidth - T) / 2;\n  const gTop = (rise + gU0 * Math.sin(s)) / Math.cos(s); // v where the gusset's front face meets the arm\n  const gTip = gTop - gussetLength;\n  const gTabs = [[gTop - 110, gTop - 50], [gTop - 230, gTop - 180]]; // v ranges of the edge tabs\n\n  let leg = poly([\n    [legFoot, 0], [legFoot + wFlat, 0], TR,\n    [legMid + tabLen / 2, rise], [legMid + tabLen / 2, H], [legMid - tabLen / 2, H], [legMid - tabLen / 2, rise],\n    TL,\n  ]);\n  for (const [v0, v1] of gTabs) leg = leg.cut(slot(rect(gU0 - c, gU0 + T + c, v0 - c, v1 + c, legMap)));\n\n  // Gusset outline in the (y, v) plane for the right side; the left side mirrors y.\n  const gOut = armOut - 5;\n  const gussetDrawing = (sign: number) => {\n    const pts: number[][] = [[bandOut, gTip], [gOut, gTop], [bandOut, gTop]];\n    // Edge tabs reach back through the leg (bandIn .. bandOut).\n    for (const [v0, v1] of gTabs) pts.push([bandOut, v1], [bandIn, v1], [bandIn, v0], [bandOut, v0]);\n    return poly(pts.map(([y, v]) => [sign * y, v]));\n  };\n  const gussetSolid = (sign: number) =>\n    gussetDrawing(sign)\n      .sketchOnPlane(new replicad.Plane([gU0, 0, 0], [0, 1, 0], [1, 0, 0])) // local x -> y, local y -> v, extrude +u\n      .extrude(T)\n      .rotate(legSweep, [0, 0, 0], [0, 1, 0]) // u -> across the leg, v -> up the sweep\n      .translate(legFoot, 0, 0);\n\n  // ---- Rear post: carries the upper batten, tab runs up through batten and arm ----\n  const postMid = xBack + postDepth / 2;\n  const post = poly([\n    [xBack, 0], [xBack + postDepth, 0], [xBack + postDepth, H - 2 * T],\n    [postMid + tabLen / 2, H - 2 * T], [postMid + tabLen / 2, H], [postMid - tabLen / 2, H], [postMid - tabLen / 2, H - 2 * T],\n    [xBack, H - 2 * T],\n  ]);\n\n  // Slot footprints (plan view) for the leg and post tabs on one side.\n  const tabSlots = (sign: number) => {\n    const y0 = sign > 0 ? bandIn - c : -bandOut - c;\n    const y1 = y0 + T + 2 * c;\n    return [\n      slot(rect(legMid - tabLen / 2 - c, legMid + tabLen / 2 + c, y0, y1)),\n      slot(rect(postMid - tabLen / 2 - c, postMid + tabLen / 2 + c, y0, y1)),\n    ];\n  };\n\n  const parts: Assembly[] = [];\n  const armLen = armRear - armFront;\n  for (const [side, sign] of [[\"Right\", 1], [\"Left\", -1]] as [string, number][]) {\n    const y0 = sign > 0 ? bandIn : -bandOut;\n    parts.push(new Assembly({ geometry: sideSheet(leg, y0), color: wood, tags: [\"cutLayout\", \"leg\"], bom: [`${side} front leg`] }));\n    parts.push(new Assembly({ geometry: gussetSolid(sign), color: wood, tags: [\"cutLayout\", \"gusset\"], bom: [`${side} arm gusset`] }));\n    parts.push(new Assembly({ geometry: sideSheet(post, y0), color: wood, tags: [\"cutLayout\", \"post\"], bom: [`${side} rear post`] }));\n\n    // Arm: square rear, rounded front corners, slots for the leg and post tabs.\n    let arm = replicad\n      .drawRoundedRectangle(armLen, armWidth, 45)\n      .fuse(replicad.drawRectangle(armLen / 2, armWidth).translate(armLen / 4, 0))\n      .translate((armFront + armRear) / 2, (sign * (armIn + armOut)) / 2);\n    for (const sl of tabSlots(sign)) arm = arm.cut(sl);\n    parts.push(new Assembly({ geometry: flatSheet(arm, H - T), color: wood, tags: [\"cutLayout\", \"arm\"], bom: [`${side} arm`] }));\n  }\n\n  // ---- Upper back batten: spans under both arms, sits on the rear posts ----\n  let batten = poly(rect(xBack, armRear, -armOut, armOut));\n  for (const sign of [1, -1]) batten = batten.cut(tabSlots(sign)[1]);\n  parts.push(new Assembly({ geometry: flatSheet(batten, H - 2 * T), color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Upper back batten\"] }));\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Arms and legs: swept-back front legs with a triangular gusset under each arm,\n * rear arm posts, an upper back batten, and two arms, locked together with through-tabs.\n * The back's rear face crosses arm height at xBack; the batten sits just behind it on\n * top of the rear posts, and the arms rest on the front legs and the batten.\n * Back pivot matches the Back molecule: seat rear bottom edge at (460, 300).\n * armHeight is the top of the arms above the floor.\n * legSweep is how far the front legs lean back from vertical (degrees).\n * The gusset stands at 90 degrees to the leg: it is centred on the leg's width, leans with\n * the sweep, runs out under the arm's overhang, and tapers to a point gussetLength down the leg.\n *\n * Joints owned here:\n *  - front leg top tab -> slot through the arm\n *  - rear post top tab -> slots through the upper batten and the arm\n *  - gusset edge tabs -> slots through the front leg\n */\nfunction run(thickness = 19.05, seatWidth = 560, backAngle = 24, armHeight = 600, legSweep = 20, bitDiameter = 6.35, clearance = 0.2, armWidth = 120, gussetLength = 300) {\n    const T = thickness;\n    const W = seatWidth;\n    const H = armHeight;\n    const c = clearance;\n    const r = (bitDiameter / 2) * 1.02;\n    const wood = \"#C8894F\";\n    const P = [460, 300];\n    const b = (backAngle * Math.PI) / 180;\n    const s = (legSweep * Math.PI) / 180;\n    // Rear face of the back where it meets the underside of the arms, plus 1 mm clearance.\n    const xBack = P[0] + T * Math.cos(b) + (H - T - (P[1] - T * Math.sin(b))) * Math.tan(b) + 1;\n    const postDepth = 100;\n    const armFront = -60;\n    const armRear = xBack + postDepth;\n    const armIn = W / 2 + 5; // clears the back panels\n    const armOut = armIn + armWidth;\n    const tabLen = 50; // tabs through the arms and batten\n    const bandIn = W / 2 + T; // legs and posts sit outboard of the runners\n    const bandOut = W / 2 + 2 * T;\n    const poly = (pts) => {\n        let pen = replicad.draw(pts[0]);\n        for (let i = 1; i < pts.length; i++)\n            pen = pen.lineTo(pts[i]);\n        return pen.close();\n    };\n    // Dogboned slot through four corners (any orientation): bit centre r from each corner along the bisector.\n    const slot = (pts) => {\n        let d = poly(pts);\n        for (let i = 0; i < 4; i++) {\n            const p = pts[i], n = pts[(i + 1) % 4], q = pts[(i + 3) % 4];\n            const e1 = [n[0] - p[0], n[1] - p[1]], e2 = [q[0] - p[0], q[1] - p[1]];\n            const l1 = Math.hypot(e1[0], e1[1]), l2 = Math.hypot(e2[0], e2[1]);\n            const bis = [e1[0] / l1 + e2[0] / l2, e1[1] / l1 + e2[1] / l2];\n            const lb = Math.hypot(bis[0], bis[1]);\n            d = d.fuse(replicad.drawCircle(r).translate(p[0] + (r * bis[0]) / lb, p[1] + (r * bis[1]) / lb));\n        }\n        return d;\n    };\n    const rect = (u0, u1, v0, v1, map = (u, v) => [u, v]) => [map(u0, v0), map(u1, v0), map(u1, v1), map(u0, v1)];\n    // Side-view (XZ) board occupying y0 .. y0+T.\n    const sideSheet = (d, y0) => d.sketchOnPlane(new replicad.Plane([0, y0 + T, 0], [1, 0, 0], [0, -1, 0])).extrude(T);\n    // Flat (XY) board occupying z0 .. z0+T.\n    const flatSheet = (d, z0) => d.sketchOnPlane(\"XY\").extrude(T).translate(0, 0, z0);\n    // ---- Front leg: 90 mm wide, swept back by legSweep, cut level at the floor and under the arm ----\n    const legWidth = 90;\n    const legFoot = -40; // front of the foot, ahead of the seat front\n    const wFlat = legWidth / Math.cos(s);\n    const rise = H - T;\n    const TL = [legFoot + rise * Math.tan(s), rise];\n    const TR = [TL[0] + wFlat, rise];\n    const legMid = (TL[0] + TR[0]) / 2;\n    // Leg-local frame: u across the leg from its front edge, v up along the sweep.\n    const legMap = (u, v) => [legFoot + v * Math.sin(s) + u * Math.cos(s), v * Math.cos(s) - u * Math.sin(s)];\n    // Gusset position in leg-local coordinates: centred on the leg width, top face under the arm.\n    const gU0 = (legWidth - T) / 2;\n    const gTop = (rise + gU0 * Math.sin(s)) / Math.cos(s); // v where the gusset's front face meets the arm\n    const gTip = gTop - gussetLength;\n    const gTabs = [[gTop - 110, gTop - 50], [gTop - 230, gTop - 180]]; // v ranges of the edge tabs\n    let leg = poly([\n        [legFoot, 0], [legFoot + wFlat, 0], TR,\n        [legMid + tabLen / 2, rise], [legMid + tabLen / 2, H], [legMid - tabLen / 2, H], [legMid - tabLen / 2, rise],\n        TL,\n    ]);\n    for (const [v0, v1] of gTabs)\n        leg = leg.cut(slot(rect(gU0 - c, gU0 + T + c, v0 - c, v1 + c, legMap)));\n    // Gusset outline in the (y, v) plane for the right side; the left side mirrors y.\n    const gOut = armOut - 5;\n    const gussetDrawing = (sign) => {\n        const pts = [[bandOut, gTip], [gOut, gTop], [bandOut, gTop]];\n        // Edge tabs reach back through the leg (bandIn .. bandOut).\n        for (const [v0, v1] of gTabs)\n            pts.push([bandOut, v1], [bandIn, v1], [bandIn, v0], [bandOut, v0]);\n        return poly(pts.map(([y, v]) => [sign * y, v]));\n    };\n    const gussetSolid = (sign) => gussetDrawing(sign)\n        .sketchOnPlane(new replicad.Plane([gU0, 0, 0], [0, 1, 0], [1, 0, 0])) // local x -> y, local y -> v, extrude +u\n        .extrude(T)\n        .rotate(legSweep, [0, 0, 0], [0, 1, 0]) // u -> across the leg, v -> up the sweep\n        .translate(legFoot, 0, 0);\n    // ---- Rear post: carries the upper batten, tab runs up through batten and arm ----\n    const postMid = xBack + postDepth / 2;\n    const post = poly([\n        [xBack, 0], [xBack + postDepth, 0], [xBack + postDepth, H - 2 * T],\n        [postMid + tabLen / 2, H - 2 * T], [postMid + tabLen / 2, H], [postMid - tabLen / 2, H], [postMid - tabLen / 2, H - 2 * T],\n        [xBack, H - 2 * T],\n    ]);\n    // Slot footprints (plan view) for the leg and post tabs on one side.\n    const tabSlots = (sign) => {\n        const y0 = sign > 0 ? bandIn - c : -bandOut - c;\n        const y1 = y0 + T + 2 * c;\n        return [\n            slot(rect(legMid - tabLen / 2 - c, legMid + tabLen / 2 + c, y0, y1)),\n            slot(rect(postMid - tabLen / 2 - c, postMid + tabLen / 2 + c, y0, y1)),\n        ];\n    };\n    const parts = [];\n    const armLen = armRear - armFront;\n    for (const [side, sign] of [[\"Right\", 1], [\"Left\", -1]]) {\n        const y0 = sign > 0 ? bandIn : -bandOut;\n        parts.push(new Assembly({ geometry: sideSheet(leg, y0), color: wood, tags: [\"cutLayout\", \"leg\"], bom: [`${side} front leg`] }));\n        parts.push(new Assembly({ geometry: gussetSolid(sign), color: wood, tags: [\"cutLayout\", \"gusset\"], bom: [`${side} arm gusset`] }));\n        parts.push(new Assembly({ geometry: sideSheet(post, y0), color: wood, tags: [\"cutLayout\", \"post\"], bom: [`${side} rear post`] }));\n        // Arm: square rear, rounded front corners, slots for the leg and post tabs.\n        let arm = replicad\n            .drawRoundedRectangle(armLen, armWidth, 45)\n            .fuse(replicad.drawRectangle(armLen / 2, armWidth).translate(armLen / 4, 0))\n            .translate((armFront + armRear) / 2, (sign * (armIn + armOut)) / 2);\n        for (const sl of tabSlots(sign))\n            arm = arm.cut(sl);\n        parts.push(new Assembly({ geometry: flatSheet(arm, H - T), color: wood, tags: [\"cutLayout\", \"arm\"], bom: [`${side} arm`] }));\n    }\n    // ---- Upper back batten: spans under both arms, sits on the rear posts ----\n    let batten = poly(rect(xBack, armRear, -armOut, armOut));\n    for (const sign of [1, -1])\n        batten = batten.cut(tabSlots(sign)[1]);\n    parts.push(new Assembly({ geometry: flatSheet(batten, H - 2 * T), color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Upper back batten\"] }));\n    return parts;\n}\n"
         },
         {
           "atomType": "Input",
@@ -454,6 +592,24 @@
           "y": 0.5,
           "uniqueID": "id-8437",
           "name": "Leg Sweep",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.6,
+          "uniqueID": "id-8462",
+          "name": "Bit Diameter",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.7,
+          "uniqueID": "id-8465",
+          "name": "Clearance",
           "type": "number",
           "options": []
         }
@@ -487,6 +643,16 @@
         {
           "ap2Name": "legSweep",
           "ap1ID": "id-8437",
+          "ap2ID": "id-8386"
+        },
+        {
+          "ap2Name": "bitDiameter",
+          "ap1ID": "id-8462",
+          "ap2ID": "id-8386"
+        },
+        {
+          "ap2Name": "clearance",
+          "ap1ID": "id-8465",
           "ap2ID": "id-8386"
         }
       ],
@@ -555,123 +721,141 @@
       "placements": [
         [
           {
-            "id": 1,
-            "rotate": 300,
+            "id": 7,
+            "rotate": 270,
             "translate": {
-              "x": -184.78167724609375,
-              "y": 491.2983703613281
+              "x": 5.199999809265137,
+              "y": 2192
             }
           },
           {
             "id": 5,
-            "rotate": 180,
+            "rotate": 90,
             "translate": {
-              "x": 1819.300048828125,
-              "y": 1054.239990234375
-            }
-          },
-          {
-            "id": 4,
-            "rotate": 210,
-            "translate": {
-              "x": 1623.280029296875,
-              "y": 1520.1781005859375
-            }
-          },
-          {
-            "id": 0,
-            "rotate": 210,
-            "translate": {
-              "x": 1032.331298828125,
-              "y": 1027.4012451171875
-            }
-          },
-          {
-            "id": 13,
-            "rotate": 180,
-            "translate": {
-              "x": 4102.56005859375,
-              "y": 772.1300048828125
-            }
-          },
-          {
-            "id": 2,
-            "rotate": 180,
-            "translate": {
-              "x": 2275.860107421875,
-              "y": 603.2799682617188
-            }
-          },
-          {
-            "id": 10,
-            "rotate": 180,
-            "translate": {
-              "x": 4070.360107421875,
-              "y": 772.1300048828125
+              "x": 491.1499938964844,
+              "y": -1042.159912109375
             }
           },
           {
             "id": 6,
             "rotate": 240,
             "translate": {
-              "x": 2347.40185546875,
-              "y": 2774.940185546875
+              "x": 959.98193359375,
+              "y": 2534.49755859375
+            }
+          },
+          {
+            "id": 10,
+            "rotate": 0,
+            "translate": {
+              "x": -1801.429931640625,
+              "y": 106.31000518798828
+            }
+          },
+          {
+            "id": 16,
+            "rotate": 120,
+            "translate": {
+              "x": 2979.697998046875,
+              "y": -1870.72607421875
+            }
+          },
+          {
+            "id": 2,
+            "rotate": 0,
+            "translate": {
+              "x": 133.86993408203125,
+              "y": 265.47998046875
+            }
+          },
+          {
+            "id": 9,
+            "rotate": 30,
+            "translate": {
+              "x": -792.1256103515625,
+              "y": -769.223388671875
+            }
+          },
+          {
+            "id": 0,
+            "rotate": 30,
+            "translate": {
+              "x": 1418.5452880859375,
+              "y": 162.1669464111328
+            }
+          },
+          {
+            "id": 14,
+            "rotate": 90,
+            "translate": {
+              "x": 1672.9200439453125,
+              "y": -3177.97998046875
+            }
+          },
+          {
+            "id": 11,
+            "rotate": 270,
+            "translate": {
+              "x": 1324.3199462890625,
+              "y": 3901.419921875
+            }
+          },
+          {
+            "id": 12,
+            "rotate": 30,
+            "translate": {
+              "x": -897.156982421875,
+              "y": -998.6734619140625
+            }
+          },
+          {
+            "id": 15,
+            "rotate": 270,
+            "translate": {
+              "x": 1547.300048828125,
+              "y": 4422.23974609375
+            }
+          },
+          {
+            "id": 13,
+            "rotate": 330,
+            "translate": {
+              "x": -1073.2691650390625,
+              "y": 1923.957763671875
             }
           },
           {
             "id": 3,
             "rotate": 240,
             "translate": {
-              "x": 2274.56689453125,
-              "y": 1478.1070556640625
+              "x": 2139.3720703125,
+              "y": 1797.1563720703125
             }
           },
           {
-            "id": 14,
-            "rotate": 30,
+            "id": 4,
+            "rotate": 150,
             "translate": {
-              "x": -1618.28125,
-              "y": -1124.778076171875
-            }
-          },
-          {
-            "id": 11,
-            "rotate": 180,
-            "translate": {
-              "x": 4786.93994140625,
-              "y": 1077.760009765625
+              "x": 3068.319580078125,
+              "y": -84.49688720703125
             }
           },
           {
             "id": 8,
-            "rotate": 210,
+            "rotate": 60,
             "translate": {
-              "x": 2564.36328125,
-              "y": 2300.02197265625
+              "x": 1259.1380615234375,
+              "y": -1309.4609375
             }
-          },
+          }
+        ],
+        [
           {
-            "id": 7,
-            "rotate": 90,
+            "id": 1,
+            "rotate": 150,
             "translate": {
-              "x": 565.199951171875,
-              "y": -1009.4801025390625
-            }
-          },
-          {
-            "id": 9,
-            "rotate": 330,
-            "translate": {
-              "x": 66.5140380859375,
-              "y": 1316.648193359375
-            }
-          },
-          {
-            "id": 12,
-            "rotate": 270,
-            "translate": {
-              "x": 525.1500244140625,
-              "y": 2783.300048828125
+              "x": 1163.8128662109375,
+              "y": 468.7852783203125
             }
           }
         ]
@@ -691,19 +875,22 @@
       ],
       "orientations": [
         {
-          "downwardFaceIndex": 5
+          "downwardFaceIndex": 49
         },
         {
-          "downwardFaceIndex": 5
+          "downwardFaceIndex": 49
         },
         {
-          "downwardFaceIndex": 0
+          "downwardFaceIndex": 36
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 12
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 24
+        },
+        {
+          "downwardFaceIndex": 24
         },
         {
           "downwardFaceIndex": 1
@@ -715,28 +902,28 @@
           "downwardFaceIndex": 0
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 9
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 8
         },
         {
-          "downwardFaceIndex": 12
+          "downwardFaceIndex": 44
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 9
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 8
         },
         {
-          "downwardFaceIndex": 12
+          "downwardFaceIndex": 44
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 36
         }
       ],
-      "orientationsForHashed": 15
+      "orientationsForHashed": 16
     },
     {
       "atomType": "Readme",
@@ -750,7 +937,7 @@
           "ioValue": "__GEOMETRY_INPUT__"
         }
       ],
-      "readMeText": "# Blocky Adirondack Chair\n\nA modern, slab-style Adirondack chair cut entirely from one sheet thickness of plywood on a CNC router.\n\n## Inputs (editable in run mode)\n- **Thickness** – sheet thickness (default 19.05 mm / 3/4\")\n- **Seat_Width** – clear width between the side runners (default 560 mm)\n- **Back_Angle** – back lean from vertical in degrees (default 24)\n- **Arm_Height** – top of the arms above the floor (default 600 mm)\n- **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)\n\n## Parts (15)\n- 2 × side runners (sloped seat support, toe rests on the floor)\n- 1 × front apron\n- 2 × seat panels\n- 2 × back panels\n- 1 × lower back batten (behind the back panels, between the runners)\n- 1 × upper back batten (under the arms, behind the back)\n- 2 × front legs (swept back, outboard of the runners)\n- 2 × rear posts (outboard of the runners, carry the upper batten)\n- 2 × arms (rounded front corners)\n\n## Assembly\n1. Screw the front legs and rear posts to the outside faces of the runners.\n2. Screw the apron across the front ends of the runners.\n3. Screw the lower back batten between the runners, then fix the back panels to it.\n4. Lay the upper back batten across the tops of the rear posts and screw the back panels to its front edge.\n5. Screw the seat panels down onto the runners' seat slope.\n6. Screw the arms down onto the front legs and the upper batten.\n\nUse exterior-grade plywood and stainless or coated deck screws.\n",
+      "readMeText": "# Blocky Adirondack Chair\n\nA modern, slab-style Adirondack chair cut entirely from one sheet thickness of plywood on a CNC router. Parts lock together with through-tabs in dogboned slots, so the chair self-aligns during glue-up/screwing.\n\n## Inputs (editable in run mode)\n- **Thickness** – sheet thickness (default 19.05 mm / 3/4\"). Measure your sheet; tabs and slots follow this value.\n- **Seat_Width** – clear width between the side runners (default 560 mm)\n- **Back_Angle** – back lean from vertical in degrees (default 24)\n- **Arm_Height** – top of the arms above the floor (default 600 mm)\n- **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)\n- **Bit Diameter** – router bit used for the dogbone reliefs in slot corners (default 6.35 mm)\n- **Clearance** – extra room added to every side of each slot (default 0.2 mm)\n\n## Parts (18)\n- 2 × side runners\n- 1 × front apron\n- 1 × seat stretcher (under the rear of the seat)\n- 2 × seat panels\n- 2 × back panels\n- 1 × lower back batten\n- 1 × upper back batten\n- 2 × front legs (swept back)\n- 2 × arm gussets (triangles at 90° to the legs, under the arm overhang)\n- 2 × rear posts\n- 2 × arms\n\n## Joints\n- Runner front tabs → through the apron\n- Runner top tabs → notches in the seat panel edges\n- Seat stretcher end tabs → through the runners\n- Lower back batten end tabs → through the runners\n- Arm gusset edge tabs → through the front legs\n- Front leg top tabs → through the arms\n- Rear post top tabs → through the upper batten and the arms\n\n## Assembly\n1. Slide the seat stretcher and lower back batten tabs into one runner, then drop the other runner on.\n2. Push the apron onto the runner front tabs.\n3. Tab the gussets into the front legs, then screw the legs and rear posts to the outside of the runners.\n4. Drop the seat panels onto the runner tabs.\n5. Set the back panels against the lower batten, lay the upper batten over the rear post tabs, and screw the back to both battens.\n6. Drop the arms over the leg and post tabs and screw down into the gussets.\n\nGlue and screw every joint with exterior glue and stainless or coated deck screws.\n",
       "global": true
     },
     {
@@ -795,6 +982,24 @@
       "y": 0.5,
       "uniqueID": "id-8434",
       "name": "Leg Sweep",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.6,
+      "uniqueID": "id-8441",
+      "name": "Bit Diameter",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.7,
+      "uniqueID": "id-8444",
+      "name": "Clearance",
       "type": "number",
       "options": []
     }
@@ -886,6 +1091,11 @@
       "ap2ID": "id-8318"
     },
     {
+      "ap2Name": "Back Angle",
+      "ap1ID": "id-8428",
+      "ap2ID": "id-8306"
+    },
+    {
       "ap2Name": "Arm Height",
       "ap1ID": "id-8431",
       "ap2ID": "id-8318"
@@ -893,6 +1103,36 @@
     {
       "ap2Name": "Leg Sweep",
       "ap1ID": "id-8434",
+      "ap2ID": "id-8318"
+    },
+    {
+      "ap2Name": "Bit Diameter",
+      "ap1ID": "id-8441",
+      "ap2ID": "id-8306"
+    },
+    {
+      "ap2Name": "Bit Diameter",
+      "ap1ID": "id-8441",
+      "ap2ID": "id-8310"
+    },
+    {
+      "ap2Name": "Bit Diameter",
+      "ap1ID": "id-8441",
+      "ap2ID": "id-8318"
+    },
+    {
+      "ap2Name": "Clearance",
+      "ap1ID": "id-8444",
+      "ap2ID": "id-8306"
+    },
+    {
+      "ap2Name": "Clearance",
+      "ap1ID": "id-8444",
+      "ap2ID": "id-8310"
+    },
+    {
+      "ap2Name": "Clearance",
+      "ap1ID": "id-8444",
       "ap2ID": "id-8318"
     }
   ],
