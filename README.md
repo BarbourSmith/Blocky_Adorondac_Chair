@@ -18,22 +18,24 @@
 
  # Blocky Adirondack Chair
 
-A modern, slab-style Adirondack chair cut entirely from one thickness of plywood on a CNC router. Key parts lock together with through-tabs, so the chair self-aligns while you screw it together.
+A modern, slab-style Adirondack chair cut entirely from one thickness of plywood on a CNC router. Its proportions follow the Paso chair: plank runners that meet the floor behind the back, a deep recline, a split back and seat with a wide center gap, broad arms carried by the back batten, and flanged front legs. Key parts lock together with through-tabs, so the chair self-aligns while you screw it together.
 
 ## Inputs (editable in run mode)
 - **Thickness** – sheet thickness (default 19.05 mm / 3/4"). Measure your sheet; tabs and slots follow this value.
-- **Seat_Width** – clear width between the side runners (default 600 mm)
-- **Back_Angle** – back lean from vertical in degrees (default 24)
-- **Arm_Height** – top of the arms above the floor (default 600 mm)
+- **Seat_Width** – clear width between the side runners (default 540 mm)
+- **Back_Angle** – back lean from vertical in degrees (default 26)
+- **Arm_Height** – top of the arms above the floor (default 520 mm)
 - **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)
 - **Bit Diameter** – your cutting bit; sets the spacing between parts in the cut layout (default 6.35 mm)
 
-## Parts (18)
+At the defaults the chair is about 820 mm wide, 900 mm deep and 740 mm tall, with the seat front at about 400 mm.
+
+## Parts (16)
 Each part is its own molecule, built from built-in atoms and tagged "wood" for the cut layout.
 - Frame: 2 × Runner, 1 × Apron, 1 × Seat Stretcher
 - Seat: 2 × Seat Panel
 - Back: 2 × Back Panel, 1 × Lower Back Batten
-- Arms and Legs: 2 × Front Leg, 2 × Rear Post, 2 × Arm, 1 × Upper Back Batten, 2 × Arm Gusset
+- Arms and Legs: 2 × Front Leg, 2 × Arm, 1 × Upper Back Batten, 2 × Arm Gusset
 
 ## Joints
 Slots are cut where parts overlap in the assembly, so they always match the tabs.
@@ -41,7 +43,6 @@ Slots are cut where parts overlap in the assembly, so they always match the tabs
 - Seat stretcher end tabs → through the runners
 - Lower back batten end tabs → through the runners
 - Front leg top tabs → through the arms
-- Rear post top tabs → through the upper batten and the arms
 
 Slot corners are round (the bit's radius), not dogboned: ease the tab corners with a file or sand them so they seat fully.
 
@@ -50,13 +51,15 @@ The chair fits on two 4 × 8 ft sheets. Open Cut Layout and press Compute Layout
 
 ## Assembly
 1. Slide the seat stretcher and lower back batten tabs into one runner, then drop the other runner on.
-2. Push the apron onto the runner front tabs.
-3. Screw the front legs and rear posts to the outside of the runners, and the gussets to the front legs.
-4. Screw the seat panels down onto the runners.
-5. Set the back panels against the lower batten, lay the upper batten over the rear post tabs, and screw the back to both battens.
-6. Drop the arms over the leg and post tabs and screw down into the gussets.
+2. Push the apron onto the runner front tabs. Its top stands proud of the seat like a front rail.
+3. Screw the front legs to the outside of the runners, and the gussets to the front legs.
+4. Screw the seat panels down onto the runners, butted against the apron.
+5. Set the back panels against the lower batten, then screw the upper batten across the back of the panels at arm height.
+6. Drop the arms over the front leg tabs, rest their back ends on the upper batten, and screw down into the gussets and the batten.
 
 Glue and screw every joint with exterior glue and the deck screws on the bill of materials (about 50 screws).
+
+__GEOMETRY_INPUT__
 
 __GEOMETRY_INPUT__
 
