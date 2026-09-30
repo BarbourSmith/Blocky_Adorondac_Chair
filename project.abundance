@@ -15,11 +15,11 @@
     },
     {
       "name": "Back_Angle",
-      "ioValue": 24
+      "ioValue": 26
     },
     {
       "name": "Arm_Height",
-      "ioValue": 600
+      "ioValue": 520
     },
     {
       "name": "Leg Sweep",
@@ -416,7 +416,7 @@
                     },
                     {
                       "name": "y length",
-                      "ioValue": 180
+                      "ioValue": 82
                     }
                   ]
                 },
@@ -436,7 +436,7 @@
                     },
                     {
                       "name": "yDist",
-                      "ioValue": 290
+                      "ioValue": 339
                     },
                     {
                       "name": "zDist",
@@ -476,7 +476,7 @@
                     },
                     {
                       "name": "yDist",
-                      "ioValue": 299.5
+                      "ioValue": 229.5
                     },
                     {
                       "name": "zDist",
@@ -492,7 +492,7 @@
                   "ioValues": [
                     {
                       "name": "x length",
-                      "ioValue": 240
+                      "ioValue": 347
                     },
                     {
                       "name": "y length",
@@ -512,7 +512,7 @@
                     },
                     {
                       "name": "xDist",
-                      "ioValue": 840
+                      "ioValue": 669.5
                     },
                     {
                       "name": "yDist",
@@ -550,7 +550,7 @@
                     {
                       "name": "Shape 1",
                       "ioValue": {
-                        "geometry": "move-rectangle-1-180-0.5-290-0",
+                        "geometry": "move-rectangle-1-82-0.5-339-0",
                         "dimension": "2D",
                         "plane": {
                           "origin": [
@@ -577,7 +577,7 @@
                     {
                       "name": "Shape2",
                       "ioValue": {
-                        "geometry": "move-rectangle-1-1-460-299.5-0",
+                        "geometry": "move-rectangle-1-1-460-229.5-0",
                         "dimension": "2D",
                         "plane": {
                           "origin": [
@@ -604,7 +604,7 @@
                     {
                       "name": "Shape3",
                       "ioValue": {
-                        "geometry": "move-rectangle-240-1-840-0.5-0",
+                        "geometry": "move-rectangle-347-1-669.5-0.5-0",
                         "dimension": "2D",
                         "plane": {
                           "origin": [
@@ -726,7 +726,7 @@
                 },
                 {
                   "name": "yDist",
-                  "ioValue": 290
+                  "ioValue": 339
                 },
                 {
                   "name": "zDist",
@@ -743,7 +743,7 @@
                 {
                   "name": "Shape 1",
                   "ioValue": {
-                    "geometry": "shrinkWrap-fuse-fuse-move-rectangle-1-1-460-299.5-0-move-rectangle-1-180-0.5-290-0-move-rectangle-240-1-840-0.5-0-50",
+                    "geometry": "shrinkWrap-fuse-fuse-move-rectangle-1-1-460-229.5-0-move-rectangle-1-82-0.5-339-0-move-rectangle-347-1-669.5-0.5-0-50",
                     "dimension": "2D",
                     "tags": [],
                     "color": "#aad7f2",
@@ -773,7 +773,7 @@
                 {
                   "name": "Shape2",
                   "ioValue": {
-                    "geometry": "move-rectangle-19.05-60--9.525-290-0",
+                    "geometry": "move-rectangle-19.05-60--9.525-339-0",
                     "dimension": "2D",
                     "plane": {
                       "origin": [
@@ -1031,7 +1031,7 @@
                 },
                 {
                   "name": "y length",
-                  "ioValue": 180
+                  "ioValue": 82
                 }
               ]
             },
@@ -1097,7 +1097,7 @@
                 },
                 {
                   "name": "zDist",
-                  "ioValue": 290
+                  "ioValue": 339
                 }
               ]
             },
@@ -1208,8 +1208,8 @@
                 },
                 {
                   "name": "y length",
-                  "ioValue": 87.15652173913043,
-                  "currentEquation": "2*(110 - (360 + Thickness)*80/460 - 0.5)"
+                  "ioValue": 111.79347826086956,
+                  "currentEquation": "2*(180 - (360 + Thickness)*150/460 - 0.5)"
                 }
               ]
             },
@@ -1239,7 +1239,7 @@
                 {
                   "name": "Shape 1",
                   "ioValue": {
-                    "geometry": "rectangle-600-87.15652173913043",
+                    "geometry": "rectangle-600-111.79347826086956",
                     "dimension": "2D",
                     "plane": {
                       "origin": [
@@ -1354,7 +1354,7 @@
                 },
                 {
                   "name": "zDist",
-                  "ioValue": 270
+                  "ioValue": 200
                 }
               ]
             },
@@ -1615,8 +1615,8 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 485.95,
-                  "currentEquation": "466.9 + Thickness"
+                  "ioValue": 502.85,
+                  "currentEquation": "483.8 + Thickness"
                 },
                 {
                   "name": "y length",
@@ -1637,8 +1637,8 @@
                 },
                 {
                   "name": "xDist",
-                  "ioValue": 223.92499999999998,
-                  "currentEquation": "(466.9 - Thickness)/2"
+                  "ioValue": 232.375,
+                  "currentEquation": "(483.8 - Thickness)/2"
                 },
                 {
                   "name": "yDist",
@@ -1684,7 +1684,7 @@
                 },
                 {
                   "name": "y-axis degrees",
-                  "ioValue": 9.865806943084369
+                  "ioValue": 18.06
                 },
                 {
                   "name": "z-axis degrees",
@@ -1868,7 +1868,7 @@
         },
         {
           "name": "BackAngle",
-          "ioValue": 24
+          "ioValue": 26
         }
       ],
       "topLevel": false,
@@ -1973,8 +1973,8 @@
                 },
                 {
                   "name": "y length",
-                  "ioValue": 297,
-                  "currentEquation": "SeatWidth/2 - 3"
+                  "ioValue": 287.5,
+                  "currentEquation": "SeatWidth/2 - 12.5"
                 }
               ]
             },
@@ -1990,7 +1990,7 @@
                 },
                 {
                   "name": "height",
-                  "ioValue": 780
+                  "ioValue": 650
                 }
               ]
             },
@@ -2011,8 +2011,8 @@
                 },
                 {
                   "name": "yDist",
-                  "ioValue": 151.5,
-                  "currentEquation": "(SeatWidth/2 + 3)/2"
+                  "ioValue": 156.25,
+                  "currentEquation": "(SeatWidth/2 + 12.5)/2"
                 },
                 {
                   "name": "zDist",
@@ -2077,8 +2077,8 @@
             },
             {
               "name": "yDist",
-              "ioValue": -303,
-              "currentEquation": "-(SeatWidth/2 + 3)"
+              "ioValue": -312.5,
+              "currentEquation": "-(SeatWidth/2 + 12.5)"
             },
             {
               "name": "zDist",
@@ -2397,7 +2397,7 @@
             },
             {
               "name": "y-axis degrees",
-              "ioValue": 24,
+              "ioValue": 26,
               "currentEquation": "BackAngle"
             },
             {
@@ -2426,7 +2426,7 @@
             },
             {
               "name": "zDist",
-              "ioValue": 300
+              "ioValue": 230
             }
           ]
         }
@@ -2507,11 +2507,11 @@
         },
         {
           "name": "BackAngle",
-          "ioValue": 24
+          "ioValue": 26
         },
         {
           "name": "ArmHeight",
-          "ioValue": 600
+          "ioValue": 520
         },
         {
           "name": "LegSweep",
@@ -2594,7 +2594,7 @@
             },
             {
               "name": "ArmHeight",
-              "ioValue": 600
+              "ioValue": 520
             },
             {
               "name": "LegSweep",
@@ -2668,7 +2668,7 @@
                 },
                 {
                   "name": "ArmHeight",
-                  "ioValue": 600
+                  "ioValue": 520
                 },
                 {
                   "name": "LegSweep",
@@ -2738,7 +2738,7 @@
                     },
                     {
                       "name": "ArmHeight",
-                      "ioValue": 600
+                      "ioValue": 520
                     },
                     {
                       "name": "LegSweep",
@@ -2839,7 +2839,7 @@
                         },
                         {
                           "name": "y length",
-                          "ioValue": 580.95,
+                          "ioValue": 500.95,
                           "currentEquation": "ArmHeight - Thickness"
                         }
                       ]
@@ -2889,12 +2889,12 @@
                         },
                         {
                           "name": "xDist",
-                          "ioValue": 105.72425379847513,
+                          "ioValue": 91.16544442782703,
                           "currentEquation": "(ArmHeight - Thickness)/2*tan(LegSweep*pi/180)"
                         },
                         {
                           "name": "yDist",
-                          "ioValue": 300,
+                          "ioValue": 260,
                           "currentEquation": "ArmHeight/2"
                         },
                         {
@@ -2912,7 +2912,7 @@
                         {
                           "name": "Shape 1",
                           "ioValue": {
-                            "geometry": "intersect-rotate-rectangle-90-2000-0-0--20-rectangle-3000-580.95",
+                            "geometry": "intersect-rotate-rectangle-90-2000-0-0--20-rectangle-3000-500.95",
                             "tags": [],
                             "color": "#aad7f2",
                             "plane": {
@@ -2939,7 +2939,7 @@
                         {
                           "name": "Shape2",
                           "ioValue": {
-                            "geometry": "move-rectangle-50-19.05-105.72425379847513-300-0",
+                            "geometry": "move-rectangle-50-19.05-91.16544442782703-260-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -3059,7 +3059,7 @@
                     },
                     {
                       "name": "xDist",
-                      "ioValue": 113.61225355989117,
+                      "ioValue": 99.05344418924307,
                       "currentEquation": "-40 + (ArmHeight - Thickness)/2*tan(LegSweep*pi/180) + 45/cos(LegSweep*pi/180)"
                     },
                     {
@@ -3069,7 +3069,7 @@
                     },
                     {
                       "name": "zDist",
-                      "ioValue": 290.475,
+                      "ioValue": 250.475,
                       "currentEquation": "(ArmHeight - Thickness)/2"
                     }
                   ]
@@ -3232,567 +3232,6 @@
         {
           "atomType": "Molecule",
           "x": 0.4,
-          "y": 0.4,
-          "uniqueID": "id-9102",
-          "name": "Rear Posts",
-          "ioValues": [
-            {
-              "name": "Thickness",
-              "ioValue": 19.05
-            },
-            {
-              "name": "SeatWidth",
-              "ioValue": 600
-            },
-            {
-              "name": "ArmHeight",
-              "ioValue": 600
-            },
-            {
-              "name": "BackAngle",
-              "ioValue": 24
-            }
-          ],
-          "topLevel": false,
-          "allAtoms": [
-            {
-              "atomType": "Output",
-              "x": 1,
-              "y": 0.5,
-              "uniqueID": "id-9104",
-              "ioValues": [
-                {
-                  "name": "number or geometry",
-                  "ioValue": "__GEOMETRY_INPUT__"
-                }
-              ]
-            },
-            {
-              "atomType": "Input",
-              "x": 0,
-              "y": 0.2,
-              "uniqueID": "id-9106",
-              "name": "Thickness",
-              "type": "number",
-              "options": []
-            },
-            {
-              "atomType": "Input",
-              "x": 0,
-              "y": 0.2,
-              "uniqueID": "id-9109",
-              "name": "SeatWidth",
-              "type": "number",
-              "options": []
-            },
-            {
-              "atomType": "Input",
-              "x": 0,
-              "y": 0.3,
-              "uniqueID": "id-9112",
-              "name": "ArmHeight",
-              "type": "number",
-              "options": []
-            },
-            {
-              "atomType": "Input",
-              "x": 0,
-              "y": 0.4,
-              "uniqueID": "id-9115",
-              "name": "BackAngle",
-              "type": "number",
-              "options": []
-            },
-            {
-              "atomType": "Molecule",
-              "x": 0.4,
-              "y": 0.5,
-              "uniqueID": "id-9118",
-              "name": "Rear Post",
-              "ioValues": [
-                {
-                  "name": "Thickness",
-                  "ioValue": 19.05
-                },
-                {
-                  "name": "SeatWidth",
-                  "ioValue": 600
-                },
-                {
-                  "name": "ArmHeight",
-                  "ioValue": 600
-                },
-                {
-                  "name": "BackAngle",
-                  "ioValue": 24
-                }
-              ],
-              "topLevel": false,
-              "allAtoms": [
-                {
-                  "atomType": "Output",
-                  "x": 1,
-                  "y": 0.5,
-                  "uniqueID": "id-9120",
-                  "ioValues": [
-                    {
-                      "name": "number or geometry",
-                      "ioValue": "__GEOMETRY_INPUT__"
-                    }
-                  ]
-                },
-                {
-                  "atomType": "Input",
-                  "x": 0,
-                  "y": 0.2,
-                  "uniqueID": "id-9122",
-                  "name": "Thickness",
-                  "type": "number",
-                  "options": []
-                },
-                {
-                  "atomType": "Input",
-                  "x": 0,
-                  "y": 0.2,
-                  "uniqueID": "id-9125",
-                  "name": "SeatWidth",
-                  "type": "number",
-                  "options": []
-                },
-                {
-                  "atomType": "Input",
-                  "x": 0,
-                  "y": 0.3,
-                  "uniqueID": "id-9128",
-                  "name": "ArmHeight",
-                  "type": "number",
-                  "options": []
-                },
-                {
-                  "atomType": "Input",
-                  "x": 0,
-                  "y": 0.4,
-                  "uniqueID": "id-9131",
-                  "name": "BackAngle",
-                  "type": "number",
-                  "options": []
-                },
-                {
-                  "atomType": "Molecule",
-                  "x": 0.3,
-                  "y": 0.5,
-                  "uniqueID": "id-9134",
-                  "name": "Rear Post Profile",
-                  "ioValues": [
-                    {
-                      "name": "Thickness",
-                      "ioValue": 19.05
-                    },
-                    {
-                      "name": "ArmHeight",
-                      "ioValue": 600
-                    }
-                  ],
-                  "topLevel": false,
-                  "allAtoms": [
-                    {
-                      "atomType": "Output",
-                      "x": 1,
-                      "y": 0.5,
-                      "uniqueID": "id-9136",
-                      "ioValues": [
-                        {
-                          "name": "number or geometry",
-                          "ioValue": "__GEOMETRY_INPUT__"
-                        }
-                      ]
-                    },
-                    {
-                      "atomType": "Input",
-                      "x": 0,
-                      "y": 0.2,
-                      "uniqueID": "id-9138",
-                      "name": "Thickness",
-                      "type": "number",
-                      "options": []
-                    },
-                    {
-                      "atomType": "Input",
-                      "x": 0,
-                      "y": 0.2,
-                      "uniqueID": "id-9141",
-                      "name": "ArmHeight",
-                      "type": "number",
-                      "options": []
-                    },
-                    {
-                      "atomType": "Rectangle",
-                      "x": 0.3,
-                      "y": 0.3,
-                      "uniqueID": "id-9144",
-                      "ioValues": [
-                        {
-                          "name": "x length",
-                          "ioValue": 100
-                        },
-                        {
-                          "name": "y length",
-                          "ioValue": 561.9,
-                          "currentEquation": "ArmHeight - 2*Thickness"
-                        }
-                      ]
-                    },
-                    {
-                      "atomType": "Rectangle",
-                      "x": 0.3,
-                      "y": 0.7,
-                      "uniqueID": "id-9148",
-                      "ioValues": [
-                        {
-                          "name": "x length",
-                          "ioValue": 50
-                        },
-                        {
-                          "name": "y length",
-                          "ioValue": 38.1,
-                          "currentEquation": "2*Thickness"
-                        }
-                      ]
-                    },
-                    {
-                      "atomType": "Move",
-                      "x": 0.5,
-                      "y": 0.7,
-                      "uniqueID": "id-9152",
-                      "ioValues": [
-                        {
-                          "name": "geometry",
-                          "ioValue": "__GEOMETRY_INPUT__"
-                        },
-                        {
-                          "name": "xDist",
-                          "ioValue": 0
-                        },
-                        {
-                          "name": "yDist",
-                          "ioValue": 300,
-                          "currentEquation": "ArmHeight/2"
-                        },
-                        {
-                          "name": "zDist",
-                          "ioValue": 0
-                        }
-                      ]
-                    },
-                    {
-                      "atomType": "Fusion",
-                      "x": 0.7,
-                      "y": 0.5,
-                      "uniqueID": "id-9158",
-                      "ioValues": [
-                        {
-                          "name": "Shape 1",
-                          "ioValue": {
-                            "geometry": "rectangle-100-561.9",
-                            "dimension": "2D",
-                            "plane": {
-                              "origin": [
-                                0,
-                                0,
-                                0
-                              ],
-                              "xDir": [
-                                1,
-                                0,
-                                0
-                              ],
-                              "normal": [
-                                0,
-                                0,
-                                1
-                              ]
-                            },
-                            "color": "#aad7f2",
-                            "tags": [],
-                            "bom": []
-                          }
-                        },
-                        {
-                          "name": "Shape2",
-                          "ioValue": {
-                            "geometry": "move-rectangle-50-38.1-0-300-0",
-                            "dimension": "2D",
-                            "plane": {
-                              "origin": [
-                                0,
-                                0,
-                                0
-                              ],
-                              "xDir": [
-                                1,
-                                0,
-                                0
-                              ],
-                              "normal": [
-                                0,
-                                0,
-                                1
-                              ]
-                            },
-                            "color": "#aad7f2",
-                            "tags": [],
-                            "bom": []
-                          }
-                        }
-                      ],
-                      "unionType": "Fusion"
-                    }
-                  ],
-                  "allConnectors": [
-                    {
-                      "ap2Name": "Shape 1",
-                      "ap1ID": "id-9144",
-                      "ap2ID": "id-9158"
-                    },
-                    {
-                      "ap2Name": "geometry",
-                      "ap1ID": "id-9148",
-                      "ap2ID": "id-9152"
-                    },
-                    {
-                      "ap2Name": "Shape2",
-                      "ap1ID": "id-9152",
-                      "ap2ID": "id-9158"
-                    },
-                    {
-                      "ap2Name": "number or geometry",
-                      "ap1ID": "id-9158",
-                      "ap2ID": "id-9136"
-                    }
-                  ],
-                  "fileTypeVersion": 1
-                },
-                {
-                  "atomType": "Extrude",
-                  "x": 0.5,
-                  "y": 0.5,
-                  "uniqueID": "id-9161",
-                  "ioValues": [
-                    {
-                      "name": "geometry",
-                      "ioValue": "__GEOMETRY_INPUT__"
-                    },
-                    {
-                      "name": "height",
-                      "ioValue": 19.05,
-                      "currentEquation": "Thickness"
-                    }
-                  ]
-                },
-                {
-                  "atomType": "Rotate",
-                  "x": 0.6,
-                  "y": 0.5,
-                  "uniqueID": "id-9165",
-                  "ioValues": [
-                    {
-                      "name": "geometry",
-                      "ioValue": "__GEOMETRY_INPUT__"
-                    },
-                    {
-                      "name": "x-axis degrees",
-                      "ioValue": 90
-                    },
-                    {
-                      "name": "y-axis degrees",
-                      "ioValue": 0
-                    },
-                    {
-                      "name": "z-axis degrees",
-                      "ioValue": 0
-                    }
-                  ]
-                },
-                {
-                  "atomType": "Move",
-                  "x": 0.7,
-                  "y": 0.5,
-                  "uniqueID": "id-9171",
-                  "ioValues": [
-                    {
-                      "name": "geometry",
-                      "ioValue": "__GEOMETRY_INPUT__"
-                    },
-                    {
-                      "name": "xDist",
-                      "ioValue": 656.9398202429734,
-                      "currentEquation": "460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 300 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 50"
-                    },
-                    {
-                      "name": "yDist",
-                      "ioValue": 338.1,
-                      "currentEquation": "SeatWidth/2 + 2*Thickness"
-                    },
-                    {
-                      "name": "zDist",
-                      "ioValue": 280.95,
-                      "currentEquation": "(ArmHeight - 2*Thickness)/2"
-                    }
-                  ]
-                },
-                {
-                  "atomType": "Tag",
-                  "x": 0.9,
-                  "y": 0.5,
-                  "uniqueID": "id-9177",
-                  "name": "wood",
-                  "ioValues": [
-                    {
-                      "name": "geometry",
-                      "ioValue": "__GEOMETRY_INPUT__"
-                    }
-                  ],
-                  "tags": [
-                    "wood"
-                  ]
-                }
-              ],
-              "allConnectors": [
-                {
-                  "ap2Name": "Thickness",
-                  "ap1ID": "id-9122",
-                  "ap2ID": "id-9134"
-                },
-                {
-                  "ap2Name": "ArmHeight",
-                  "ap1ID": "id-9128",
-                  "ap2ID": "id-9134"
-                },
-                {
-                  "ap2Name": "geometry",
-                  "ap1ID": "id-9161",
-                  "ap2ID": "id-9165"
-                },
-                {
-                  "ap2Name": "geometry",
-                  "ap1ID": "id-9165",
-                  "ap2ID": "id-9171"
-                },
-                {
-                  "ap2Name": "geometry",
-                  "ap1ID": "id-9171",
-                  "ap2ID": "id-9177"
-                },
-                {
-                  "ap2Name": "number or geometry",
-                  "ap1ID": "id-9177",
-                  "ap2ID": "id-9120"
-                },
-                {
-                  "ap2Name": "geometry",
-                  "ap1ID": "id-9134",
-                  "ap2ID": "id-9161"
-                }
-              ],
-              "fileTypeVersion": 1
-            },
-            {
-              "atomType": "Move",
-              "x": 0.6,
-              "y": 0.7,
-              "uniqueID": "id-9180",
-              "ioValues": [
-                {
-                  "name": "geometry",
-                  "ioValue": "__GEOMETRY_INPUT__"
-                },
-                {
-                  "name": "xDist",
-                  "ioValue": 0
-                },
-                {
-                  "name": "yDist",
-                  "ioValue": -657.15,
-                  "currentEquation": "-(SeatWidth + 3*Thickness)"
-                },
-                {
-                  "name": "zDist",
-                  "ioValue": 0
-                }
-              ]
-            },
-            {
-              "atomType": "Assembly",
-              "x": 0.8,
-              "y": 0.5,
-              "uniqueID": "id-9186",
-              "ioValues": [
-                {
-                  "name": "makeDisjoint",
-                  "ioValue": true
-                },
-                {
-                  "name": "Shape 1",
-                  "ioValue": "__GEOMETRY_INPUT__"
-                },
-                {
-                  "name": "Shape2",
-                  "ioValue": "__GEOMETRY_INPUT__"
-                },
-                {
-                  "name": "Shape3",
-                  "ioValue": "__GEOMETRY_INPUT__"
-                }
-              ]
-            }
-          ],
-          "allConnectors": [
-            {
-              "ap2Name": "Thickness",
-              "ap1ID": "id-9106",
-              "ap2ID": "id-9118"
-            },
-            {
-              "ap2Name": "SeatWidth",
-              "ap1ID": "id-9109",
-              "ap2ID": "id-9118"
-            },
-            {
-              "ap2Name": "ArmHeight",
-              "ap1ID": "id-9112",
-              "ap2ID": "id-9118"
-            },
-            {
-              "ap2Name": "BackAngle",
-              "ap1ID": "id-9115",
-              "ap2ID": "id-9118"
-            },
-            {
-              "ap2Name": "Shape2",
-              "ap1ID": "id-9180",
-              "ap2ID": "id-9186"
-            },
-            {
-              "ap2Name": "number or geometry",
-              "ap1ID": "id-9186",
-              "ap2ID": "id-9104"
-            },
-            {
-              "ap2Name": "geometry",
-              "ap1ID": "id-9118",
-              "ap2ID": "id-9180"
-            },
-            {
-              "ap2Name": "Shape 1",
-              "ap1ID": "id-9118",
-              "ap2ID": "id-9186"
-            }
-          ],
-          "fileTypeVersion": 1
-        },
-        {
-          "atomType": "Molecule",
-          "x": 0.4,
           "y": 0.8,
           "uniqueID": "id-9190",
           "name": "Upper Back Batten",
@@ -3807,11 +3246,11 @@
             },
             {
               "name": "ArmHeight",
-              "ioValue": 600
+              "ioValue": 520
             },
             {
               "name": "BackAngle",
-              "ioValue": 24
+              "ioValue": 26
             }
           ],
           "topLevel": false,
@@ -3910,8 +3349,8 @@
                 },
                 {
                   "name": "xDist",
-                  "ioValue": 656.9398202429734,
-                  "currentEquation": "460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 300 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 50"
+                  "ioValue": 664.3462118379725,
+                  "currentEquation": "460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 230 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 50"
                 },
                 {
                   "name": "yDist",
@@ -3919,7 +3358,7 @@
                 },
                 {
                   "name": "zDist",
-                  "ioValue": 561.9,
+                  "ioValue": 481.9,
                   "currentEquation": "ArmHeight - 2*Thickness"
                 }
               ]
@@ -3982,11 +3421,11 @@
             },
             {
               "name": "ArmHeight",
-              "ioValue": 600
+              "ioValue": 520
             },
             {
               "name": "BackAngle",
-              "ioValue": 24
+              "ioValue": 26
             }
           ],
           "topLevel": false,
@@ -4056,11 +3495,11 @@
                 },
                 {
                   "name": "ArmHeight",
-                  "ioValue": 600
+                  "ioValue": 520
                 },
                 {
                   "name": "BackAngle",
-                  "ioValue": 24
+                  "ioValue": 26
                 }
               ],
               "topLevel": false,
@@ -4126,11 +3565,11 @@
                     },
                     {
                       "name": "ArmHeight",
-                      "ioValue": 600
+                      "ioValue": 520
                     },
                     {
                       "name": "BackAngle",
-                      "ioValue": 24
+                      "ioValue": 26
                     }
                   ],
                   "topLevel": false,
@@ -4183,8 +3622,8 @@
                       "ioValues": [
                         {
                           "name": "X_Length",
-                          "ioValue": 766.9398202429734,
-                          "currentEquation": "460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 300 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 160"
+                          "ioValue": 774.3462118379725,
+                          "currentEquation": "460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 230 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 160"
                         },
                         {
                           "name": "Y_Length",
@@ -4241,7 +3680,7 @@
                           "ioValues": [
                             {
                               "name": "width",
-                              "ioValue": 766.9398202429734
+                              "ioValue": 774.3462118379725
                             },
                             {
                               "name": "height",
@@ -4297,8 +3736,8 @@
                       "ioValues": [
                         {
                           "name": "x length",
-                          "ioValue": 383.4699101214867,
-                          "currentEquation": "(460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 300 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 160)/2"
+                          "ioValue": 387.17310591898627,
+                          "currentEquation": "(460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 230 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 160)/2"
                         },
                         {
                           "name": "y length",
@@ -4318,8 +3757,8 @@
                         },
                         {
                           "name": "xDist",
-                          "ioValue": 191.73495506074335,
-                          "currentEquation": "(460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 300 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 160)/4"
+                          "ioValue": 193.58655295949313,
+                          "currentEquation": "(460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 230 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 160)/4"
                         },
                         {
                           "name": "yDist",
@@ -4340,14 +3779,14 @@
                         {
                           "name": "Shape 1",
                           "ioValue": {
-                            "geometry": "55d3a163-0",
+                            "geometry": "cf072340-0",
                             "color": "#aad7f2",
                             "tags": [
                               "rounded-rectangle",
                               "2d"
                             ],
                             "bom": [
-                              "Rounded rectangle 766.9398202429734×120 mm, r=45 mm"
+                              "Rounded rectangle 774.3462118379725×120 mm, r=45 mm"
                             ],
                             "plane": {
                               "origin": [
@@ -4373,7 +3812,7 @@
                         {
                           "name": "Shape2",
                           "ioValue": {
-                            "geometry": "move-rectangle-383.4699101214867-120-191.73495506074335-0-0",
+                            "geometry": "move-rectangle-387.17310591898627-120-193.58655295949313-0-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -4454,8 +3893,8 @@
                     },
                     {
                       "name": "xDist",
-                      "ioValue": 323.4699101214867,
-                      "currentEquation": "(460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 300 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 40)/2"
+                      "ioValue": 327.17310591898627,
+                      "currentEquation": "(460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 230 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 40)/2"
                     },
                     {
                       "name": "yDist",
@@ -4464,7 +3903,7 @@
                     },
                     {
                       "name": "zDist",
-                      "ioValue": 580.95,
+                      "ioValue": 500.95,
                       "currentEquation": "ArmHeight - Thickness"
                     }
                   ]
@@ -4636,7 +4075,7 @@
             },
             {
               "name": "ArmHeight",
-              "ioValue": 600
+              "ioValue": 520
             },
             {
               "name": "LegSweep",
@@ -4710,7 +4149,7 @@
                 },
                 {
                   "name": "ArmHeight",
-                  "ioValue": 600
+                  "ioValue": 520
                 },
                 {
                   "name": "LegSweep",
@@ -4784,7 +4223,7 @@
                     },
                     {
                       "name": "ArmHeight",
-                      "ioValue": 600
+                      "ioValue": 520
                     },
                     {
                       "name": "LegSweep",
@@ -4875,7 +4314,7 @@
                         },
                         {
                           "name": "yDist",
-                          "ioValue": 634.1127374618602,
+                          "ioValue": 548.9785156637873,
                           "currentEquation": "(ArmHeight - Thickness + 45*sin(LegSweep*pi/180))/cos(LegSweep*pi/180) - 0.5"
                         },
                         {
@@ -4917,7 +4356,7 @@
                         },
                         {
                           "name": "yDist",
-                          "ioValue": 335.1127374618602,
+                          "ioValue": 249.97851566378733,
                           "currentEquation": "(ArmHeight - Thickness + 45*sin(LegSweep*pi/180))/cos(LegSweep*pi/180) - 300 + 0.5"
                         },
                         {
@@ -4948,7 +4387,7 @@
                         {
                           "name": "Shape 1",
                           "ioValue": {
-                            "geometry": "move-rectangle-81.9-1-379.05-634.1127374618602-0",
+                            "geometry": "move-rectangle-81.9-1-379.05-548.9785156637873-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -4975,7 +4414,7 @@
                         {
                           "name": "Shape2",
                           "ioValue": {
-                            "geometry": "move-rectangle-1-1-338.6-335.1127374618602-0",
+                            "geometry": "move-rectangle-1-1-338.6-249.97851566378733-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -5350,10 +4789,6 @@
             {
               "name": "Shape5",
               "ioValue": "__GEOMETRY_INPUT__"
-            },
-            {
-              "name": "Shape6",
-              "ioValue": "__GEOMETRY_INPUT__"
             }
           ]
         }
@@ -5367,11 +4802,6 @@
         {
           "ap2Name": "Thickness",
           "ap1ID": "id-8978",
-          "ap2ID": "id-9102"
-        },
-        {
-          "ap2Name": "Thickness",
-          "ap1ID": "id-8978",
           "ap2ID": "id-9190"
         },
         {
@@ -5392,11 +4822,6 @@
         {
           "ap2Name": "SeatWidth",
           "ap1ID": "id-8981",
-          "ap2ID": "id-9102"
-        },
-        {
-          "ap2Name": "SeatWidth",
-          "ap1ID": "id-8981",
           "ap2ID": "id-9190"
         },
         {
@@ -5412,11 +4837,6 @@
         {
           "ap2Name": "BackAngle",
           "ap1ID": "id-8984",
-          "ap2ID": "id-9102"
-        },
-        {
-          "ap2Name": "BackAngle",
-          "ap1ID": "id-8984",
           "ap2ID": "id-9190"
         },
         {
@@ -5428,11 +4848,6 @@
           "ap2Name": "ArmHeight",
           "ap1ID": "id-8987",
           "ap2ID": "id-8993"
-        },
-        {
-          "ap2Name": "ArmHeight",
-          "ap1ID": "id-8987",
-          "ap2ID": "id-9102"
         },
         {
           "ap2Name": "ArmHeight",
@@ -5472,11 +4887,6 @@
         {
           "ap2Name": "Shape 1",
           "ap1ID": "id-8993",
-          "ap2ID": "id-9448"
-        },
-        {
-          "ap2Name": "Shape2",
-          "ap1ID": "id-9102",
           "ap2ID": "id-9448"
         },
         {
@@ -5525,61 +4935,151 @@
       ],
       "orientations": [
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 1,
+          "faceCount": 6,
+          "faceNormal": [
+            0,
+            -1,
+            1.1102230246251565e-16
+          ]
         },
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 1,
+          "faceCount": 6,
+          "faceNormal": [
+            0,
+            -1,
+            1.1102230246251565e-16
+          ]
         },
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 5,
+          "faceCount": 13,
+          "faceNormal": [
+            0,
+            0,
+            1
+          ]
         },
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 5,
+          "faceCount": 13,
+          "faceNormal": [
+            0,
+            0,
+            1
+          ]
         },
         {
-          "downwardFaceIndex": 5
+          "downwardFaceIndex": 4,
+          "faceCount": 6,
+          "faceNormal": [
+            0,
+            0,
+            -1
+          ]
         },
         {
-          "downwardFaceIndex": 5
+          "downwardFaceIndex": 6,
+          "faceCount": 8,
+          "faceNormal": [
+            -0.9396926207859084,
+            1.1102230246251565e-16,
+            0.3420201433256686
+          ]
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 6,
+          "faceCount": 8,
+          "faceNormal": [
+            0.9396926207859084,
+            -2.3348698237725105e-16,
+            -0.3420201433256688
+          ]
         },
         {
-          "downwardFaceIndex": 6
+          "downwardFaceIndex": 1,
+          "faceCount": 6,
+          "faceNormal": [
+            0.898794046299167,
+            0,
+            -0.4383711467890774
+          ]
         },
         {
-          "downwardFaceIndex": 6
+          "downwardFaceIndex": 1,
+          "faceCount": 6,
+          "faceNormal": [
+            0.898794046299167,
+            0,
+            -0.4383711467890774
+          ]
         },
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 1,
+          "faceCount": 6,
+          "faceNormal": [
+            -0.898794046299167,
+            1.1102230246251565e-16,
+            0.4383711467890773
+          ]
         },
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 4,
+          "faceCount": 9,
+          "faceNormal": [
+            0.3100127688103205,
+            0,
+            0.9507323930394708
+          ]
         },
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 5,
+          "faceCount": 9,
+          "faceNormal": [
+            0.3100127688103205,
+            0,
+            0.9507323930394708
+          ]
         },
         {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 1,
+          "faceCount": 6,
+          "faceNormal": [
+            -1,
+            1.1102230246251565e-16,
+            -1.1102230246251565e-16
+          ]
         },
         {
-          "downwardFaceIndex": 5
+          "downwardFaceIndex": 1,
+          "faceCount": 9,
+          "faceNormal": [
+            0,
+            1,
+            -1.1102230246251565e-16
+          ]
         },
         {
-          "downwardFaceIndex": 1
+          "downwardFaceIndex": 1,
+          "faceCount": 9,
+          "faceNormal": [
+            0,
+            1,
+            -1.1102230246251565e-16
+          ]
         },
         {
-          "downwardFaceIndex": 1
-        },
-        {
-          "downwardFaceIndex": 1
-        },
-        {
-          "downwardFaceIndex": 4
+          "downwardFaceIndex": 4,
+          "faceCount": 6,
+          "faceNormal": [
+            -1,
+            1.1102230246251565e-16,
+            -1.1102230246251565e-16
+          ]
         }
       ],
-      "orientationsForHashed": 18
+      "orientationsForHashed": 16
     },
     {
       "atomType": "Molecule",
@@ -5590,7 +5090,7 @@
       "ioValues": [
         {
           "name": "ArmHeight",
-          "ioValue": 600
+          "ioValue": 520
         },
         {
           "name": "Thickness",
@@ -5602,7 +5102,7 @@
         },
         {
           "name": "BackAngle",
-          "ioValue": 24
+          "ioValue": 26
         }
       ],
       "topLevel": false,
@@ -5878,8 +5378,8 @@
             },
             {
               "name": "xDist",
-              "ioValue": 626.9398202429734,
-              "currentEquation": "460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 300 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 20"
+              "ioValue": 634.3462118379725,
+              "currentEquation": "460 + Thickness*cos(BackAngle*pi/180) + (ArmHeight - Thickness - 230 + Thickness*sin(BackAngle*pi/180))*tan(BackAngle*pi/180) + 1 + 20"
             },
             {
               "name": "yDist",
@@ -5888,7 +5388,7 @@
             },
             {
               "name": "zDist",
-              "ioValue": 600,
+              "ioValue": 520,
               "currentEquation": "ArmHeight"
             }
           ]
