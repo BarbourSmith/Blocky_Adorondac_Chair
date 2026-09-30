@@ -1008,8 +1008,8 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 608.1,
-                  "currentEquation": "SeatWidth + 2*Thickness + 40"
+                  "ioValue": 568.1,
+                  "currentEquation": "SeatWidth + 2*Thickness"
                 },
                 {
                   "name": "y length",
