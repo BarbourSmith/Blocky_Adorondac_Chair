@@ -2,4 +2,5 @@
 # Bill Of Materials 
  |Part|Number Needed|Price|Source| 
  |----|----------|-----|-----|
-|Total: |0|$0.00| |
+|#8 x 1-1/4 in. exterior star-drive deck screws, 1 lb box (186 pcs)|1|$10.97|https://www.homedepot.com/p/DECKMATE-8-x-1-1-4-in-Tan-Star-Flat-Head-Wood-Deck-Screw-1-lb-186-Piece-115975/306587122|
+|Total: |1|$10.97| |
