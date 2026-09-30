@@ -1,13 +1,902 @@
 {
-    "atomType": "Molecule",
-    "x": 0,
-    "y": 0,
-    "uniqueID": "id-8292",
-    "name": "Blocky_Adorondac_Chair",
-    "topLevel": true,
-    "allAtoms": [],
-    "allConnectors": [],
-    "unitsKey": "MM",
-    "fileTypeVersion": 1,
-    "filetypeVersion": 1
+  "atomType": "Molecule",
+  "x": 0,
+  "y": 0,
+  "uniqueID": "id-8292",
+  "name": "Blocky_Adorondac_Chair",
+  "ioValues": [
+    {
+      "name": "Thickness",
+      "ioValue": 19.05
+    },
+    {
+      "name": "Seat_Width",
+      "ioValue": 560
+    },
+    {
+      "name": "Back_Angle",
+      "ioValue": 24
+    },
+    {
+      "name": "Arm_Height",
+      "ioValue": 600
+    },
+    {
+      "name": "Leg Sweep",
+      "ioValue": 20
+    }
+  ],
+  "topLevel": true,
+  "allAtoms": [
+    {
+      "atomType": "Output",
+      "x": 1,
+      "y": 0.5,
+      "uniqueID": "id-8293",
+      "ioValues": [
+        {
+          "name": "number or geometry",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ]
+    },
+    {
+      "atomType": "Molecule",
+      "x": 0.4,
+      "y": 0.2,
+      "uniqueID": "id-8306",
+      "name": "Frame",
+      "ioValues": [
+        {
+          "name": "Thickness",
+          "ioValue": 19.05
+        },
+        {
+          "name": "Seat Width",
+          "ioValue": 560
+        }
+      ],
+      "topLevel": false,
+      "allAtoms": [
+        {
+          "atomType": "Output",
+          "x": 1,
+          "y": 0.5,
+          "uniqueID": "id-8308",
+          "ioValues": [
+            {
+              "name": "number or geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8326",
+          "name": "Thickness",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8329",
+          "name": "Seat Width",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Code",
+          "x": 0.5,
+          "y": 0.5,
+          "uniqueID": "id-8332",
+          "ioValues": [
+            {
+              "name": "thickness",
+              "ioValue": 19.05
+            },
+            {
+              "name": "seatWidth",
+              "ioValue": 560
+            }
+          ],
+          "interpreterVersion": 1,
+          "code": "/**\n * Frame: two side runners plus the front apron.\n * Chair axes (mm): X runs front -> back, Y across the chair, Z up.\n * Runner side profile corners (x, z):\n *   front top (0,380) -> seat rear (460,300) -> toe (960,0) -> heel (720,0) -> front bottom (0,200)\n * The top edge from front to seat rear is the seat slope; the seat panels sit on it.\n */\nfunction run(thickness: number = 19.05, seatWidth: number = 560): Assembly[] {\n  const T = thickness;\n  const W = seatWidth; // clear width between the runners\n  const wood = \"#C8894F\";\n\n  // A flat board cut from a profile drawn in the side (XZ) view, placed with its\n  // inner face at y = y0 and extending T in +Y.\n  const sideBoard = (pts: number[][], y0: number) => {\n    let pen = replicad.draw(pts[0]);\n    for (let i = 1; i < pts.length; i++) pen = pen.lineTo(pts[i]);\n    let solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n    const bb = solid.boundingBox.bounds;\n    return solid.translate(0, y0 - bb[0][1], 0);\n  };\n\n  const runnerPts = [[0, 380], [0, 200], [720, 0], [960, 0], [460, 300]];\n  const parts: Assembly[] = [];\n  for (const [side, y0] of [[\"Right\", W / 2], [\"Left\", -W / 2 - T]] as [string, number][]) {\n    parts.push(new Assembly({\n      geometry: sideBoard(runnerPts, y0),\n      color: wood,\n      tags: [\"cutLayout\", \"runner\"],\n      bom: [`${side} runner`],\n    }));\n  }\n\n  // Front apron: spans the outside faces of both runners and caps their front ends.\n  const apron = replicad.makeBox([-T, -(W / 2 + T), 200], [0, W / 2 + T, 380]);\n  parts.push(new Assembly({ geometry: apron, color: wood, tags: [\"cutLayout\", \"apron\"], bom: [\"Front apron\"] }));\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Frame: two side runners plus the front apron.\n * Chair axes (mm): X runs front -> back, Y across the chair, Z up.\n * Runner side profile corners (x, z):\n *   front top (0,380) -> seat rear (460,300) -> toe (960,0) -> heel (720,0) -> front bottom (0,200)\n * The top edge from front to seat rear is the seat slope; the seat panels sit on it.\n */\nfunction run(thickness = 19.05, seatWidth = 560) {\n    const T = thickness;\n    const W = seatWidth; // clear width between the runners\n    const wood = \"#C8894F\";\n    // A flat board cut from a profile drawn in the side (XZ) view, placed with its\n    // inner face at y = y0 and extending T in +Y.\n    const sideBoard = (pts, y0) => {\n        let pen = replicad.draw(pts[0]);\n        for (let i = 1; i < pts.length; i++)\n            pen = pen.lineTo(pts[i]);\n        let solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n        const bb = solid.boundingBox.bounds;\n        return solid.translate(0, y0 - bb[0][1], 0);\n    };\n    const runnerPts = [[0, 380], [0, 200], [720, 0], [960, 0], [460, 300]];\n    const parts = [];\n    for (const [side, y0] of [[\"Right\", W / 2], [\"Left\", -W / 2 - T]]) {\n        parts.push(new Assembly({\n            geometry: sideBoard(runnerPts, y0),\n            color: wood,\n            tags: [\"cutLayout\", \"runner\"],\n            bom: [`${side} runner`],\n        }));\n    }\n    // Front apron: spans the outside faces of both runners and caps their front ends.\n    const apron = replicad.makeBox([-T, -(W / 2 + T), 200], [0, W / 2 + T, 380]);\n    parts.push(new Assembly({ geometry: apron, color: wood, tags: [\"cutLayout\", \"apron\"], bom: [\"Front apron\"] }));\n    return parts;\n}\n"
+        }
+      ],
+      "allConnectors": [
+        {
+          "ap2Name": "thickness",
+          "ap1ID": "id-8326",
+          "ap2ID": "id-8332"
+        },
+        {
+          "ap2Name": "seatWidth",
+          "ap1ID": "id-8329",
+          "ap2ID": "id-8332"
+        },
+        {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-8332",
+          "ap2ID": "id-8308"
+        }
+      ],
+      "fileTypeVersion": 1
+    },
+    {
+      "atomType": "Molecule",
+      "x": 0.4,
+      "y": 0.4,
+      "uniqueID": "id-8310",
+      "name": "Seat",
+      "ioValues": [
+        {
+          "name": "Thickness",
+          "ioValue": 19.05
+        },
+        {
+          "name": "Seat Width",
+          "ioValue": 560
+        }
+      ],
+      "topLevel": false,
+      "allAtoms": [
+        {
+          "atomType": "Output",
+          "x": 1,
+          "y": 0.5,
+          "uniqueID": "id-8312",
+          "ioValues": [
+            {
+              "name": "number or geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8341",
+          "name": "Thickness",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8344",
+          "name": "Seat Width",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Code",
+          "x": 0.5,
+          "y": 0.5,
+          "uniqueID": "id-8347",
+          "ioValues": [
+            {
+              "name": "thickness",
+              "ioValue": 19.05
+            },
+            {
+              "name": "seatWidth",
+              "ioValue": 560
+            },
+            {
+              "name": "gap",
+              "ioValue": 6
+            }
+          ],
+          "interpreterVersion": 1,
+          "code": "/**\n * Seat: two wide panels resting on the runners' seat slope,\n * which runs from the runner front top (0,380) down to the seat rear (460,300).\n * The front of the seat overhangs to cover the apron.\n */\nfunction run(thickness: number = 19.05, seatWidth: number = 560, gap: number = 6): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const wood = \"#C8894F\";\n  const A = [0, 380]; // runner front top (x, z)\n  const B = [460, 300]; // runner seat rear (x, z)\n  const slopeDeg = (Math.atan2(A[1] - B[1], B[0] - A[0]) * 180) / Math.PI;\n  const depth = Math.hypot(B[0] - A[0], B[1] - A[1]); // along the slope\n\n  const half = W / 2 + T; // panels cover the runners' outside faces\n  const parts: Assembly[] = [];\n  for (const [side, y0, y1] of [[\"Right\", gap / 2, half], [\"Left\", -half, -gap / 2]] as [string, number, number][]) {\n    const panel = replicad\n      .makeBox([-T, y0, 0], [depth, y1, T])\n      .rotate(slopeDeg, [0, 0, 0], [0, 1, 0]) // tip the rear edge down\n      .translate(A[0], 0, A[1]);\n    parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"seat\"], bom: [`${side} seat panel`] }));\n  }\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Seat: two wide panels resting on the runners' seat slope,\n * which runs from the runner front top (0,380) down to the seat rear (460,300).\n * The front of the seat overhangs to cover the apron.\n */\nfunction run(thickness = 19.05, seatWidth = 560, gap = 6) {\n    const T = thickness;\n    const W = seatWidth;\n    const wood = \"#C8894F\";\n    const A = [0, 380]; // runner front top (x, z)\n    const B = [460, 300]; // runner seat rear (x, z)\n    const slopeDeg = (Math.atan2(A[1] - B[1], B[0] - A[0]) * 180) / Math.PI;\n    const depth = Math.hypot(B[0] - A[0], B[1] - A[1]); // along the slope\n    const half = W / 2 + T; // panels cover the runners' outside faces\n    const parts = [];\n    for (const [side, y0, y1] of [[\"Right\", gap / 2, half], [\"Left\", -half, -gap / 2]]) {\n        const panel = replicad\n            .makeBox([-T, y0, 0], [depth, y1, T])\n            .rotate(slopeDeg, [0, 0, 0], [0, 1, 0]) // tip the rear edge down\n            .translate(A[0], 0, A[1]);\n        parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"seat\"], bom: [`${side} seat panel`] }));\n    }\n    return parts;\n}\n"
+        }
+      ],
+      "allConnectors": [
+        {
+          "ap2Name": "thickness",
+          "ap1ID": "id-8341",
+          "ap2ID": "id-8347"
+        },
+        {
+          "ap2Name": "seatWidth",
+          "ap1ID": "id-8344",
+          "ap2ID": "id-8347"
+        },
+        {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-8347",
+          "ap2ID": "id-8312"
+        }
+      ],
+      "fileTypeVersion": 1
+    },
+    {
+      "atomType": "Molecule",
+      "x": 0.4,
+      "y": 0.6,
+      "uniqueID": "id-8314",
+      "name": "Back",
+      "ioValues": [
+        {
+          "name": "Thickness",
+          "ioValue": 19.05
+        },
+        {
+          "name": "Seat Width",
+          "ioValue": 560
+        },
+        {
+          "name": "Back Angle",
+          "ioValue": 24
+        }
+      ],
+      "topLevel": false,
+      "allAtoms": [
+        {
+          "atomType": "Output",
+          "x": 1,
+          "y": 0.5,
+          "uniqueID": "id-8316",
+          "ioValues": [
+            {
+              "name": "number or geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8356",
+          "name": "Thickness",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8359",
+          "name": "Seat Width",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.3,
+          "uniqueID": "id-8362",
+          "name": "Back Angle",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Code",
+          "x": 0.5,
+          "y": 0.5,
+          "uniqueID": "id-8365",
+          "ioValues": [
+            {
+              "name": "thickness",
+              "ioValue": 19.05
+            },
+            {
+              "name": "seatWidth",
+              "ioValue": 560
+            },
+            {
+              "name": "backAngle",
+              "ioValue": 24
+            },
+            {
+              "name": "backLength",
+              "ioValue": 700
+            },
+            {
+              "name": "gap",
+              "ioValue": 6
+            }
+          ],
+          "interpreterVersion": 1,
+          "code": "/**\n * Back: two leaning back panels between the runners plus a lower batten behind them.\n * The panels' front face pivots on the seat's rear bottom edge and leans back by backAngle\n * from vertical. The seat rear is where the seat slope (0,380)->(460,300) ends.\n * backLength is the panel length above the pivot, measured along the lean.\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  backAngle: number = 24,\n  backLength: number = 700,\n  gap: number = 6,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const wood = \"#C8894F\";\n  const P = [460, 300]; // seat rear bottom edge (x, z)\n  const below = 80; // panel length below the pivot, drops between the runners\n\n  // Boxes are built upright (X = thickness, Z = along the back) then leaned about Y.\n  const lean = (s: any) => s.rotate(backAngle, [0, 0, 0], [0, 1, 0]).translate(P[0], 0, P[1]);\n\n  const parts: Assembly[] = [];\n  for (const [side, y0, y1] of [[\"Right\", gap / 2, W / 2], [\"Left\", -W / 2, -gap / 2]] as [string, number, number][]) {\n    const panel = lean(replicad.makeBox([0, y0, -below], [T, y1, backLength]));\n    parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"back\"], bom: [`${side} back panel`] }));\n  }\n\n  // Lower batten: directly behind the panels at the bottom, screwed through the runners.\n  const batten = lean(replicad.makeBox([T, -W / 2, -below], [2 * T, W / 2, 20]));\n  parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Lower back batten\"] }));\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Back: two leaning back panels between the runners plus a lower batten behind them.\n * The panels' front face pivots on the seat's rear bottom edge and leans back by backAngle\n * from vertical. The seat rear is where the seat slope (0,380)->(460,300) ends.\n * backLength is the panel length above the pivot, measured along the lean.\n */\nfunction run(thickness = 19.05, seatWidth = 560, backAngle = 24, backLength = 700, gap = 6) {\n    const T = thickness;\n    const W = seatWidth;\n    const wood = \"#C8894F\";\n    const P = [460, 300]; // seat rear bottom edge (x, z)\n    const below = 80; // panel length below the pivot, drops between the runners\n    // Boxes are built upright (X = thickness, Z = along the back) then leaned about Y.\n    const lean = (s) => s.rotate(backAngle, [0, 0, 0], [0, 1, 0]).translate(P[0], 0, P[1]);\n    const parts = [];\n    for (const [side, y0, y1] of [[\"Right\", gap / 2, W / 2], [\"Left\", -W / 2, -gap / 2]]) {\n        const panel = lean(replicad.makeBox([0, y0, -below], [T, y1, backLength]));\n        parts.push(new Assembly({ geometry: panel, color: wood, tags: [\"cutLayout\", \"back\"], bom: [`${side} back panel`] }));\n    }\n    // Lower batten: directly behind the panels at the bottom, screwed through the runners.\n    const batten = lean(replicad.makeBox([T, -W / 2, -below], [2 * T, W / 2, 20]));\n    parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Lower back batten\"] }));\n    return parts;\n}\n"
+        }
+      ],
+      "allConnectors": [
+        {
+          "ap2Name": "thickness",
+          "ap1ID": "id-8356",
+          "ap2ID": "id-8365"
+        },
+        {
+          "ap2Name": "seatWidth",
+          "ap1ID": "id-8359",
+          "ap2ID": "id-8365"
+        },
+        {
+          "ap2Name": "backAngle",
+          "ap1ID": "id-8362",
+          "ap2ID": "id-8365"
+        },
+        {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-8365",
+          "ap2ID": "id-8316"
+        }
+      ],
+      "fileTypeVersion": 1
+    },
+    {
+      "atomType": "Molecule",
+      "x": 0.4,
+      "y": 0.8,
+      "uniqueID": "id-8318",
+      "name": "Arms and Legs",
+      "ioValues": [
+        {
+          "name": "Thickness",
+          "ioValue": 19.05
+        },
+        {
+          "name": "Seat Width",
+          "ioValue": 560
+        },
+        {
+          "name": "Back Angle",
+          "ioValue": 24
+        },
+        {
+          "name": "Arm Height",
+          "ioValue": 600
+        },
+        {
+          "name": "Leg Sweep",
+          "ioValue": 20
+        }
+      ],
+      "topLevel": false,
+      "allAtoms": [
+        {
+          "atomType": "Output",
+          "x": 1,
+          "y": 0.5,
+          "uniqueID": "id-8320",
+          "ioValues": [
+            {
+              "name": "number or geometry",
+              "ioValue": "__GEOMETRY_INPUT__"
+            }
+          ]
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8374",
+          "name": "Thickness",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.2,
+          "uniqueID": "id-8377",
+          "name": "Seat Width",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.3,
+          "uniqueID": "id-8380",
+          "name": "Back Angle",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.4,
+          "uniqueID": "id-8383",
+          "name": "Arm Height",
+          "type": "number",
+          "options": []
+        },
+        {
+          "atomType": "Code",
+          "x": 0.5,
+          "y": 0.5,
+          "uniqueID": "id-8386",
+          "ioValues": [
+            {
+              "name": "thickness",
+              "ioValue": 19.05
+            },
+            {
+              "name": "seatWidth",
+              "ioValue": 560
+            },
+            {
+              "name": "backAngle",
+              "ioValue": 24
+            },
+            {
+              "name": "armHeight",
+              "ioValue": 600
+            },
+            {
+              "name": "armWidth",
+              "ioValue": 120
+            },
+            {
+              "name": "legSweep",
+              "ioValue": 20
+            }
+          ],
+          "interpreterVersion": 1,
+          "code": "/**\n * Arms and legs: swept-back front legs, rear arm posts, an upper back batten, and two arms.\n * The back's rear face crosses arm height at xBack; the batten sits just behind it on\n * top of the rear posts, and the arms rest on the front legs and the batten.\n * Back pivot matches the Back molecule: seat rear bottom edge at (460, 300).\n * armHeight is the top of the arms above the floor.\n * legSweep is how far the front legs lean back from vertical (degrees); the foot sits\n * forward of the seat and the top lands well back under the arm.\n */\nfunction run(\n  thickness: number = 19.05,\n  seatWidth: number = 560,\n  backAngle: number = 24,\n  armHeight: number = 600,\n  legSweep: number = 20,\n  armWidth: number = 120,\n): Assembly[] {\n  const T = thickness;\n  const W = seatWidth;\n  const H = armHeight;\n  const wood = \"#C8894F\";\n  const P = [460, 300];\n  const b = (backAngle * Math.PI) / 180;\n  const s = (legSweep * Math.PI) / 180;\n\n  // Rear face of the back where it meets the underside of the arms, plus 1 mm clearance.\n  const xBack = P[0] + T * Math.cos(b) + (H - T - (P[1] - T * Math.sin(b))) * Math.tan(b) + 1;\n  const postDepth = 100;\n  const armFront = -60;\n  const armRear = xBack + postDepth;\n  const armIn = W / 2 + 5; // clears the back panels\n  const armOut = armIn + armWidth;\n\n  // Board drawn in the side (XZ) view with its inner face at y0.\n  const sideBoard = (pts: number[][], y0: number) => {\n    let pen = replicad.draw(pts[0]);\n    for (let i = 1; i < pts.length; i++) pen = pen.lineTo(pts[i]);\n    const solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n    const bb = solid.boundingBox.bounds;\n    return solid.translate(0, y0 - bb[0][1], 0);\n  };\n\n  // Front leg: a 90 mm wide board swept back by legSweep, cut level at the floor and under the arm.\n  const legWidth = 90;\n  const legFoot = -40; // front of the foot, ahead of the seat front\n  const wFlat = legWidth / Math.cos(s); // width measured along the level cuts\n  const rise = H - T;\n  const run_ = rise * Math.tan(s);\n  const legPts = [[legFoot, 0], [legFoot + wFlat, 0], [legFoot + wFlat + run_, rise], [legFoot + run_, rise]];\n  const postPts = [[xBack, 0], [xBack + postDepth, 0], [xBack + postDepth, H - 2 * T], [xBack, H - 2 * T]];\n\n  // Arm outline in plan: square rear, rounded front corners.\n  const armLen = armRear - armFront;\n  const armDrawing = replicad\n    .drawRoundedRectangle(armLen, armWidth, 45)\n    .fuse(replicad.drawRectangle(armLen / 2, armWidth).translate(armLen / 4, 0));\n\n  const parts: Assembly[] = [];\n  for (const [side, sign] of [[\"Right\", 1], [\"Left\", -1]] as [string, number][]) {\n    // Legs and posts sit outboard of the runners (runner occupies W/2 .. W/2+T).\n    const y0 = sign > 0 ? W / 2 + T : -W / 2 - 2 * T;\n    parts.push(new Assembly({ geometry: sideBoard(legPts, y0), color: wood, tags: [\"cutLayout\", \"leg\"], bom: [`${side} front leg`] }));\n    parts.push(new Assembly({ geometry: sideBoard(postPts, y0), color: wood, tags: [\"cutLayout\", \"post\"], bom: [`${side} rear post`] }));\n\n    const arm = armDrawing\n      .translate((armFront + armRear) / 2, (sign * (armIn + armOut)) / 2)\n      .sketchOnPlane(\"XY\")\n      .extrude(T)\n      .translate(0, 0, H - T);\n    parts.push(new Assembly({ geometry: arm, color: wood, tags: [\"cutLayout\", \"arm\"], bom: [`${side} arm`] }));\n  }\n\n  // Upper back batten: spans under both arms, rests on the rear posts.\n  const batten = replicad.makeBox([xBack, -armOut, H - 2 * T], [armRear, armOut, H - T]);\n  parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Upper back batten\"] }));\n  return parts;\n}\n",
+          "compiledCode": "\"use strict\";\n/**\n * Arms and legs: swept-back front legs, rear arm posts, an upper back batten, and two arms.\n * The back's rear face crosses arm height at xBack; the batten sits just behind it on\n * top of the rear posts, and the arms rest on the front legs and the batten.\n * Back pivot matches the Back molecule: seat rear bottom edge at (460, 300).\n * armHeight is the top of the arms above the floor.\n * legSweep is how far the front legs lean back from vertical (degrees); the foot sits\n * forward of the seat and the top lands well back under the arm.\n */\nfunction run(thickness = 19.05, seatWidth = 560, backAngle = 24, armHeight = 600, legSweep = 20, armWidth = 120) {\n    const T = thickness;\n    const W = seatWidth;\n    const H = armHeight;\n    const wood = \"#C8894F\";\n    const P = [460, 300];\n    const b = (backAngle * Math.PI) / 180;\n    const s = (legSweep * Math.PI) / 180;\n    // Rear face of the back where it meets the underside of the arms, plus 1 mm clearance.\n    const xBack = P[0] + T * Math.cos(b) + (H - T - (P[1] - T * Math.sin(b))) * Math.tan(b) + 1;\n    const postDepth = 100;\n    const armFront = -60;\n    const armRear = xBack + postDepth;\n    const armIn = W / 2 + 5; // clears the back panels\n    const armOut = armIn + armWidth;\n    // Board drawn in the side (XZ) view with its inner face at y0.\n    const sideBoard = (pts, y0) => {\n        let pen = replicad.draw(pts[0]);\n        for (let i = 1; i < pts.length; i++)\n            pen = pen.lineTo(pts[i]);\n        const solid = pen.close().sketchOnPlane(\"XZ\").extrude(T);\n        const bb = solid.boundingBox.bounds;\n        return solid.translate(0, y0 - bb[0][1], 0);\n    };\n    // Front leg: a 90 mm wide board swept back by legSweep, cut level at the floor and under the arm.\n    const legWidth = 90;\n    const legFoot = -40; // front of the foot, ahead of the seat front\n    const wFlat = legWidth / Math.cos(s); // width measured along the level cuts\n    const rise = H - T;\n    const run_ = rise * Math.tan(s);\n    const legPts = [[legFoot, 0], [legFoot + wFlat, 0], [legFoot + wFlat + run_, rise], [legFoot + run_, rise]];\n    const postPts = [[xBack, 0], [xBack + postDepth, 0], [xBack + postDepth, H - 2 * T], [xBack, H - 2 * T]];\n    // Arm outline in plan: square rear, rounded front corners.\n    const armLen = armRear - armFront;\n    const armDrawing = replicad\n        .drawRoundedRectangle(armLen, armWidth, 45)\n        .fuse(replicad.drawRectangle(armLen / 2, armWidth).translate(armLen / 4, 0));\n    const parts = [];\n    for (const [side, sign] of [[\"Right\", 1], [\"Left\", -1]]) {\n        // Legs and posts sit outboard of the runners (runner occupies W/2 .. W/2+T).\n        const y0 = sign > 0 ? W / 2 + T : -W / 2 - 2 * T;\n        parts.push(new Assembly({ geometry: sideBoard(legPts, y0), color: wood, tags: [\"cutLayout\", \"leg\"], bom: [`${side} front leg`] }));\n        parts.push(new Assembly({ geometry: sideBoard(postPts, y0), color: wood, tags: [\"cutLayout\", \"post\"], bom: [`${side} rear post`] }));\n        const arm = armDrawing\n            .translate((armFront + armRear) / 2, (sign * (armIn + armOut)) / 2)\n            .sketchOnPlane(\"XY\")\n            .extrude(T)\n            .translate(0, 0, H - T);\n        parts.push(new Assembly({ geometry: arm, color: wood, tags: [\"cutLayout\", \"arm\"], bom: [`${side} arm`] }));\n    }\n    // Upper back batten: spans under both arms, rests on the rear posts.\n    const batten = replicad.makeBox([xBack, -armOut, H - 2 * T], [armRear, armOut, H - T]);\n    parts.push(new Assembly({ geometry: batten, color: wood, tags: [\"cutLayout\", \"batten\"], bom: [\"Upper back batten\"] }));\n    return parts;\n}\n"
+        },
+        {
+          "atomType": "Input",
+          "x": 0,
+          "y": 0.5,
+          "uniqueID": "id-8437",
+          "name": "Leg Sweep",
+          "type": "number",
+          "options": []
+        }
+      ],
+      "allConnectors": [
+        {
+          "ap2Name": "thickness",
+          "ap1ID": "id-8374",
+          "ap2ID": "id-8386"
+        },
+        {
+          "ap2Name": "seatWidth",
+          "ap1ID": "id-8377",
+          "ap2ID": "id-8386"
+        },
+        {
+          "ap2Name": "backAngle",
+          "ap1ID": "id-8380",
+          "ap2ID": "id-8386"
+        },
+        {
+          "ap2Name": "armHeight",
+          "ap1ID": "id-8383",
+          "ap2ID": "id-8386"
+        },
+        {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-8386",
+          "ap2ID": "id-8320"
+        },
+        {
+          "ap2Name": "legSweep",
+          "ap1ID": "id-8437",
+          "ap2ID": "id-8386"
+        }
+      ],
+      "fileTypeVersion": 1
+    },
+    {
+      "atomType": "Assembly",
+      "x": 0.6,
+      "y": 0.5,
+      "uniqueID": "id-8322",
+      "ioValues": [
+        {
+          "name": "makeDisjoint",
+          "ioValue": true
+        },
+        {
+          "name": "Shape 1",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "Shape2",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "Shape3",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "Shape4",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "Shape5",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ]
+    },
+    {
+      "atomType": "CutLayout",
+      "x": 0.8,
+      "y": 0.8,
+      "uniqueID": "id-8410",
+      "name": "Cut Layout",
+      "ioValues": [
+        {
+          "name": "geometry",
+          "ioValue": "__GEOMETRY_INPUT__"
+        },
+        {
+          "name": "Sheet Width",
+          "ioValue": 2438
+        },
+        {
+          "name": "Sheet Height",
+          "ioValue": 1219
+        },
+        {
+          "name": "Part Padding",
+          "ioValue": 10
+        },
+        {
+          "name": "Orientations",
+          "ioValue": 12
+        }
+      ],
+      "placements": [
+        [
+          {
+            "id": 1,
+            "rotate": 300,
+            "translate": {
+              "x": -184.78167724609375,
+              "y": 491.2983703613281
+            }
+          },
+          {
+            "id": 5,
+            "rotate": 180,
+            "translate": {
+              "x": 1819.300048828125,
+              "y": 1054.239990234375
+            }
+          },
+          {
+            "id": 4,
+            "rotate": 210,
+            "translate": {
+              "x": 1623.280029296875,
+              "y": 1520.1781005859375
+            }
+          },
+          {
+            "id": 0,
+            "rotate": 210,
+            "translate": {
+              "x": 1032.331298828125,
+              "y": 1027.4012451171875
+            }
+          },
+          {
+            "id": 13,
+            "rotate": 180,
+            "translate": {
+              "x": 4102.56005859375,
+              "y": 772.1300048828125
+            }
+          },
+          {
+            "id": 2,
+            "rotate": 180,
+            "translate": {
+              "x": 2275.860107421875,
+              "y": 603.2799682617188
+            }
+          },
+          {
+            "id": 10,
+            "rotate": 180,
+            "translate": {
+              "x": 4070.360107421875,
+              "y": 772.1300048828125
+            }
+          },
+          {
+            "id": 6,
+            "rotate": 240,
+            "translate": {
+              "x": 2347.40185546875,
+              "y": 2774.940185546875
+            }
+          },
+          {
+            "id": 3,
+            "rotate": 240,
+            "translate": {
+              "x": 2274.56689453125,
+              "y": 1478.1070556640625
+            }
+          },
+          {
+            "id": 14,
+            "rotate": 30,
+            "translate": {
+              "x": -1618.28125,
+              "y": -1124.778076171875
+            }
+          },
+          {
+            "id": 11,
+            "rotate": 180,
+            "translate": {
+              "x": 4786.93994140625,
+              "y": 1077.760009765625
+            }
+          },
+          {
+            "id": 8,
+            "rotate": 210,
+            "translate": {
+              "x": 2564.36328125,
+              "y": 2300.02197265625
+            }
+          },
+          {
+            "id": 7,
+            "rotate": 90,
+            "translate": {
+              "x": 565.199951171875,
+              "y": -1009.4801025390625
+            }
+          },
+          {
+            "id": 9,
+            "rotate": 330,
+            "translate": {
+              "x": 66.5140380859375,
+              "y": 1316.648193359375
+            }
+          },
+          {
+            "id": 12,
+            "rotate": 270,
+            "translate": {
+              "x": 525.1500244140625,
+              "y": 2783.300048828125
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "atomType": "CutOrient",
+      "x": 0.6,
+      "y": 0.8,
+      "uniqueID": "id-8417",
+      "name": "Cut Orient",
+      "ioValues": [
+        {
+          "name": "geometry",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ],
+      "orientations": [
+        {
+          "downwardFaceIndex": 5
+        },
+        {
+          "downwardFaceIndex": 5
+        },
+        {
+          "downwardFaceIndex": 0
+        },
+        {
+          "downwardFaceIndex": 4
+        },
+        {
+          "downwardFaceIndex": 4
+        },
+        {
+          "downwardFaceIndex": 1
+        },
+        {
+          "downwardFaceIndex": 1
+        },
+        {
+          "downwardFaceIndex": 0
+        },
+        {
+          "downwardFaceIndex": 4
+        },
+        {
+          "downwardFaceIndex": 4
+        },
+        {
+          "downwardFaceIndex": 12
+        },
+        {
+          "downwardFaceIndex": 4
+        },
+        {
+          "downwardFaceIndex": 4
+        },
+        {
+          "downwardFaceIndex": 12
+        },
+        {
+          "downwardFaceIndex": 4
+        }
+      ],
+      "orientationsForHashed": 15
+    },
+    {
+      "atomType": "Readme",
+      "x": 0.8,
+      "y": 0.2,
+      "uniqueID": "id-8420",
+      "name": "README",
+      "ioValues": [
+        {
+          "name": "value",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ],
+      "readMeText": "# Blocky Adirondack Chair\n\nA modern, slab-style Adirondack chair cut entirely from one sheet thickness of plywood on a CNC router.\n\n## Inputs (editable in run mode)\n- **Thickness** – sheet thickness (default 19.05 mm / 3/4\")\n- **Seat_Width** – clear width between the side runners (default 560 mm)\n- **Back_Angle** – back lean from vertical in degrees (default 24)\n- **Arm_Height** – top of the arms above the floor (default 600 mm)\n- **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)\n\n## Parts (15)\n- 2 × side runners (sloped seat support, toe rests on the floor)\n- 1 × front apron\n- 2 × seat panels\n- 2 × back panels\n- 1 × lower back batten (behind the back panels, between the runners)\n- 1 × upper back batten (under the arms, behind the back)\n- 2 × front legs (swept back, outboard of the runners)\n- 2 × rear posts (outboard of the runners, carry the upper batten)\n- 2 × arms (rounded front corners)\n\n## Assembly\n1. Screw the front legs and rear posts to the outside faces of the runners.\n2. Screw the apron across the front ends of the runners.\n3. Screw the lower back batten between the runners, then fix the back panels to it.\n4. Lay the upper back batten across the tops of the rear posts and screw the back panels to its front edge.\n5. Screw the seat panels down onto the runners' seat slope.\n6. Screw the arms down onto the front legs and the upper batten.\n\nUse exterior-grade plywood and stainless or coated deck screws.\n",
+      "global": true
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.2,
+      "uniqueID": "id-8422",
+      "name": "Thickness",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.2,
+      "uniqueID": "id-8425",
+      "name": "Seat_Width",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.3,
+      "uniqueID": "id-8428",
+      "name": "Back_Angle",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.4,
+      "uniqueID": "id-8431",
+      "name": "Arm_Height",
+      "type": "number",
+      "options": []
+    },
+    {
+      "atomType": "Input",
+      "x": 0,
+      "y": 0.5,
+      "uniqueID": "id-8434",
+      "name": "Leg Sweep",
+      "type": "number",
+      "options": []
+    }
+  ],
+  "allConnectors": [
+    {
+      "ap2Name": "Shape 1",
+      "ap1ID": "id-8306",
+      "ap2ID": "id-8322"
+    },
+    {
+      "ap2Name": "Shape2",
+      "ap1ID": "id-8310",
+      "ap2ID": "id-8322"
+    },
+    {
+      "ap2Name": "Shape3",
+      "ap1ID": "id-8314",
+      "ap2ID": "id-8322"
+    },
+    {
+      "ap2Name": "Shape4",
+      "ap1ID": "id-8318",
+      "ap2ID": "id-8322"
+    },
+    {
+      "ap2Name": "number or geometry",
+      "ap1ID": "id-8322",
+      "ap2ID": "id-8293"
+    },
+    {
+      "ap2Name": "geometry",
+      "ap1ID": "id-8322",
+      "ap2ID": "id-8417"
+    },
+    {
+      "ap2Name": "geometry",
+      "ap1ID": "id-8417",
+      "ap2ID": "id-8410"
+    },
+    {
+      "ap2Name": "Thickness",
+      "ap1ID": "id-8422",
+      "ap2ID": "id-8306"
+    },
+    {
+      "ap2Name": "Thickness",
+      "ap1ID": "id-8422",
+      "ap2ID": "id-8310"
+    },
+    {
+      "ap2Name": "Thickness",
+      "ap1ID": "id-8422",
+      "ap2ID": "id-8314"
+    },
+    {
+      "ap2Name": "Thickness",
+      "ap1ID": "id-8422",
+      "ap2ID": "id-8318"
+    },
+    {
+      "ap2Name": "Seat Width",
+      "ap1ID": "id-8425",
+      "ap2ID": "id-8306"
+    },
+    {
+      "ap2Name": "Seat Width",
+      "ap1ID": "id-8425",
+      "ap2ID": "id-8310"
+    },
+    {
+      "ap2Name": "Seat Width",
+      "ap1ID": "id-8425",
+      "ap2ID": "id-8314"
+    },
+    {
+      "ap2Name": "Seat Width",
+      "ap1ID": "id-8425",
+      "ap2ID": "id-8318"
+    },
+    {
+      "ap2Name": "Back Angle",
+      "ap1ID": "id-8428",
+      "ap2ID": "id-8314"
+    },
+    {
+      "ap2Name": "Back Angle",
+      "ap1ID": "id-8428",
+      "ap2ID": "id-8318"
+    },
+    {
+      "ap2Name": "Arm Height",
+      "ap1ID": "id-8431",
+      "ap2ID": "id-8318"
+    },
+    {
+      "ap2Name": "Leg Sweep",
+      "ap1ID": "id-8434",
+      "ap2ID": "id-8318"
+    }
+  ],
+  "unitsKey": "MM",
+  "fileTypeVersion": 1,
+  "filetypeVersion": 1
 }
