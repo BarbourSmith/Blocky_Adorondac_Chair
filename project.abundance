@@ -11,7 +11,7 @@
     },
     {
       "name": "Seat_Width",
-      "ioValue": 600
+      "ioValue": 540
     },
     {
       "name": "Back_Angle",
@@ -107,149 +107,131 @@
       "placements": [
         [
           {
-            "id": 11,
-            "rotate": 270,
-            "translate": {
-              "x": 3.369999885559082,
-              "y": 2056.610107421875
-            }
-          },
-          {
-            "id": 17,
-            "rotate": 270,
-            "translate": {
-              "x": 3.369999885559082,
-              "y": 3858.6201171875
-            }
-          },
-          {
-            "id": 12,
-            "rotate": 120,
-            "translate": {
-              "x": 1609.6011962890625,
-              "y": -1208.9361572265625
-            }
-          },
-          {
-            "id": 5,
-            "rotate": 270,
-            "translate": {
-              "x": 3.380000114440918,
-              "y": 1910.199951171875
-            }
-          },
-          {
             "id": 2,
-            "rotate": 0,
+            "rotate": 150,
             "translate": {
-              "x": 71.780029296875,
-              "y": 282.1200256347656
-            }
-          },
-          {
-            "id": 10,
-            "rotate": 60,
-            "translate": {
-              "x": 658.0811767578125,
-              "y": -1403.8720703125
-            }
-          },
-          {
-            "id": 9,
-            "rotate": 240,
-            "translate": {
-              "x": 1607.31884765625,
-              "y": 2150.986572265625
-            }
-          },
-          {
-            "id": 6,
-            "rotate": 270,
-            "translate": {
-              "x": 3.369999885559082,
-              "y": 2137.93017578125
-            }
-          },
-          {
-            "id": 15,
-            "rotate": 270,
-            "translate": {
-              "x": 871.47998046875,
-              "y": 3985.3701171875
-            }
-          },
-          {
-            "id": 13,
-            "rotate": 300,
-            "translate": {
-              "x": 340.3787841796875,
-              "y": 2489.7783203125
-            }
-          },
-          {
-            "id": 8,
-            "rotate": 30,
-            "translate": {
-              "x": -471.73089599609375,
-              "y": -79.1502685546875
+              "x": 1004.111328125,
+              "y": 395.1116027832031
             }
           },
           {
             "id": 7,
-            "rotate": 150,
+            "rotate": 330,
             "translate": {
-              "x": 1844.2474365234375,
-              "y": -346.5387878417969
+              "x": -759.9976806640625,
+              "y": 773.7395629882812
             }
           },
           {
-            "id": 4,
-            "rotate": 300,
+            "id": 10,
+            "rotate": 180,
             "translate": {
-              "x": 1164.2386474609375,
-              "y": 799.635009765625
+              "x": 2094.929931640625,
+              "y": 1054.989990234375
+            }
+          },
+          {
+            "id": 8,
+            "rotate": 210,
+            "translate": {
+              "x": 1949.712890625,
+              "y": 1921.38623046875
             }
           },
           {
             "id": 3,
-            "rotate": 90,
+            "rotate": 240,
             "translate": {
-              "x": 565.2699584960938,
-              "y": 391.44000244140625
+              "x": 1130.778564453125,
+              "y": 1134.881103515625
+            }
+          },
+          {
+            "id": 4,
+            "rotate": 330,
+            "translate": {
+              "x": 198.806396484375,
+              "y": 914.6300659179688
+            }
+          },
+          {
+            "id": 15,
+            "rotate": 30,
+            "translate": {
+              "x": -1334.142578125,
+              "y": -1525.601318359375
+            }
+          },
+          {
+            "id": 13,
+            "rotate": 210,
+            "translate": {
+              "x": 3652.54931640625,
+              "y": 2326.28369140625
+            }
+          },
+          {
+            "id": 12,
+            "rotate": 0,
+            "translate": {
+              "x": -772.56005859375,
+              "y": 668.8800048828125
             }
           },
           {
             "id": 14,
-            "rotate": 60,
+            "rotate": 210,
             "translate": {
-              "x": 513.451171875,
-              "y": -1495.0169677734375
+              "x": 4271.0439453125,
+              "y": 2355.61865234375
             }
           },
           {
-            "id": 1,
-            "rotate": 270,
+            "id": 6,
+            "rotate": 330,
             "translate": {
-              "x": 1593.929931640625,
-              "y": 1249.5400390625
+              "x": -608.295166015625,
+              "y": 1531.5810546875
             }
           },
           {
             "id": 0,
-            "rotate": 90,
+            "rotate": 180,
             "translate": {
-              "x": 2423.219970703125,
-              "y": 3.77001953125
+              "x": 1994.5699462890625,
+              "y": 1208.8800048828125
             }
-          }
-        ],
-        [
+          },
           {
-            "id": 16,
-            "rotate": 0,
+            "id": 11,
+            "rotate": 120,
             "translate": {
-              "x": -3154.1201171875,
-              "y": 3.369999885559082
+              "x": 3465.326171875,
+              "y": -1186.81298828125
+            }
+          },
+          {
+            "id": 9,
+            "rotate": 300,
+            "translate": {
+              "x": 1050.86376953125,
+              "y": 1574.59228515625
+            }
+          },
+          {
+            "id": 5,
+            "rotate": 300,
+            "translate": {
+              "x": -193.69619750976562,
+              "y": 1654.373779296875
+            }
+          },
+          {
+            "id": 1,
+            "rotate": 60,
+            "translate": {
+              "x": 805.585693359375,
+              "y": -396.097900390625
             }
           }
         ]
@@ -337,7 +319,7 @@
         },
         {
           "name": "SeatWidth",
-          "ioValue": 600
+          "ioValue": 540
         }
       ],
       "topLevel": false,
@@ -367,7 +349,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             }
           ],
           "topLevel": false,
@@ -857,7 +839,7 @@
                 },
                 {
                   "name": "yDist",
-                  "ioValue": 319.05,
+                  "ioValue": 289.05,
                   "currentEquation": "SeatWidth/2 + Thickness"
                 },
                 {
@@ -961,7 +943,7 @@
             },
             {
               "name": "yDist",
-              "ioValue": -619.05,
+              "ioValue": -559.05,
               "currentEquation": "-(SeatWidth + Thickness)"
             },
             {
@@ -983,7 +965,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             }
           ],
           "topLevel": false,
@@ -1026,12 +1008,12 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 678.1,
+                  "ioValue": 618.1,
                   "currentEquation": "SeatWidth + 2*Thickness + 40"
                 },
                 {
                   "name": "y length",
-                  "ioValue": 82
+                  "ioValue": 130
                 }
               ]
             },
@@ -1097,7 +1079,7 @@
                 },
                 {
                   "name": "zDist",
-                  "ioValue": 339
+                  "ioValue": 355
                 }
               ]
             },
@@ -1160,7 +1142,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             }
           ],
           "topLevel": false,
@@ -1203,7 +1185,7 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 600,
+                  "ioValue": 540,
                   "currentEquation": "SeatWidth"
                 },
                 {
@@ -1221,7 +1203,7 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 638.1,
+                  "ioValue": 578.1,
                   "currentEquation": "SeatWidth + 2*Thickness"
                 },
                 {
@@ -1239,7 +1221,7 @@
                 {
                   "name": "Shape 1",
                   "ioValue": {
-                    "geometry": "rectangle-600-111.79347826086956",
+                    "geometry": "rectangle-540-111.79347826086956",
                     "dimension": "2D",
                     "plane": {
                       "origin": [
@@ -1266,7 +1248,7 @@
                 {
                   "name": "Shape2",
                   "ioValue": {
-                    "geometry": "rectangle-638.1-40",
+                    "geometry": "rectangle-578.1-40",
                     "dimension": "2D",
                     "plane": {
                       "origin": [
@@ -1524,7 +1506,7 @@
         },
         {
           "name": "SeatWidth",
-          "ioValue": 600
+          "ioValue": 540
         }
       ],
       "topLevel": false,
@@ -1572,7 +1554,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             }
           ],
           "topLevel": false,
@@ -1615,13 +1597,12 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 502.85,
-                  "currentEquation": "483.8 + Thickness"
+                  "ioValue": 483.8
                 },
                 {
                   "name": "y length",
-                  "ioValue": 316.05,
-                  "currentEquation": "SeatWidth/2 + Thickness - 3"
+                  "ioValue": 276.55,
+                  "currentEquation": "SeatWidth/2 + Thickness - 12.5"
                 }
               ]
             },
@@ -1637,13 +1618,12 @@
                 },
                 {
                   "name": "xDist",
-                  "ioValue": 232.375,
-                  "currentEquation": "(483.8 - Thickness)/2"
+                  "ioValue": 241.9
                 },
                 {
                   "name": "yDist",
-                  "ioValue": 161.025,
-                  "currentEquation": "(SeatWidth/2 + Thickness + 3)/2"
+                  "ioValue": 150.775,
+                  "currentEquation": "(SeatWidth/2 + Thickness + 12.5)/2"
                 },
                 {
                   "name": "zDist",
@@ -1783,8 +1763,8 @@
             },
             {
               "name": "yDist",
-              "ioValue": -322.05,
-              "currentEquation": "-(SeatWidth/2 + Thickness + 3)"
+              "ioValue": -301.55,
+              "currentEquation": "-(SeatWidth/2 + Thickness + 12.5)"
             },
             {
               "name": "zDist",
@@ -1864,7 +1844,7 @@
         },
         {
           "name": "SeatWidth",
-          "ioValue": 600
+          "ioValue": 540
         },
         {
           "name": "BackAngle",
@@ -1925,7 +1905,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             }
           ],
           "topLevel": false,
@@ -1973,7 +1953,7 @@
                 },
                 {
                   "name": "y length",
-                  "ioValue": 287.5,
+                  "ioValue": 257.5,
                   "currentEquation": "SeatWidth/2 - 12.5"
                 }
               ]
@@ -2011,7 +1991,7 @@
                 },
                 {
                   "name": "yDist",
-                  "ioValue": 156.25,
+                  "ioValue": 141.25,
                   "currentEquation": "(SeatWidth/2 + 12.5)/2"
                 },
                 {
@@ -2077,7 +2057,7 @@
             },
             {
               "name": "yDist",
-              "ioValue": -312.5,
+              "ioValue": -282.5,
               "currentEquation": "-(SeatWidth/2 + 12.5)"
             },
             {
@@ -2099,7 +2079,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             }
           ],
           "topLevel": false,
@@ -2142,7 +2122,7 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 600,
+                  "ioValue": 540,
                   "currentEquation": "SeatWidth"
                 },
                 {
@@ -2159,7 +2139,7 @@
               "ioValues": [
                 {
                   "name": "x length",
-                  "ioValue": 638.1,
+                  "ioValue": 578.1,
                   "currentEquation": "SeatWidth + 2*Thickness"
                 },
                 {
@@ -2177,7 +2157,7 @@
                 {
                   "name": "Shape 1",
                   "ioValue": {
-                    "geometry": "rectangle-600-130",
+                    "geometry": "rectangle-540-130",
                     "dimension": "2D",
                     "plane": {
                       "origin": [
@@ -2204,7 +2184,7 @@
                 {
                   "name": "Shape2",
                   "ioValue": {
-                    "geometry": "rectangle-638.1-50",
+                    "geometry": "rectangle-578.1-50",
                     "dimension": "2D",
                     "plane": {
                       "origin": [
@@ -2503,7 +2483,7 @@
         },
         {
           "name": "SeatWidth",
-          "ioValue": 600
+          "ioValue": 540
         },
         {
           "name": "BackAngle",
@@ -2590,7 +2570,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             },
             {
               "name": "ArmHeight",
@@ -2664,7 +2644,7 @@
                 },
                 {
                   "name": "SeatWidth",
-                  "ioValue": 600
+                  "ioValue": 540
                 },
                 {
                   "name": "ArmHeight",
@@ -3064,7 +3044,7 @@
                     },
                     {
                       "name": "yDist",
-                      "ioValue": 338.1,
+                      "ioValue": 308.1,
                       "currentEquation": "SeatWidth/2 + 2*Thickness"
                     },
                     {
@@ -3151,7 +3131,7 @@
                 },
                 {
                   "name": "yDist",
-                  "ioValue": -657.15,
+                  "ioValue": -597.15,
                   "currentEquation": "-(SeatWidth + 3*Thickness)"
                 },
                 {
@@ -3242,7 +3222,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             },
             {
               "name": "ArmHeight",
@@ -3315,8 +3295,8 @@
                 },
                 {
                   "name": "y length",
-                  "ioValue": 850,
-                  "currentEquation": "SeatWidth + 250"
+                  "ioValue": 820,
+                  "currentEquation": "SeatWidth + 280"
                 }
               ]
             },
@@ -3417,7 +3397,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             },
             {
               "name": "ArmHeight",
@@ -3491,7 +3471,7 @@
                 },
                 {
                   "name": "SeatWidth",
-                  "ioValue": 600
+                  "ioValue": 540
                 },
                 {
                   "name": "ArmHeight",
@@ -3627,7 +3607,7 @@
                         },
                         {
                           "name": "Y_Length",
-                          "ioValue": 120
+                          "ioValue": 150
                         },
                         {
                           "name": "Radius",
@@ -3684,7 +3664,7 @@
                             },
                             {
                               "name": "height",
-                              "ioValue": 120
+                              "ioValue": 150
                             },
                             {
                               "name": "cornerRadius",
@@ -3741,7 +3721,7 @@
                         },
                         {
                           "name": "y length",
-                          "ioValue": 120
+                          "ioValue": 150
                         }
                       ]
                     },
@@ -3779,14 +3759,14 @@
                         {
                           "name": "Shape 1",
                           "ioValue": {
-                            "geometry": "cf072340-0",
+                            "geometry": "dba308a4-0",
                             "color": "#aad7f2",
                             "tags": [
                               "rounded-rectangle",
                               "2d"
                             ],
                             "bom": [
-                              "Rounded rectangle 774.3462118379725×120 mm, r=45 mm"
+                              "Rounded rectangle 774.3462118379725×150 mm, r=45 mm"
                             ],
                             "plane": {
                               "origin": [
@@ -3812,7 +3792,7 @@
                         {
                           "name": "Shape2",
                           "ioValue": {
-                            "geometry": "move-rectangle-387.17310591898627-120-193.58655295949313-0-0",
+                            "geometry": "move-rectangle-387.17310591898627-150-193.58655295949313-0-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -3898,7 +3878,7 @@
                     },
                     {
                       "name": "yDist",
-                      "ioValue": 365,
+                      "ioValue": 335,
                       "currentEquation": "SeatWidth/2 + 65"
                     },
                     {
@@ -3980,7 +3960,7 @@
                 },
                 {
                   "name": "yDist",
-                  "ioValue": -730,
+                  "ioValue": -670,
                   "currentEquation": "-(SeatWidth + 130)"
                 },
                 {
@@ -4071,7 +4051,7 @@
             },
             {
               "name": "SeatWidth",
-              "ioValue": 600
+              "ioValue": 540
             },
             {
               "name": "ArmHeight",
@@ -4145,7 +4125,7 @@
                 },
                 {
                   "name": "SeatWidth",
-                  "ioValue": 600
+                  "ioValue": 540
                 },
                 {
                   "name": "ArmHeight",
@@ -4219,7 +4199,7 @@
                     },
                     {
                       "name": "SeatWidth",
-                      "ioValue": 600
+                      "ioValue": 540
                     },
                     {
                       "name": "ArmHeight",
@@ -4288,8 +4268,8 @@
                       "ioValues": [
                         {
                           "name": "x length",
-                          "ioValue": 81.9,
-                          "currentEquation": "120 - 2*Thickness"
+                          "ioValue": 101.9,
+                          "currentEquation": "140 - 2*Thickness"
                         },
                         {
                           "name": "y length",
@@ -4309,8 +4289,8 @@
                         },
                         {
                           "name": "xDist",
-                          "ioValue": 379.05,
-                          "currentEquation": "SeatWidth/2 + Thickness + 60"
+                          "ioValue": 359.05,
+                          "currentEquation": "SeatWidth/2 + Thickness + 70"
                         },
                         {
                           "name": "yDist",
@@ -4351,7 +4331,7 @@
                         },
                         {
                           "name": "xDist",
-                          "ioValue": 338.6,
+                          "ioValue": 308.6,
                           "currentEquation": "SeatWidth/2 + 2*Thickness + 0.5"
                         },
                         {
@@ -4387,7 +4367,7 @@
                         {
                           "name": "Shape 1",
                           "ioValue": {
-                            "geometry": "move-rectangle-81.9-1-379.05-548.9785156637873-0",
+                            "geometry": "move-rectangle-101.9-1-359.05-548.9785156637873-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -4414,7 +4394,7 @@
                         {
                           "name": "Shape2",
                           "ioValue": {
-                            "geometry": "move-rectangle-1-1-338.6-249.97851566378733-0",
+                            "geometry": "move-rectangle-1-1-308.6-249.97851566378733-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -4953,8 +4933,8 @@
           ]
         },
         {
-          "downwardFaceIndex": 5,
-          "faceCount": 13,
+          "downwardFaceIndex": 3,
+          "faceCount": 16,
           "faceNormal": [
             0,
             0,
@@ -4962,8 +4942,8 @@
           ]
         },
         {
-          "downwardFaceIndex": 5,
-          "faceCount": 13,
+          "downwardFaceIndex": 6,
+          "faceCount": 16,
           "faceNormal": [
             0,
             0,
@@ -5034,7 +5014,7 @@
           ]
         },
         {
-          "downwardFaceIndex": 5,
+          "downwardFaceIndex": 4,
           "faceCount": 9,
           "faceNormal": [
             0.3100127688103205,
@@ -5098,7 +5078,7 @@
         },
         {
           "name": "SeatWidth",
-          "ioValue": 600
+          "ioValue": 540
         },
         {
           "name": "BackAngle",
@@ -5383,7 +5363,7 @@
             },
             {
               "name": "yDist",
-              "ioValue": 328.575,
+              "ioValue": 298.575,
               "currentEquation": "SeatWidth/2 + 1.5*Thickness"
             },
             {
