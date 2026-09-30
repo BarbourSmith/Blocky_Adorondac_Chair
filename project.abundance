@@ -1013,7 +1013,7 @@
                 },
                 {
                   "name": "y length",
-                  "ioValue": 130
+                  "ioValue": 82
                 }
               ]
             },
@@ -1079,7 +1079,7 @@
                 },
                 {
                   "name": "zDist",
-                  "ioValue": 315
+                  "ioValue": 339
                 }
               ]
             },
