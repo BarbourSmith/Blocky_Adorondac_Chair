@@ -22,7 +22,7 @@ A modern, slab-style Adirondack chair cut entirely from one thickness of plywood
 
 ## Inputs (editable in run mode)
 - **Thickness** – sheet thickness (default 19.05 mm / 3/4"). Measure your sheet; tabs and slots follow this value.
-- **Seat_Width** – clear width between the side runners (default 540 mm)
+- **Seat_Width** – clear width between the side runners (default 530 mm)
 - **Back_Angle** – back lean from vertical in degrees (default 26)
 - **Arm_Height** – top of the arms above the floor (default 520 mm)
 - **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)
@@ -51,9 +51,9 @@ The chair fits on two 4 × 8 ft sheets. Open Cut Layout and press Compute Layout
 
 ## Assembly
 1. Slide the seat stretcher and lower back batten tabs into one runner, then drop the other runner on.
-2. Push the apron onto the runner front tabs. Its top stands proud of the seat like a front rail.
+2. Push the apron onto the runner front tabs.
 3. Screw the front legs to the outside of the runners, and the gussets to the front legs.
-4. Screw the seat panels down onto the runners, butted against the apron.
+4. Screw the seat panels down onto the runners and the top edge of the apron.
 5. Set the back panels against the lower batten, then screw the upper batten across the back of the panels at arm height.
 6. Drop the arms over the front leg tabs, rest their back ends on the upper batten, and screw down into the gussets and the batten.
 
