@@ -108,130 +108,130 @@
         [
           {
             "id": 2,
-            "rotate": 150,
-            "translate": {
-              "x": 1004.111328125,
-              "y": 395.1116027832031
-            }
-          },
-          {
-            "id": 7,
-            "rotate": 330,
-            "translate": {
-              "x": -759.9976806640625,
-              "y": 773.7395629882812
-            }
-          },
-          {
-            "id": 10,
             "rotate": 180,
             "translate": {
-              "x": 2094.929931640625,
-              "y": 1054.989990234375
-            }
-          },
-          {
-            "id": 8,
-            "rotate": 210,
-            "translate": {
-              "x": 1949.712890625,
-              "y": 1921.38623046875
-            }
-          },
-          {
-            "id": 3,
-            "rotate": 240,
-            "translate": {
-              "x": 1130.778564453125,
-              "y": 1134.881103515625
+              "x": 711.5900268554688,
+              "y": 777.7100219726562
             }
           },
           {
             "id": 4,
-            "rotate": 330,
+            "rotate": 90,
             "translate": {
-              "x": 198.806396484375,
-              "y": 914.6300659179688
-            }
-          },
-          {
-            "id": 15,
-            "rotate": 30,
-            "translate": {
-              "x": -1334.142578125,
-              "y": -1525.601318359375
-            }
-          },
-          {
-            "id": 13,
-            "rotate": 210,
-            "translate": {
-              "x": 3652.54931640625,
-              "y": 2326.28369140625
-            }
-          },
-          {
-            "id": 12,
-            "rotate": 0,
-            "translate": {
-              "x": -772.56005859375,
-              "y": 668.8800048828125
+              "x": 823.3699951171875,
+              "y": -75.739990234375
             }
           },
           {
             "id": 14,
-            "rotate": 210,
+            "rotate": 300,
             "translate": {
-              "x": 4271.0439453125,
-              "y": 2355.61865234375
+              "x": -1428.32861328125,
+              "y": 3452.53369140625
+            }
+          },
+          {
+            "id": 8,
+            "rotate": 240,
+            "translate": {
+              "x": 1001.86376953125,
+              "y": 2011.992919921875
+            }
+          },
+          {
+            "id": 15,
+            "rotate": 0,
+            "translate": {
+              "x": -2385.8798828125,
+              "y": 401.2400207519531
+            }
+          },
+          {
+            "id": 3,
+            "rotate": 90,
+            "translate": {
+              "x": 934.4700317382812,
+              "y": -636.75
             }
           },
           {
             "id": 6,
-            "rotate": 330,
-            "translate": {
-              "x": -608.295166015625,
-              "y": 1531.5810546875
-            }
-          },
-          {
-            "id": 0,
-            "rotate": 180,
-            "translate": {
-              "x": 1994.5699462890625,
-              "y": 1208.8800048828125
-            }
-          },
-          {
-            "id": 11,
             "rotate": 120,
             "translate": {
-              "x": 3465.326171875,
-              "y": -1186.81298828125
-            }
-          },
-          {
-            "id": 9,
-            "rotate": 300,
-            "translate": {
-              "x": 1050.86376953125,
-              "y": 1574.59228515625
-            }
-          },
-          {
-            "id": 5,
-            "rotate": 300,
-            "translate": {
-              "x": -193.69619750976562,
-              "y": 1654.373779296875
+              "x": 1356.070068359375,
+              "y": -144.83538818359375
             }
           },
           {
             "id": 1,
-            "rotate": 60,
+            "rotate": 90,
             "translate": {
-              "x": 805.585693359375,
-              "y": -396.097900390625
+              "x": 1302.0999755859375,
+              "y": -49.47998046875
+            }
+          },
+          {
+            "id": 7,
+            "rotate": 300,
+            "translate": {
+              "x": 411.353759765625,
+              "y": 1237.275390625
+            }
+          },
+          {
+            "id": 5,
+            "rotate": 120,
+            "translate": {
+              "x": 951.7261962890625,
+              "y": -524.2937622070312
+            }
+          },
+          {
+            "id": 13,
+            "rotate": 180,
+            "translate": {
+              "x": 4556.41015625,
+              "y": 846.3699951171875
+            }
+          },
+          {
+            "id": 12,
+            "rotate": 240,
+            "translate": {
+              "x": 2236.94384765625,
+              "y": 2924.72314453125
+            }
+          },
+          {
+            "id": 0,
+            "rotate": 210,
+            "translate": {
+              "x": 1234.7615966796875,
+              "y": 1163.210693359375
+            }
+          },
+          {
+            "id": 10,
+            "rotate": 120,
+            "translate": {
+              "x": 2891.481201171875,
+              "y": -724.447509765625
+            }
+          },
+          {
+            "id": 11,
+            "rotate": 210,
+            "translate": {
+              "x": 3994.373046875,
+              "y": 1607.15625
+            }
+          },
+          {
+            "id": 9,
+            "rotate": 240,
+            "translate": {
+              "x": 2801.9736328125,
+              "y": 2586.4921875
             }
           }
         ]
@@ -249,7 +249,7 @@
           "ioValue": "__GEOMETRY_INPUT__"
         }
       ],
-      "readMeText": "# Blocky Adirondack Chair\n\nA modern, slab-style Adirondack chair cut entirely from one thickness of plywood on a CNC router. Key parts lock together with through-tabs, so the chair self-aligns while you screw it together.\n\n## Inputs (editable in run mode)\n- **Thickness** – sheet thickness (default 19.05 mm / 3/4\"). Measure your sheet; tabs and slots follow this value.\n- **Seat_Width** – clear width between the side runners (default 600 mm)\n- **Back_Angle** – back lean from vertical in degrees (default 24)\n- **Arm_Height** – top of the arms above the floor (default 600 mm)\n- **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)\n- **Bit Diameter** – your cutting bit; sets the spacing between parts in the cut layout (default 6.35 mm)\n\n## Parts (18)\nEach part is its own molecule, built from built-in atoms and tagged \"wood\" for the cut layout.\n- Frame: 2 × Runner, 1 × Apron, 1 × Seat Stretcher\n- Seat: 2 × Seat Panel\n- Back: 2 × Back Panel, 1 × Lower Back Batten\n- Arms and Legs: 2 × Front Leg, 2 × Rear Post, 2 × Arm, 1 × Upper Back Batten, 2 × Arm Gusset\n\n## Joints\nSlots are cut where parts overlap in the assembly, so they always match the tabs.\n- Runner front tabs → through the apron\n- Seat stretcher end tabs → through the runners\n- Lower back batten end tabs → through the runners\n- Front leg top tabs → through the arms\n- Rear post top tabs → through the upper batten and the arms\n\nSlot corners are round (the bit's radius), not dogboned: ease the tab corners with a file or sand them so they seat fully.\n\n## Cutting\nThe chair fits on two 4 × 8 ft sheets. Open Cut Layout and press Compute Layout after changing any input.\n\n## Assembly\n1. Slide the seat stretcher and lower back batten tabs into one runner, then drop the other runner on.\n2. Push the apron onto the runner front tabs.\n3. Screw the front legs and rear posts to the outside of the runners, and the gussets to the front legs.\n4. Screw the seat panels down onto the runners.\n5. Set the back panels against the lower batten, lay the upper batten over the rear post tabs, and screw the back to both battens.\n6. Drop the arms over the leg and post tabs and screw down into the gussets.\n\nGlue and screw every joint with exterior glue and the deck screws on the bill of materials (about 50 screws).",
+      "readMeText": "# Blocky Adirondack Chair\n\nA modern, slab-style Adirondack chair cut entirely from one thickness of plywood on a CNC router. Its proportions follow the Paso chair: plank runners that meet the floor behind the back, a deep recline, a split back and seat with a wide center gap, broad arms carried by the back batten, and flanged front legs. Key parts lock together with through-tabs, so the chair self-aligns while you screw it together.\n\n## Inputs (editable in run mode)\n- **Thickness** – sheet thickness (default 19.05 mm / 3/4\"). Measure your sheet; tabs and slots follow this value.\n- **Seat_Width** – clear width between the side runners (default 540 mm)\n- **Back_Angle** – back lean from vertical in degrees (default 26)\n- **Arm_Height** – top of the arms above the floor (default 520 mm)\n- **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)\n- **Bit Diameter** – your cutting bit; sets the spacing between parts in the cut layout (default 6.35 mm)\n\nAt the defaults the chair is about 820 mm wide, 900 mm deep and 740 mm tall, with the seat front at about 400 mm.\n\n## Parts (16)\nEach part is its own molecule, built from built-in atoms and tagged \"wood\" for the cut layout.\n- Frame: 2 × Runner, 1 × Apron, 1 × Seat Stretcher\n- Seat: 2 × Seat Panel\n- Back: 2 × Back Panel, 1 × Lower Back Batten\n- Arms and Legs: 2 × Front Leg, 2 × Arm, 1 × Upper Back Batten, 2 × Arm Gusset\n\n## Joints\nSlots are cut where parts overlap in the assembly, so they always match the tabs.\n- Runner front tabs → through the apron\n- Seat stretcher end tabs → through the runners\n- Lower back batten end tabs → through the runners\n- Front leg top tabs → through the arms\n\nSlot corners are round (the bit's radius), not dogboned: ease the tab corners with a file or sand them so they seat fully.\n\n## Cutting\nThe chair fits on two 4 × 8 ft sheets. Open Cut Layout and press Compute Layout after changing any input.\n\n## Assembly\n1. Slide the seat stretcher and lower back batten tabs into one runner, then drop the other runner on.\n2. Push the apron onto the runner front tabs. Its top stands proud of the seat like a front rail.\n3. Screw the front legs to the outside of the runners, and the gussets to the front legs.\n4. Screw the seat panels down onto the runners, butted against the apron.\n5. Set the back panels against the lower batten, then screw the upper batten across the back of the panels at arm height.\n6. Drop the arms over the front leg tabs, rest their back ends on the upper batten, and screw down into the gussets and the batten.\n\nGlue and screw every joint with exterior glue and the deck screws on the bill of materials (about 50 screws).\n\n__GEOMETRY_INPUT__",
       "global": true
     },
     {
