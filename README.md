@@ -11,41 +11,56 @@
 - **Back_Angle** (number)
 - **Arm_Height** (number)
 - **Leg Sweep** (number)
+- **Bit Diameter** (number)
+- **Clearance** (number)
 
 
 
 
  # Blocky Adirondack Chair
 
-A modern, slab-style Adirondack chair cut entirely from one sheet thickness of plywood on a CNC router.
+A modern, slab-style Adirondack chair cut entirely from one sheet thickness of plywood on a CNC router. Parts lock together with through-tabs in dogboned slots, so the chair self-aligns during glue-up/screwing.
 
 ## Inputs (editable in run mode)
-- **Thickness** – sheet thickness (default 19.05 mm / 3/4")
+- **Thickness** – sheet thickness (default 19.05 mm / 3/4"). Measure your sheet; tabs and slots follow this value.
 - **Seat_Width** – clear width between the side runners (default 560 mm)
 - **Back_Angle** – back lean from vertical in degrees (default 24)
 - **Arm_Height** – top of the arms above the floor (default 600 mm)
 - **Leg Sweep** – how far the front legs lean back from vertical in degrees (default 20)
+- **Bit Diameter** – router bit used for the dogbone reliefs in slot corners (default 6.35 mm)
+- **Clearance** – extra room added to every side of each slot (default 0.2 mm)
 
-## Parts (15)
-- 2 × side runners (sloped seat support, toe rests on the floor)
+## Parts (18)
+- 2 × side runners
 - 1 × front apron
+- 1 × seat stretcher (under the rear of the seat)
 - 2 × seat panels
 - 2 × back panels
-- 1 × lower back batten (behind the back panels, between the runners)
-- 1 × upper back batten (under the arms, behind the back)
-- 2 × front legs (swept back, outboard of the runners)
-- 2 × rear posts (outboard of the runners, carry the upper batten)
-- 2 × arms (rounded front corners)
+- 1 × lower back batten
+- 1 × upper back batten
+- 2 × front legs (swept back)
+- 2 × arm gussets (triangles at 90° to the legs, under the arm overhang)
+- 2 × rear posts
+- 2 × arms
+
+## Joints
+- Runner front tabs → through the apron
+- Runner top tabs → notches in the seat panel edges
+- Seat stretcher end tabs → through the runners
+- Lower back batten end tabs → through the runners
+- Arm gusset edge tabs → through the front legs
+- Front leg top tabs → through the arms
+- Rear post top tabs → through the upper batten and the arms
 
 ## Assembly
-1. Screw the front legs and rear posts to the outside faces of the runners.
-2. Screw the apron across the front ends of the runners.
-3. Screw the lower back batten between the runners, then fix the back panels to it.
-4. Lay the upper back batten across the tops of the rear posts and screw the back panels to its front edge.
-5. Screw the seat panels down onto the runners' seat slope.
-6. Screw the arms down onto the front legs and the upper batten.
+1. Slide the seat stretcher and lower back batten tabs into one runner, then drop the other runner on.
+2. Push the apron onto the runner front tabs.
+3. Tab the gussets into the front legs, then screw the legs and rear posts to the outside of the runners.
+4. Drop the seat panels onto the runner tabs.
+5. Set the back panels against the lower batten, lay the upper batten over the rear post tabs, and screw the back to both battens.
+6. Drop the arms over the leg and post tabs and screw down into the gussets.
 
-Use exterior-grade plywood and stainless or coated deck screws.
+Glue and screw every joint with exterior glue and stainless or coated deck screws.
 
 
 
