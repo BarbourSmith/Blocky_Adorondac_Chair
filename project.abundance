@@ -11,7 +11,8 @@
     },
     {
       "name": "Seat_Width",
-      "ioValue": 560
+      "ioValue": 600,
+      "currentEquation": "600"
     },
     {
       "name": "Back_Angle",
@@ -61,7 +62,7 @@
         },
         {
           "name": "Seat Width",
-          "ioValue": 560
+          "ioValue": 600
         },
         {
           "name": "Back Angle",
@@ -120,7 +121,7 @@
             },
             {
               "name": "seatWidth",
-              "ioValue": 560
+              "ioValue": 600
             },
             {
               "name": "backAngle",
@@ -214,7 +215,7 @@
         },
         {
           "name": "Seat Width",
-          "ioValue": 560
+          "ioValue": 600
         },
         {
           "name": "Bit Diameter",
@@ -269,7 +270,7 @@
             },
             {
               "name": "seatWidth",
-              "ioValue": 560
+              "ioValue": 600
             },
             {
               "name": "gap",
@@ -349,7 +350,7 @@
         },
         {
           "name": "Seat Width",
-          "ioValue": 560
+          "ioValue": 600
         },
         {
           "name": "Back Angle",
@@ -409,7 +410,7 @@
             },
             {
               "name": "seatWidth",
-              "ioValue": 560
+              "ioValue": 600
             },
             {
               "name": "backAngle",
@@ -466,7 +467,7 @@
         },
         {
           "name": "Seat Width",
-          "ioValue": 560
+          "ioValue": 600
         },
         {
           "name": "Back Angle",
@@ -551,7 +552,7 @@
             },
             {
               "name": "seatWidth",
-              "ioValue": 560
+              "ioValue": 600
             },
             {
               "name": "backAngle",
@@ -902,7 +903,10 @@
           "downwardFaceIndex": 0
         },
         {
-          "downwardFaceIndex": 9
+          "downwardFaceIndex": 40
+        },
+        {
+          "downwardFaceIndex": 12
         },
         {
           "downwardFaceIndex": 8
@@ -911,7 +915,10 @@
           "downwardFaceIndex": 44
         },
         {
-          "downwardFaceIndex": 9
+          "downwardFaceIndex": 40
+        },
+        {
+          "downwardFaceIndex": 12
         },
         {
           "downwardFaceIndex": 8
@@ -923,7 +930,7 @@
           "downwardFaceIndex": 36
         }
       ],
-      "orientationsForHashed": 16
+      "orientationsForHashed": 18
     },
     {
       "atomType": "Readme",
