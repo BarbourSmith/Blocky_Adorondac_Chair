@@ -47,7 +47,7 @@
     {
       "atomType": "Assembly",
       "x": 0.6,
-      "y": 0.5,
+      "y": 0.3,
       "uniqueID": "id-8322",
       "ioValues": [
         {
@@ -78,8 +78,8 @@
     },
     {
       "atomType": "CutLayout",
-      "x": 0.8,
-      "y": 0.8,
+      "x": 0.9,
+      "y": 0.9,
       "uniqueID": "id-8410",
       "name": "Cut Layout",
       "ioValues": [
@@ -5494,7 +5494,7 @@
     },
     {
       "atomType": "ExtractTag",
-      "x": 0.8,
+      "x": 0.7,
       "y": 0.6,
       "uniqueID": "id-9465",
       "name": "Extract wood",
@@ -5513,8 +5513,8 @@
     },
     {
       "atomType": "CutOrient",
-      "x": 0.9,
-      "y": 0.6,
+      "x": 0.8,
+      "y": 0.8,
       "uniqueID": "id-9468",
       "name": "Cut Orient",
       "ioValues": [
@@ -5911,7 +5911,7 @@
     {
       "atomType": "Assembly",
       "x": 0.7,
-      "y": 0.4,
+      "y": 0.5,
       "uniqueID": "id-9521",
       "ioValues": [
         {
@@ -6030,11 +6030,6 @@
       "ap2ID": "id-9468"
     },
     {
-      "ap2Name": "geometry",
-      "ap1ID": "id-9468",
-      "ap2ID": "id-8410"
-    },
-    {
       "ap2Name": "number or geometry",
       "ap1ID": "id-9521",
       "ap2ID": "id-8293"
@@ -6068,6 +6063,11 @@
       "ap2Name": "Shape 1",
       "ap1ID": "id-8974",
       "ap2ID": "id-8322"
+    },
+    {
+      "ap2Name": "geometry",
+      "ap1ID": "id-9468",
+      "ap2ID": "id-8410"
     }
   ],
   "unitsKey": "MM",
