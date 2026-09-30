@@ -630,7 +630,7 @@
                     },
                     {
                       "name": "Shape4",
-                      "ioValue": null
+                      "ioValue": "__GEOMETRY_INPUT__"
                     }
                   ]
                 }
@@ -885,11 +885,6 @@
           ],
           "allConnectors": [
             {
-              "ap2Name": "Shape 1",
-              "ap1ID": "id-8610",
-              "ap2ID": "id-8686"
-            },
-            {
               "ap2Name": "geometry",
               "ap1ID": "id-8676",
               "ap2ID": "id-8680"
@@ -923,6 +918,11 @@
               "ap2Name": "number or geometry",
               "ap1ID": "id-8705",
               "ap2ID": "id-8608"
+            },
+            {
+              "ap2Name": "Shape 1",
+              "ap1ID": "id-8610",
+              "ap2ID": "id-8686"
             }
           ],
           "fileTypeVersion": 1
@@ -1449,16 +1449,6 @@
       ],
       "allConnectors": [
         {
-          "ap2Name": "geometry",
-          "ap1ID": "id-8606",
-          "ap2ID": "id-8717"
-        },
-        {
-          "ap2Name": "Shape2",
-          "ap1ID": "id-8606",
-          "ap2ID": "id-8796"
-        },
-        {
           "ap2Name": "Thickness",
           "ap1ID": "id-8711",
           "ap2ID": "id-8606"
@@ -1494,6 +1484,11 @@
           "ap2ID": "id-8796"
         },
         {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-8796",
+          "ap2ID": "id-8604"
+        },
+        {
           "ap2Name": "Shape4",
           "ap1ID": "id-8723",
           "ap2ID": "id-8796"
@@ -1504,9 +1499,14 @@
           "ap2ID": "id-8796"
         },
         {
-          "ap2Name": "number or geometry",
-          "ap1ID": "id-8796",
-          "ap2ID": "id-8604"
+          "ap2Name": "geometry",
+          "ap1ID": "id-8606",
+          "ap2ID": "id-8717"
+        },
+        {
+          "ap2Name": "Shape2",
+          "ap1ID": "id-8606",
+          "ap2ID": "id-8796"
         }
       ],
       "fileTypeVersion": 1
@@ -1829,16 +1829,6 @@
           "ap2ID": "id-8816"
         },
         {
-          "ap2Name": "geometry",
-          "ap1ID": "id-8816",
-          "ap2ID": "id-8855"
-        },
-        {
-          "ap2Name": "Shape 1",
-          "ap1ID": "id-8816",
-          "ap2ID": "id-8861"
-        },
-        {
           "ap2Name": "Shape2",
           "ap1ID": "id-8855",
           "ap2ID": "id-8861"
@@ -1847,6 +1837,16 @@
           "ap2Name": "number or geometry",
           "ap1ID": "id-8861",
           "ap2ID": "id-8808"
+        },
+        {
+          "ap2Name": "geometry",
+          "ap1ID": "id-8816",
+          "ap2ID": "id-8855"
+        },
+        {
+          "ap2Name": "Shape 1",
+          "ap1ID": "id-8816",
+          "ap2ID": "id-8861"
         }
       ],
       "fileTypeVersion": 1
@@ -2453,23 +2453,8 @@
           "ap2ID": "id-8913"
         },
         {
-          "ap2Name": "geometry",
-          "ap1ID": "id-8880",
-          "ap2ID": "id-8907"
-        },
-        {
-          "ap2Name": "Shape 1",
-          "ap1ID": "id-8880",
-          "ap2ID": "id-8953"
-        },
-        {
           "ap2Name": "Shape2",
           "ap1ID": "id-8907",
-          "ap2ID": "id-8953"
-        },
-        {
-          "ap2Name": "Shape3",
-          "ap1ID": "id-8913",
           "ap2ID": "id-8953"
         },
         {
@@ -2486,6 +2471,21 @@
           "ap2Name": "number or geometry",
           "ap1ID": "id-8963",
           "ap2ID": "id-8869"
+        },
+        {
+          "ap2Name": "geometry",
+          "ap1ID": "id-8880",
+          "ap2ID": "id-8907"
+        },
+        {
+          "ap2Name": "Shape 1",
+          "ap1ID": "id-8880",
+          "ap2ID": "id-8953"
+        },
+        {
+          "ap2Name": "Shape3",
+          "ap1ID": "id-8913",
+          "ap2ID": "id-8953"
         }
       ],
       "fileTypeVersion": 1
@@ -3109,11 +3109,6 @@
                 },
                 {
                   "ap2Name": "geometry",
-                  "ap1ID": "id-9025",
-                  "ap2ID": "id-9069"
-                },
-                {
-                  "ap2Name": "geometry",
                   "ap1ID": "id-9069",
                   "ap2ID": "id-9073"
                 },
@@ -3131,6 +3126,11 @@
                   "ap2Name": "number or geometry",
                   "ap1ID": "id-9085",
                   "ap2ID": "id-9011"
+                },
+                {
+                  "ap2Name": "geometry",
+                  "ap1ID": "id-9025",
+                  "ap2ID": "id-9069"
                 }
               ],
               "fileTypeVersion": 1
@@ -3207,16 +3207,6 @@
               "ap2ID": "id-9009"
             },
             {
-              "ap2Name": "geometry",
-              "ap1ID": "id-9009",
-              "ap2ID": "id-9088"
-            },
-            {
-              "ap2Name": "Shape 1",
-              "ap1ID": "id-9009",
-              "ap2ID": "id-9094"
-            },
-            {
               "ap2Name": "Shape2",
               "ap1ID": "id-9088",
               "ap2ID": "id-9094"
@@ -3225,6 +3215,16 @@
               "ap2Name": "number or geometry",
               "ap1ID": "id-9094",
               "ap2ID": "id-8995"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-9009",
+              "ap2ID": "id-9088"
+            },
+            {
+              "ap2Name": "Shape 1",
+              "ap1ID": "id-9009",
+              "ap2ID": "id-9094"
             }
           ],
           "fileTypeVersion": 1
@@ -3670,11 +3670,6 @@
                 },
                 {
                   "ap2Name": "geometry",
-                  "ap1ID": "id-9134",
-                  "ap2ID": "id-9161"
-                },
-                {
-                  "ap2Name": "geometry",
                   "ap1ID": "id-9161",
                   "ap2ID": "id-9165"
                 },
@@ -3692,6 +3687,11 @@
                   "ap2Name": "number or geometry",
                   "ap1ID": "id-9177",
                   "ap2ID": "id-9120"
+                },
+                {
+                  "ap2Name": "geometry",
+                  "ap1ID": "id-9134",
+                  "ap2ID": "id-9161"
                 }
               ],
               "fileTypeVersion": 1
@@ -3768,16 +3768,6 @@
               "ap2ID": "id-9118"
             },
             {
-              "ap2Name": "geometry",
-              "ap1ID": "id-9118",
-              "ap2ID": "id-9180"
-            },
-            {
-              "ap2Name": "Shape 1",
-              "ap1ID": "id-9118",
-              "ap2ID": "id-9186"
-            },
-            {
               "ap2Name": "Shape2",
               "ap1ID": "id-9180",
               "ap2ID": "id-9186"
@@ -3786,6 +3776,16 @@
               "ap2Name": "number or geometry",
               "ap1ID": "id-9186",
               "ap2ID": "id-9104"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-9118",
+              "ap2ID": "id-9180"
+            },
+            {
+              "ap2Name": "Shape 1",
+              "ap1ID": "id-9118",
+              "ap2ID": "id-9186"
             }
           ],
           "fileTypeVersion": 1
@@ -4403,11 +4403,6 @@
                   ],
                   "allConnectors": [
                     {
-                      "ap2Name": "Shape 1",
-                      "ap1ID": "id-9278",
-                      "ap2ID": "id-9303"
-                    },
-                    {
                       "ap2Name": "geometry",
                       "ap1ID": "id-9293",
                       "ap2ID": "id-9297"
@@ -4421,6 +4416,11 @@
                       "ap2Name": "number or geometry",
                       "ap1ID": "id-9303",
                       "ap2ID": "id-9260"
+                    },
+                    {
+                      "ap2Name": "Shape 1",
+                      "ap1ID": "id-9278",
+                      "ap2ID": "id-9303"
                     }
                   ],
                   "fileTypeVersion": 1
@@ -4504,11 +4504,6 @@
                 },
                 {
                   "ap2Name": "geometry",
-                  "ap1ID": "id-9258",
-                  "ap2ID": "id-9306"
-                },
-                {
-                  "ap2Name": "geometry",
                   "ap1ID": "id-9306",
                   "ap2ID": "id-9310"
                 },
@@ -4521,6 +4516,11 @@
                   "ap2Name": "number or geometry",
                   "ap1ID": "id-9316",
                   "ap2ID": "id-9244"
+                },
+                {
+                  "ap2Name": "geometry",
+                  "ap1ID": "id-9258",
+                  "ap2ID": "id-9306"
                 }
               ],
               "fileTypeVersion": 1
@@ -4597,16 +4597,6 @@
               "ap2ID": "id-9242"
             },
             {
-              "ap2Name": "geometry",
-              "ap1ID": "id-9242",
-              "ap2ID": "id-9319"
-            },
-            {
-              "ap2Name": "Shape 1",
-              "ap1ID": "id-9242",
-              "ap2ID": "id-9325"
-            },
-            {
               "ap2Name": "Shape2",
               "ap1ID": "id-9319",
               "ap2ID": "id-9325"
@@ -4615,6 +4605,16 @@
               "ap2Name": "number or geometry",
               "ap1ID": "id-9325",
               "ap2ID": "id-9228"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-9242",
+              "ap2ID": "id-9319"
+            },
+            {
+              "ap2Name": "Shape 1",
+              "ap1ID": "id-9242",
+              "ap2ID": "id-9325"
             }
           ],
           "fileTypeVersion": 1
@@ -5001,7 +5001,7 @@
                         },
                         {
                           "name": "Shape3",
-                          "ioValue": null
+                          "ioValue": "__GEOMETRY_INPUT__"
                         }
                       ]
                     }
@@ -5141,11 +5141,6 @@
                 },
                 {
                   "ap2Name": "geometry",
-                  "ap1ID": "id-9365",
-                  "ap2ID": "id-9404"
-                },
-                {
-                  "ap2Name": "geometry",
                   "ap1ID": "id-9404",
                   "ap2ID": "id-9408"
                 },
@@ -5163,6 +5158,11 @@
                   "ap2Name": "number or geometry",
                   "ap1ID": "id-9420",
                   "ap2ID": "id-9351"
+                },
+                {
+                  "ap2Name": "geometry",
+                  "ap1ID": "id-9365",
+                  "ap2ID": "id-9404"
                 }
               ],
               "fileTypeVersion": 1
@@ -5289,16 +5289,6 @@
               "ap2ID": "id-9349"
             },
             {
-              "ap2Name": "geometry",
-              "ap1ID": "id-9349",
-              "ap2ID": "id-9423"
-            },
-            {
-              "ap2Name": "Shape 1",
-              "ap1ID": "id-9349",
-              "ap2ID": "id-9429"
-            },
-            {
               "ap2Name": "Shape2",
               "ap1ID": "id-9423",
               "ap2ID": "id-9429"
@@ -5317,6 +5307,16 @@
               "ap2Name": "number or geometry",
               "ap1ID": "id-9439",
               "ap2ID": "id-9335"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-9349",
+              "ap2ID": "id-9423"
+            },
+            {
+              "ap2Name": "Shape 1",
+              "ap1ID": "id-9349",
+              "ap2ID": "id-9429"
             }
           ],
           "fileTypeVersion": 1
@@ -5460,6 +5460,16 @@
           "ap2ID": "id-9333"
         },
         {
+          "ap2Name": "number or geometry",
+          "ap1ID": "id-9448",
+          "ap2ID": "id-8976"
+        },
+        {
+          "ap2Name": "Shape4",
+          "ap1ID": "id-9190",
+          "ap2ID": "id-9448"
+        },
+        {
           "ap2Name": "Shape 1",
           "ap1ID": "id-8993",
           "ap2ID": "id-9448"
@@ -5470,24 +5480,14 @@
           "ap2ID": "id-9448"
         },
         {
-          "ap2Name": "Shape4",
-          "ap1ID": "id-9190",
+          "ap2Name": "Shape5",
+          "ap1ID": "id-9333",
           "ap2ID": "id-9448"
         },
         {
           "ap2Name": "Shape3",
           "ap1ID": "id-9226",
           "ap2ID": "id-9448"
-        },
-        {
-          "ap2Name": "Shape5",
-          "ap1ID": "id-9333",
-          "ap2ID": "id-9448"
-        },
-        {
-          "ap2Name": "number or geometry",
-          "ap1ID": "id-9448",
-          "ap2ID": "id-8976"
         }
       ],
       "fileTypeVersion": 1
@@ -5896,14 +5896,14 @@
       ],
       "allConnectors": [
         {
-          "ap2Name": "geometry",
-          "ap1ID": "id-9487",
-          "ap2ID": "id-9515"
-        },
-        {
           "ap2Name": "number or geometry",
           "ap1ID": "id-9515",
           "ap2ID": "id-9473"
+        },
+        {
+          "ap2Name": "geometry",
+          "ap1ID": "id-9487",
+          "ap2ID": "id-9515"
         }
       ],
       "fileTypeVersion": 1
@@ -6025,9 +6025,24 @@
       "ap2ID": "id-8410"
     },
     {
-      "ap2Name": "Shape4",
-      "ap1ID": "id-8602",
-      "ap2ID": "id-8322"
+      "ap2Name": "geometry",
+      "ap1ID": "id-9465",
+      "ap2ID": "id-9468"
+    },
+    {
+      "ap2Name": "geometry",
+      "ap1ID": "id-9468",
+      "ap2ID": "id-8410"
+    },
+    {
+      "ap2Name": "number or geometry",
+      "ap1ID": "id-9521",
+      "ap2ID": "id-8293"
+    },
+    {
+      "ap2Name": "geometry",
+      "ap1ID": "id-9521",
+      "ap2ID": "id-9465"
     },
     {
       "ap2Name": "Shape3",
@@ -6040,34 +6055,19 @@
       "ap2ID": "id-8322"
     },
     {
-      "ap2Name": "Shape 1",
-      "ap1ID": "id-8974",
-      "ap2ID": "id-8322"
-    },
-    {
-      "ap2Name": "geometry",
-      "ap1ID": "id-9465",
-      "ap2ID": "id-9468"
-    },
-    {
-      "ap2Name": "geometry",
-      "ap1ID": "id-9468",
-      "ap2ID": "id-8410"
-    },
-    {
       "ap2Name": "Shape2",
       "ap1ID": "id-9471",
       "ap2ID": "id-9521"
     },
     {
-      "ap2Name": "number or geometry",
-      "ap1ID": "id-9521",
-      "ap2ID": "id-8293"
+      "ap2Name": "Shape4",
+      "ap1ID": "id-8602",
+      "ap2ID": "id-8322"
     },
     {
-      "ap2Name": "geometry",
-      "ap1ID": "id-9521",
-      "ap2ID": "id-9465"
+      "ap2Name": "Shape 1",
+      "ap1ID": "id-8974",
+      "ap2ID": "id-8322"
     }
   ],
   "unitsKey": "MM",
