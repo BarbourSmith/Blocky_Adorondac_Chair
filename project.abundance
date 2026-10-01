@@ -541,7 +541,7 @@
                     },
                     {
                       "name": "yDist",
-                      "ioValue": 229.5
+                      "ioValue": 229.3411529023965
                     },
                     {
                       "name": "zDist",
@@ -642,7 +642,7 @@
                     {
                       "name": "Shape2",
                       "ioValue": {
-                        "geometry": "move-rectangle-1-1-460-229.5-0",
+                        "geometry": "move-rectangle-1-1-460-229.3411529023965-0",
                         "dimension": "2D",
                         "plane": {
                           "origin": [
@@ -818,7 +818,7 @@
                 {
                   "name": "Shape 1",
                   "ioValue": {
-                    "geometry": "shrinkWrap-fuse-fuse-move-rectangle-1-1-460-229.5-0-move-rotate-move-rectangle-1-82-0.5--41-0-0-0--18.06-0-380-0-move-rectangle-347-1-669.5-0.5-0-50",
+                    "geometry": "shrinkWrap-fuse-fuse-move-rectangle-1-1-460-229.3411529023965-0-move-rotate-move-rectangle-1-82-0.5--41-0-0-0--18.06-0-380-0-move-rectangle-347-1-669.5-0.5-0-50",
                     "dimension": "2D",
                     "tags": [],
                     "color": "#aad7f2",
@@ -5199,8 +5199,8 @@
           ]
         },
         {
-          "downwardFaceIndex": 3,
-          "faceCount": 7,
+          "downwardFaceIndex": 4,
+          "faceCount": 6,
           "faceNormal": [
             -0.3100127688103205,
             0,
@@ -5209,11 +5209,11 @@
         },
         {
           "downwardFaceIndex": 4,
-          "faceCount": 8,
+          "faceCount": 6,
           "faceNormal": [
-            0.3100127688103205,
+            -0.3100127688103205,
             0,
-            0.9507323930394708
+            -0.9507323930394708
           ]
         },
         {
