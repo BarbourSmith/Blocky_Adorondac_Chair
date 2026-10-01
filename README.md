@@ -37,8 +37,10 @@ Each part is its own molecule, built from built-in atoms and tagged "wood" for t
 - Back: 2 × Back Panel, 1 × Lower Back Batten
 - Arms and Legs: 2 × Front Leg, 2 × Arm, 1 × Upper Back Batten, 2 × Arm Gusset
 
+The apron and seat stretcher stand square to the seat (tilted back with it), so the seat panels bear flat on their top edges.
+
 ## Joints
-Slots are cut where parts overlap in the assembly, so they always match the tabs.
+Slots are cut where parts overlap in the assembly, so they always match the tabs. In this version of Abundance a shape lower in an Assembly's input list cuts the shapes above it, so each tabbed part sits below the part it passes through.
 - Runner front tabs → through the apron
 - Seat stretcher end tabs → through the runners
 - Lower back batten end tabs → through the runners
@@ -52,14 +54,12 @@ The chair fits on two 4 × 8 ft sheets. Open Cut Layout and press Compute Layout
 ## Assembly
 1. Slide the seat stretcher and lower back batten tabs into one runner, then drop the other runner on.
 2. Push the apron onto the runner front tabs.
-3. Screw the front legs to the outside of the runners, and the gussets to the front legs.
-4. Screw the seat panels down onto the runners and the top edge of the apron.
+3. Screw the front legs to the outside of the runners. Glue each gusset to the front edge of its leg, in the same plane as the leg, with its top flush with the top of the leg.
+4. Screw the seat panels down onto the runners, the seat stretcher and the top edge of the apron.
 5. Set the back panels against the lower batten, then screw the upper batten across the back of the panels at arm height.
-6. Drop the arms over the front leg tabs, rest their back ends on the upper batten, and screw down into the gussets and the batten.
+6. Drop the arms over the front leg tabs, rest their back ends on the upper batten, and screw down into the legs, the gussets and the batten.
 
 Glue and screw every joint with exterior glue and the deck screws on the bill of materials (about 50 screws).
-
-__GEOMETRY_INPUT__
 
 __GEOMETRY_INPUT__
 
