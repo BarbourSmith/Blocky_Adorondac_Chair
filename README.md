@@ -11,7 +11,6 @@
 - **Back_Angle** (number)
 - **Arm_Height** (number)
 - **Leg Sweep** (number)
-- **Bit Diameter** (number)
 
 
 
