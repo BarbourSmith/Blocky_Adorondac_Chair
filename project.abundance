@@ -4298,10 +4298,59 @@
           "topLevel": false,
           "allAtoms": [
             {
-              "atomType": "Move",
+              "atomType": "Rotate",
               "x": 0.7,
               "y": 0.2,
-              "uniqueID": "id-10339",
+              "uniqueID": "id-10348",
+              "ioValues": [
+                {
+                  "name": "geometry",
+                  "ioValue": "__GEOMETRY_INPUT__"
+                },
+                {
+                  "name": "x-axis degrees",
+                  "ioValue": 0
+                },
+                {
+                  "name": "y-axis degrees",
+                  "ioValue": 0
+                },
+                {
+                  "name": "z-axis degrees",
+                  "ioValue": 180
+                }
+              ]
+            },
+            {
+              "atomType": "Rotate",
+              "x": 0.8,
+              "y": 0.3,
+              "uniqueID": "id-10355",
+              "ioValues": [
+                {
+                  "name": "geometry",
+                  "ioValue": "__GEOMETRY_INPUT__"
+                },
+                {
+                  "name": "x-axis degrees",
+                  "ioValue": 0
+                },
+                {
+                  "name": "y-axis degrees",
+                  "ioValue": 20,
+                  "currentEquation": "LegSweep"
+                },
+                {
+                  "name": "z-axis degrees",
+                  "ioValue": 0
+                }
+              ]
+            },
+            {
+              "atomType": "Move",
+              "x": 0.8,
+              "y": 0.4,
+              "uniqueID": "id-10361",
               "ioValues": [
                 {
                   "name": "geometry",
@@ -4309,16 +4358,17 @@
                 },
                 {
                   "name": "xDist",
-                  "ioValue": 0
+                  "ioValue": -44.271461075365345,
+                  "currentEquation": "(-40*cos(LegSweep*pi/180) - Thickness/2)*cos(LegSweep*pi/180)"
                 },
                 {
                   "name": "yDist",
-                  "ioValue": -587.15,
-                  "currentEquation": "-(SeatWidth + 3*Thickness)"
+                  "ioValue": 0
                 },
                 {
                   "name": "zDist",
-                  "ioValue": 0
+                  "ioValue": 16.113494058907783,
+                  "currentEquation": "(40*cos(LegSweep*pi/180) + Thickness/2)*sin(LegSweep*pi/180)"
                 }
               ]
             },
@@ -4526,7 +4576,8 @@
                       "ioValues": [
                         {
                           "name": "x length",
-                          "ioValue": 100
+                          "ioValue": 125.95,
+                          "currentEquation": "145 - Thickness"
                         },
                         {
                           "name": "y length",
@@ -4546,13 +4597,13 @@
                         },
                         {
                           "name": "xDist",
-                          "ioValue": 91.96691862138786,
-                          "currentEquation": "-40 + (ArmHeight - Thickness)*tan(LegSweep*pi/180) - tan(LegSweep*pi/180) - 50"
+                          "ioValue": 347.025,
+                          "currentEquation": "SeatWidth/2 + Thickness/2 + 72.5"
                         },
                         {
                           "name": "yDist",
-                          "ioValue": 500.45,
-                          "currentEquation": "ArmHeight - Thickness - 0.5"
+                          "ioValue": 511.98541642601015,
+                          "currentEquation": "(ArmHeight - Thickness)/cos(LegSweep*pi/180) - 40*sin(LegSweep*pi/180) - Thickness*tan(LegSweep*pi/180) - 0.5"
                         },
                         {
                           "name": "zDist",
@@ -4568,7 +4619,8 @@
                       "ioValues": [
                         {
                           "name": "x length",
-                          "ioValue": 1
+                          "ioValue": 19.05,
+                          "currentEquation": "Thickness"
                         },
                         {
                           "name": "y length",
@@ -4588,13 +4640,13 @@
                         },
                         {
                           "name": "xDist",
-                          "ioValue": 39.224845857953454,
-                          "currentEquation": "-40 + (ArmHeight - Thickness - 300*cos(LegSweep*pi/180))*tan(LegSweep*pi/180) - 0.5"
+                          "ioValue": 293.575,
+                          "currentEquation": "SeatWidth/2 + 1.5*Thickness"
                         },
                         {
                           "name": "yDist",
-                          "ioValue": 219.54221376422748,
-                          "currentEquation": "ArmHeight - Thickness - 300*cos(LegSweep*pi/180) + 0.5"
+                          "ioValue": 212.98541642601015,
+                          "currentEquation": "(ArmHeight - Thickness)/cos(LegSweep*pi/180) - 40*sin(LegSweep*pi/180) - Thickness*tan(LegSweep*pi/180) - 300 + 0.5"
                         },
                         {
                           "name": "zDist",
@@ -4624,7 +4676,7 @@
                         {
                           "name": "Shape 1",
                           "ioValue": {
-                            "geometry": "move-rectangle-100-1-91.96691862138786-500.45-0",
+                            "geometry": "move-rectangle-125.95-1-347.025-511.98541642601015-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -4651,7 +4703,7 @@
                         {
                           "name": "Shape2",
                           "ioValue": {
-                            "geometry": "move-rectangle-1-1-39.224845857953454-219.54221376422748-0",
+                            "geometry": "move-rectangle-19.05-1-293.575-212.98541642601015-0",
                             "dimension": "2D",
                             "plane": {
                               "origin": [
@@ -4748,8 +4800,8 @@
                     },
                     {
                       "name": "zDist",
-                      "ioValue": -303.1,
-                      "currentEquation": "-(SeatWidth/2 + 2*Thickness)"
+                      "ioValue": -9.525,
+                      "currentEquation": "-Thickness/2"
                     }
                   ]
                 },
@@ -4773,7 +4825,7 @@
                     },
                     {
                       "name": "z-axis degrees",
-                      "ioValue": 0
+                      "ioValue": 90
                     }
                   ]
                 },
@@ -4890,9 +4942,9 @@
               "ap2ID": "id-9349"
             },
             {
-              "ap2Name": "number or geometry",
+              "ap2Name": "geometry",
               "ap1ID": "id-9429",
-              "ap2ID": "id-9335"
+              "ap2ID": "id-10355"
             },
             {
               "ap2Name": "Shape 1",
@@ -4902,12 +4954,22 @@
             {
               "ap2Name": "geometry",
               "ap1ID": "id-9349",
-              "ap2ID": "id-10339"
+              "ap2ID": "id-10348"
             },
             {
               "ap2Name": "Shape2",
-              "ap1ID": "id-10339",
+              "ap1ID": "id-10348",
               "ap2ID": "id-9429"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-10355",
+              "ap2ID": "id-10361"
+            },
+            {
+              "ap2Name": "number or geometry",
+              "ap1ID": "id-10361",
+              "ap2ID": "id-9335"
             }
           ],
           "fileTypeVersion": 1
@@ -5117,18 +5179,18 @@
           "downwardFaceIndex": 6,
           "faceCount": 8,
           "faceNormal": [
-            0,
-            1,
-            -1.1102230246251565e-16
+            -0.9396926207859084,
+            1.1102230246251565e-16,
+            0.3420201433256686
           ]
         },
         {
           "downwardFaceIndex": 6,
           "faceCount": 8,
           "faceNormal": [
-            0,
-            1,
-            -1.1102230246251565e-16
+            0.9396926207859084,
+            -2.3348698237725105e-16,
+            -0.3420201433256688
           ]
         },
         {
