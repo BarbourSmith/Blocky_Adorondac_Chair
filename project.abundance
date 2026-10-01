@@ -24,10 +24,6 @@
     {
       "name": "Leg Sweep",
       "ioValue": 20
-    },
-    {
-      "name": "Bit Diameter",
-      "ioValue": 6.35
     }
   ],
   "topLevel": true,
@@ -97,7 +93,7 @@
         },
         {
           "name": "Part Padding",
-          "ioValue": 6.35
+          "ioValue": 10
         },
         {
           "name": "Orientations",
@@ -294,15 +290,6 @@
       "y": 0.5,
       "uniqueID": "id-8434",
       "name": "Leg Sweep",
-      "type": "number",
-      "options": []
-    },
-    {
-      "atomType": "Input",
-      "x": 0,
-      "y": 0.6,
-      "uniqueID": "id-8441",
-      "name": "Bit Diameter",
       "type": "number",
       "options": []
     },
@@ -716,6 +703,16 @@
               "allConnectors": [
                 {
                   "ap2Name": "geometry",
+                  "ap1ID": "id-10302",
+                  "ap2ID": "id-10308"
+                },
+                {
+                  "ap2Name": "Shape 1",
+                  "ap1ID": "id-10308",
+                  "ap2ID": "id-8644"
+                },
+                {
+                  "ap2Name": "geometry",
                   "ap1ID": "id-8614",
                   "ap2ID": "id-8618"
                 },
@@ -748,16 +745,6 @@
                   "ap2Name": "number or geometry",
                   "ap1ID": "id-8644",
                   "ap2ID": "id-8612"
-                },
-                {
-                  "ap2Name": "geometry",
-                  "ap1ID": "id-10302",
-                  "ap2ID": "id-10308"
-                },
-                {
-                  "ap2Name": "Shape 1",
-                  "ap1ID": "id-10308",
-                  "ap2ID": "id-8644"
                 }
               ],
               "fileTypeVersion": 1
@@ -974,6 +961,16 @@
           "allConnectors": [
             {
               "ap2Name": "geometry",
+              "ap1ID": "id-10314",
+              "ap2ID": "id-10320"
+            },
+            {
+              "ap2Name": "Shape2",
+              "ap1ID": "id-10320",
+              "ap2ID": "id-8686"
+            },
+            {
+              "ap2Name": "geometry",
               "ap1ID": "id-8676",
               "ap2ID": "id-8680"
             },
@@ -1010,16 +1007,6 @@
             {
               "ap2Name": "Shape 1",
               "ap1ID": "id-8610",
-              "ap2ID": "id-8686"
-            },
-            {
-              "ap2Name": "geometry",
-              "ap1ID": "id-10314",
-              "ap2ID": "id-10320"
-            },
-            {
-              "ap2Name": "Shape2",
-              "ap1ID": "id-10320",
               "ap2ID": "id-8686"
             }
           ],
@@ -1267,6 +1254,16 @@
           "allConnectors": [
             {
               "ap2Name": "geometry",
+              "ap1ID": "id-10290",
+              "ap2ID": "id-10296"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-10296",
+              "ap2ID": "id-8753"
+            },
+            {
+              "ap2Name": "geometry",
               "ap1ID": "id-8733",
               "ap2ID": "id-8737"
             },
@@ -1289,16 +1286,6 @@
               "ap2Name": "number or geometry",
               "ap1ID": "id-8753",
               "ap2ID": "id-8725"
-            },
-            {
-              "ap2Name": "geometry",
-              "ap1ID": "id-10290",
-              "ap2ID": "id-10296"
-            },
-            {
-              "ap2Name": "geometry",
-              "ap1ID": "id-10296",
-              "ap2ID": "id-8753"
             }
           ],
           "fileTypeVersion": 1
@@ -1580,6 +1567,16 @@
           ],
           "allConnectors": [
             {
+              "ap2Name": "geometry",
+              "ap1ID": "id-10326",
+              "ap2ID": "id-10332"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-10332",
+              "ap2ID": "id-8793"
+            },
+            {
               "ap2Name": "Shape 1",
               "ap1ID": "id-8766",
               "ap2ID": "id-8774"
@@ -1613,16 +1610,6 @@
               "ap2Name": "number or geometry",
               "ap1ID": "id-8793",
               "ap2ID": "id-8758"
-            },
-            {
-              "ap2Name": "geometry",
-              "ap1ID": "id-10326",
-              "ap2ID": "id-10332"
-            },
-            {
-              "ap2Name": "geometry",
-              "ap1ID": "id-10332",
-              "ap2ID": "id-8793"
             }
           ],
           "fileTypeVersion": 1
@@ -2067,7 +2054,7 @@
     {
       "atomType": "Molecule",
       "x": 0.4,
-      "y": 0.5,
+      "y": 0.6,
       "uniqueID": "id-8867",
       "name": "Back",
       "ioValues": [
@@ -4922,6 +4909,21 @@
           ],
           "allConnectors": [
             {
+              "ap2Name": "Shape2",
+              "ap1ID": "id-10348",
+              "ap2ID": "id-9429"
+            },
+            {
+              "ap2Name": "geometry",
+              "ap1ID": "id-10355",
+              "ap2ID": "id-10361"
+            },
+            {
+              "ap2Name": "number or geometry",
+              "ap1ID": "id-10361",
+              "ap2ID": "id-9335"
+            },
+            {
               "ap2Name": "Thickness",
               "ap1ID": "id-9337",
               "ap2ID": "id-9349"
@@ -4955,21 +4957,6 @@
               "ap2Name": "geometry",
               "ap1ID": "id-9349",
               "ap2ID": "id-10348"
-            },
-            {
-              "ap2Name": "Shape2",
-              "ap1ID": "id-10348",
-              "ap2ID": "id-9429"
-            },
-            {
-              "ap2Name": "geometry",
-              "ap1ID": "id-10355",
-              "ap2ID": "id-10361"
-            },
-            {
-              "ap2Name": "number or geometry",
-              "ap1ID": "id-10361",
-              "ap2ID": "id-9335"
             }
           ],
           "fileTypeVersion": 1
@@ -5732,11 +5719,6 @@
       "ap2Name": "LegSweep",
       "ap1ID": "id-8434",
       "ap2ID": "id-8974"
-    },
-    {
-      "ap2Name": "Part Padding",
-      "ap1ID": "id-8441",
-      "ap2ID": "id-8410"
     },
     {
       "ap2Name": "geometry",
